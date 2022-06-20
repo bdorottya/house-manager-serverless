@@ -1,0 +1,56 @@
+section{
+  background: eee;
+  max-height: 100%;
+  padding: 5% 30%;
+}
+.grey-box{
+  display: flex;
+  box-shadow: 0 0 4px grey;
+  border-radius: 30px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  h1{
+    font-size: 1.7rem;
+    font-weight: 500;
+  }
+  .login-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    label{
+      font-weight: 300;
+      display: block;
+      margin-bottom: .6rem;
+    }
+    input{
+      border-radius: 30px;
+      font-size: 1rem;
+      padding: 15px 20px;
+      border: none;
+      box-shadow: 0 0 4px grey;
+      width: 20rem;
+    }
+    button{
+      width: 60%;
+      border-radius: 30px;
+      background-color: #21AE49;
+      color: white;
+      font-weight: 500;
+      padding: 3px 50px;
+      margin: 2% 0;
+    }
+  }
+  .small{
+    font-size: 12px;
+    margin: 3% 0;
+    a{
+      color: #21AE49;
+      cursor: pointer;
+      &:hover{
+        color: #21ae498d;
+      }
+    }
+  }
+
+}

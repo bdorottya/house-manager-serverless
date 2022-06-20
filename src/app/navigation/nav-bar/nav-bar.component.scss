@@ -1,0 +1,48 @@
+.nav-bar{
+  flex-direction: row;
+  margin: 1% 4%;
+  border: none;
+  box-shadow: 0px 0px 4px grey;
+  border-radius: 30px;
+  padding: 1%;
+  justify-content: space-between;
+  align-items: center;
+
+  .flex-item{
+    &:first-child{
+      margin-left: 1%;
+      margin-top: 5px;
+    }
+    &:last-child{
+      margin-right: 2%;
+      button{
+        padding: 5px 24px;
+        margin: 0 10px;
+        border-radius: 30px;
+        font-weight: 400;
+      }
+      .login{
+        background-color: none;
+        box-shadow: 0 0 4px #21AE49;
+
+      }
+      .signup{
+        background-color: #21AE49;
+        color: white;
+      }
+    }
+    &:nth-child(2){
+      a{
+        padding: 0 24px;
+        transition: all .1s ease-in-out;
+        &:hover{
+          color: #21AE49;
+        }
+      }
+    }
+    img{
+      width: 75%;
+    }
+
+  }
+}
