@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -18,9 +19,10 @@ export class LoginComponent implements OnInit {
   googleLoginShow: boolean = false;
 
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    
   }
 
   submitLogin(){
@@ -28,7 +30,12 @@ export class LoginComponent implements OnInit {
       let email = this.loginForm.get("email")?.value;
       let pass = this.loginForm.get("password")?.value;
       let user = this.authService.loginWithEmailAndPass(email, pass);
-      console.log(user);
+      user.then(data => {
+        if(data){
+          this.router.navigateByUrl('/userhome');
+          console.log(user);
+        }
+      });
     }
   }
 
@@ -38,5 +45,17 @@ export class LoginComponent implements OnInit {
 
   googleLogin(){
 
+  }
+// @ts-ignore
+  handleCredentialsResponse(response){
+    const app = new Realm.App({
+      id: "housemanager-zblhe",
+    });
+    console.log("valami");
+    const credentials = Realm.Credentials.google(response.credential);
+      console.log(credentials);
+      app
+        .logIn(credentials)
+        .then((user) => alert(`Logged in with id: ${user.id}`));
   }
 }

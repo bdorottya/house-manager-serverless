@@ -10,6 +10,7 @@ import { UserModule } from './user/user.module';
 import { AllExpertsComponent } from './expert/all-experts/all-experts.component';
 import { OneExpertComponent } from './expert/one-expert/one-expert.component';
 import { MatButtonModule } from '@angular/material/button';
+import { ExpertDashboardComponent } from './expert/expert-dashboard/expert-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
     NavBarComponent,
     AllExpertsComponent,
     OneExpertComponent,
+    ExpertDashboardComponent,
   ],
   imports: [
     BrowserModule,
