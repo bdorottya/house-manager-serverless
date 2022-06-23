@@ -9,7 +9,7 @@ export class AuthService {
   app_id:string = "housemanager-zblhe";
   loggedInUser: boolean = false;
 
-  constructor() { }
+  constructor() {}
 
   async loginWithEmailAndPass(email: string, password: string){
     const app = new Realm.App({id: this.app_id});
@@ -24,4 +24,6 @@ export class AuthService {
       return 0;
     }
   }
+
+
 }

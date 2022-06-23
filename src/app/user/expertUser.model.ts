@@ -1,8 +1,6 @@
 export interface ExpertlUser{
   id: string;
-  userName: string;
   email: string;
-  role: string;
   avatar: string;
   phone: string;
   firstName: string;

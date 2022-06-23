@@ -10,31 +10,5 @@
     </form>
     <button (click)="showGoogleLogin()" class="google-btn" mat-button>Google Belépés</button>
     <p class="small">Nincs még fiókod? <a routerLink='/signup'>Regisztráció</a> </p>
-
-
-    <span id="g_id_onload"
-    data-client_id="383591626747-5e5o5sgr7rrvi9ml6431rdpfesuitkon.apps.googleusercontent.com"
-    data-callback="handleCredentialsResponse"
-    data-ux_mode="popup">
-    <script>function handleCredentialsResponse(response) {
-      const credentials = Realm.Credentials.google(response.credential);
-      console.log(credentials);
-      app
-        .logIn(credentials)
-        .then((user) => alert(`Logged in with id: ${user.id}`));
-    }</script>
-  </span>
-
-
-  <!-- Log in with Realm and Google Authentication -->
-  <script async defer>
-    const app = new Realm.App({
-      id: "housemanager-zblhe",
-    });
-    console.log("after app init");
-    // Callback used in `data-callback` to handle Google's response and log user into Realm
-    
-  </script>
-
   </div>
 </section>

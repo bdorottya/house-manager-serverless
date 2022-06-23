@@ -1,1 +1,28 @@
-<p>signup works!</p>
+<section>
+    <div class="grey-box">
+        <h1>Regisztráció</h1>
+        <mat-tab-group>
+            <mat-tab label="Felhasználóként regisztrálok">
+                <div class="content">
+                    <form [formGroup]="signupForm" (ngSubmit)="submitSignup()" class="signup-form">
+                        <label>E-mail cím</label>
+                        <input type="email" matInput name="email" formControlName="email">
+                        <label>Vezetéknév</label>
+                        <input type="text" matInput name="firstName" formControlName="firstName">
+                        <label>Kersztnév</label>
+                        <input type="text" matInput name="lastName" formControlName="lastName">
+                        <label>Jelszó</label>
+                        <input type="password" matInput name="password" formControlName="password">
+                        <label>Jelszó megerősítése</label>
+                        <input type="password" matInput name="passwordAgain" formControlName="passwordAgain">
+                    <button mat-button type="submit">Regisztráció</button>
+                    </form>
+                    <p class="small">Van már fiókod?<a routerLink='/login'>Bejelentkezés</a></p>
+                </div>
+            </mat-tab>
+            <mat-tab label="Szakemberként regisztrálok">
+
+            </mat-tab>
+        </mat-tab-group>
+      </div>
+</section>
