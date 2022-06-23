@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -11,6 +11,8 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements OnInit {
 
+
+
   loginForm = new FormGroup({
     email: new FormControl(''),
     password: new FormControl('')
@@ -22,7 +24,7 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    
+
   }
 
   submitLogin(){
@@ -34,6 +36,8 @@ export class LoginComponent implements OnInit {
         if(data){
           this.router.navigateByUrl('/userhome');
           console.log(user);
+          this.authService.loggedInUser = true;
+
         }
       });
     }

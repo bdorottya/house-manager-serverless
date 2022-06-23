@@ -9,7 +9,7 @@
     <a routerLink="">Szolgáltatások</a>
   </span>
   <span class="flex-item">
-    <a routerLink="/login"><button class="login" mat-button>Bejelentkezés</button></a>
-    <a routerLink="/signup"><button class="signup"si mat-button>Regisztráció</button></a>
+    <a *ngIf="!loggedInUser"routerLink="/login"><button class="login" mat-button>Bejelentkezés</button></a>
+    <a *ngIf="!loggedInUser" routerLink="/signup"><button class="signup"si mat-button>Regisztráció</button></a>
   </span>
 </div>

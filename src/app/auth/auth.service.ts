@@ -7,6 +7,7 @@ import * as Realm from 'realm-web';
 export class AuthService {
 
   app_id:string = "housemanager-zblhe";
+  loggedInUser: boolean = false;
 
   constructor() { }
 
@@ -16,6 +17,7 @@ export class AuthService {
     try{
       let user = await app.logIn(creds);
       console.assert(user.id === app.currentUser?.id);
+      console.log(app.currentUser?.id);
       return user;
     }catch(err){
       console.error("failed to log in", err);

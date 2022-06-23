@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import * as Realm from 'realm-web';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +10,13 @@ import * as Realm from 'realm-web';
 export class AppComponent implements OnInit {
   title = 'house-manager-serverless';
 
-  ngOnInit(){
+  loggedInUser: boolean = false;
 
+  constructor(private authService: AuthService){}
+
+  ngOnInit(){
+    this.loggedInUser = this.authService.loggedInUser;
+    console.log(this.loggedInUser);
   }
 
 }

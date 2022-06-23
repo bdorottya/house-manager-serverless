@@ -7,11 +7,12 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class NavBarComponent implements OnInit {
 
-  @Input() loggedInUser: boolean = false;
+  @Input() loggedInUser?: boolean;
 
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 }
