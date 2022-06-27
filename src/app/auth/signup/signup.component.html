@@ -1,27 +1,27 @@
 <section>
-    <div class="grey-box">
+    <div class="box card">
         <h1>Regisztráció</h1>
         <mat-tab-group>
             <mat-tab label="Felhasználóként regisztrálok">
-                <div class="content">
-                    <form [formGroup]="signupForm" (ngSubmit)="submitSignup()" class="signup-form">
+                <div class="flex content">
+                    <form [formGroup]="signupForm" (ngSubmit)="submitSignup()" class="signup-form flex">
                         <label>E-mail cím</label>
-                        <input type="email" matInput name="email" formControlName="email">
+                        <input class="input" type="email" matInput name="email" formControlName="email">
                         <label>Vezetéknév</label>
-                        <input type="text" matInput name="firstName" formControlName="firstName">
+                        <input class="input" type="text" matInput name="firstName" formControlName="firstName">
                         <label>Kersztnév</label>
-                        <input type="text" matInput name="lastName" formControlName="lastName">
+                        <input class="input" type="text" matInput name="lastName" formControlName="lastName">
                         <label>Jelszó</label>
-                        <input type="password" matInput name="password" formControlName="password">
+                        <input class="input" type="password" matInput name="password" formControlName="password">
                         <label>Jelszó megerősítése</label>
-                        <input type="password" matInput name="passwordAgain" formControlName="passwordAgain">
-                    <button mat-button type="submit">Regisztráció</button>
+                        <input class="input" type="password" matInput name="passwordAgain" formControlName="passwordAgain">
+                        <button mat-button class="primary-btn" type="submit">Regisztráció</button>
                     </form>
-                    <p class="small">Van már fiókod?<a routerLink='/login'>Bejelentkezés</a></p>
+                    <p class="small">Van már fiókod? <a routerLink='/login'>Bejelentkezés</a></p>
                 </div>
             </mat-tab>
             <mat-tab label="Szakemberként regisztrálok">
-
+              <button mat-button>Kattints ide!</button>
             </mat-tab>
         </mat-tab-group>
       </div>

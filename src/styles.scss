@@ -35,6 +35,8 @@ $house-manager-serverless-theme: mat.define-light-theme((
 
 /* You can add global styles to this file, and also import other style files */
 
+
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
@@ -67,4 +69,30 @@ a:hover{
   padding: 10px 15px;
   font-weight: 500;
 }
+
+.primary-btn{
+  background-color: #21AE49;
+  color: white;
+}
+
+.secondary-btn{
+  background-color: white;
+  color: black;
+  box-shadow: 0 0 4px #21AE49;
+}
+
+.card{
+  border-radius: 30px;
+  box-shadow: 0 0 4px grey;
+  padding: 5% 10%;
+}
+
+.input{
+  border-radius: 30px;
+  font-size: 1rem;
+  padding: 15px 20px;
+  box-shadow: 0 0 4px grey;
+  border: none;
+}
+
 

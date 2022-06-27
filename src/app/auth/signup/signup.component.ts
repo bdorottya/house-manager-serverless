@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,11 +18,23 @@ export class SignupComponent implements OnInit {
     passwordAgain: new FormControl('')
   })
 
-  constructor() { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  submitSignup(){}
+  async submitSignup(){
+    if(this.signupForm.valid){
+      let email = this.signupForm.get("email")?.value;
+      let password = this.signupForm.get("password")?.value;
+      let lastName = this.signupForm.get("lastName")?.value;
+      let firstName = this.signupForm.get("firstName")?.value;
+      let userId = await this.authService.signup(email, password, lastName, firstName);
+      if(userId){
+        console.log("afterSugnup: ", userId.insertedId);
+        this.router.navigate(["/firstlogin"], {queryParams: {email: email}});
+      }
+    }
+  }
 
 }

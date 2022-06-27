@@ -10,13 +10,12 @@ import { AuthService } from './auth/auth.service';
 export class AppComponent implements OnInit {
   title = 'house-manager-serverless';
 
-  loggedInUser: boolean = false;
+
 
   constructor(private authService: AuthService){}
 
   ngOnInit(){
-    this.loggedInUser = this.authService.loggedInUser;
-    console.log(this.loggedInUser);
+
   }
 
 }

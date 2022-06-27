@@ -6,9 +6,9 @@
         <input type="email" matInput placeholder="valami@gmail.com" name="email" formControlName="email">
         <label>Jelszó</label>
         <input type="password" matInput placeholder="Jelszó" name="password" formControlName="password">
-      <button mat-button type="submit">Belépés</button>
+      <button mat-button type="submit" class="primary-btn">Belépés</button>
     </form>
-    <button (click)="showGoogleLogin()" class="google-btn" mat-button>Google Belépés</button>
+    <button (click)="loadGoogleLogin()" class="google-btn" mat-button>Google Belépés</button>
     <p class="small">Nincs még fiókod? <a routerLink='/signup'>Regisztráció</a> </p>
   </div>
 </section>

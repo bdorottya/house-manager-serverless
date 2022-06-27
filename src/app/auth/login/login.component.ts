@@ -28,16 +28,27 @@ export class LoginComponent implements OnInit {
     //@ts-ignore
     window.onGoogleLibraryLoad = () => {
       console.log('Google\'s One-tap sign in script loaded!');
-    
+
       // @ts-ignore
       google.accounts.id.initialize({
         // Ref: https://developers.google.com/identity/gsi/web/reference/js-reference#IdConfiguration
         client_id: '383591626747-5e5o5sgr7rrvi9ml6431rdpfesuitkon.apps.googleusercontent.com',
         callback: this.handleCredentialsResponse.bind(this), // Whatever function you want to trigger...
-        auto_select: false,
+        auto_select: true,
         cancel_on_tap_outside: false
       });
   };
+}
+
+loadGoogleLogin(){
+  //@ts-ignore
+  google.accounts.id.initialize({
+    // Ref: https://developers.google.com/identity/gsi/web/reference/js-reference#IdConfiguration
+    client_id: '383591626747-5e5o5sgr7rrvi9ml6431rdpfesuitkon.apps.googleusercontent.com',
+    callback: this.handleCredentialsResponse.bind(this), // Whatever function you want to trigger...
+    auto_select: true,
+    cancel_on_tap_outside: false
+  });
 }
 
   submitLogin(){
@@ -47,32 +58,22 @@ export class LoginComponent implements OnInit {
       let user = this.authService.loginWithEmailAndPass(email, pass);
       user.then(data => {
         if(data){
+          this.authService.loggedInUser = data;
           this.router.navigateByUrl('/userhome');
           console.log(user);
-          this.authService.loggedInUser = true;
-
         }
       });
     }
   }
-
-  showGoogleLogin(){
-    this.googleLoginShow = true;
-  }
-
-  googleLogin(){
-
-  }
 // @ts-ignore
   handleCredentialsResponse(response){
-    const app = new Realm.App({
-      id: "housemanager-zblhe",
-    });
-    console.log("valami");
     const credentials = Realm.Credentials.google(response.credential);
-      console.log(credentials);
-      app
-        .logIn(credentials)
-        .then((user) => alert(`Logged in with id: ${user.id}`));
+    let user = this.authService.googleLogin(credentials);
+    user.then(data => {
+      if(data){
+        this.authService.loggedInUser = data;
+        this.router.navigateByUrl('userhome');
+      }
+    })
   }
 }

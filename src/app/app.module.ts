@@ -10,7 +10,9 @@ import { UserModule } from './user/user.module';
 import { AllExpertsComponent } from './expert/all-experts/all-experts.component';
 import { OneExpertComponent } from './expert/one-expert/one-expert.component';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { ExpertDashboardComponent } from './expert/expert-dashboard/expert-dashboard.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { ExpertDashboardComponent } from './expert/expert-dashboard/expert-dashb
     BrowserAnimationsModule,
     AuthModule,
     UserModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
