@@ -6,6 +6,7 @@ import { UserDashboardComponent } from './user-dashboard/user-dashboard.componen
 import { AfterFirstLoginComponent } from './after-first-login/after-first-login.component';
 
 import {MatStepperModule} from '@angular/material/stepper';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,7 +19,7 @@ import {MatStepperModule} from '@angular/material/stepper';
   imports: [
     CommonModule,
     MatStepperModule,
-
+    ReactiveFormsModule
   ]
 })
 export class UserModule { }

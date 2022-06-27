@@ -33,6 +33,8 @@ export class SignupComponent implements OnInit {
       if(userId){
         console.log("afterSugnup: ", userId.insertedId);
         this.router.navigate(["/firstlogin"], {queryParams: {email: email}});
+      }else{
+        console.log("error");
       }
     }
   }

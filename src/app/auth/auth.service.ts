@@ -10,7 +10,7 @@ export class AuthService {
 
 
   app_id:string = "housemanager-zblhe";
-  loggedInUser?: Realm.User;
+  loggedInUser: boolean = false;
 
   constructor() {}
 
@@ -21,6 +21,7 @@ export class AuthService {
       let user = await app.logIn(creds);
       console.assert(user.id === app.currentUser?.id);
       console.log(app.currentUser?.id);
+      this.loggedInUser = true;
       return user;
     }catch(err){
       console.error("failed to log in", err);
@@ -34,6 +35,7 @@ export class AuthService {
       let user = await app.logIn(creds);
       console.assert(user.id === app.currentUser?.id);
       console.log(app.currentUser?.id);
+      this.loggedInUser = true;
       return user;
     }catch(err){
       console.error("failed to log in", err);
@@ -43,17 +45,20 @@ export class AuthService {
 
   async signup(email: string, password: string, lastName: string, firstName: string){
     let app = new Realm.App({id: this.app_id});
+    let creds = Realm.Credentials.anonymous();
+    let user = await app.logIn(creds);
     let mongo = app.currentUser?.mongoClient("mongodb-atlas");
-    let collection = mongo?.db("home-maker").collection("users");
+    let collection = mongo?.db("home-maker").collection("users");    
     try{
       await app.emailPasswordAuth.registerUser({ email, password });
       let user = new UserDAO(email, firstName, lastName);
-      let res = await collection?.insertOne(user);
-      if(res){
-        console.log(res.insertedId);
-        return res;
-      }else{
-        console.log("error in saving user");
+      try {
+        let res = await collection?.insertOne(user);
+        if(res){
+          console.log(res.insertedId);
+          return res;} return;
+      }catch(err){
+        console.log("error in saving user", err);
         return;
       }
     }catch(err){
@@ -64,7 +69,12 @@ export class AuthService {
 
   async fetchFirstLoginData(email:string){
     let app = new Realm.App({id: this.app_id});
+  }
 
+  async logOut(){
+    const app = new Realm.App({id: this.app_id});
+    await app.currentUser?.logOut();
+    this.loggedInUser = false;
   }
 }
 

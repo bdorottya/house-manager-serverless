@@ -1,6 +1,7 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { UserDAO } from '../socialUser.model';
 
 @Component({
@@ -16,18 +17,23 @@ export class AfterFirstLoginComponent implements OnInit {
   firstName:string = "";
   lastName:string = "";
 
+  phoneForm = new FormGroup({
+    phone: new FormControl(''),
+    avatar: new FormControl('')
+  })
+
   constructor(private httpClient: HttpClient, private router: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.router.queryParams.subscribe(params => {
       this.email = params['email'];
     });
-
-    let params = JSON.stringify({email: this.email});
-    let res = this.httpClient.post(this.baseUrl, {body: {params}});
+    let res = this.httpClient.get<UserDAO>(this.baseUrl, {params: {email: this.email}});
     res.subscribe(data => {
-      console.log("data: ", data);
+      console.log(data.email);
     })
   }
+
+  submitForm(){}
 
 }

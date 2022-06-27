@@ -58,7 +58,6 @@ loadGoogleLogin(){
       let user = this.authService.loginWithEmailAndPass(email, pass);
       user.then(data => {
         if(data){
-          this.authService.loggedInUser = data;
           this.router.navigateByUrl('/userhome');
           console.log(user);
         }
@@ -71,8 +70,8 @@ loadGoogleLogin(){
     let user = this.authService.googleLogin(credentials);
     user.then(data => {
       if(data){
-        this.authService.loggedInUser = data;
-        this.router.navigateByUrl('userhome');
+        
+        this.router.navigateByUrl('/userhome');
       }
     })
   }

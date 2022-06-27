@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AllHomesComponent implements OnInit {
 
-  constructor() { }
+  baseUrl = "https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/getHomes";
+  app_id:string = "housemanager-zblhe";
+
+  constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
+    let app = new Realm.App({id: this.app_id});
+    let creds = Realm.Credentials.anonymous();
+    let user = app.logIn(creds);
+    let homes = this.httpClient.get(this.baseUrl);
+    homes.subscribe(data => {
+      console.log(data);
+    })
   }
 
 }

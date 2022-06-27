@@ -1,12 +1,26 @@
+<form [formGroup]="phoneForm" (ngSubmit)="submitForm()">
 <mat-stepper [linear]="isLinear" #stepper>
-  <mat-step>
-
+  <mat-step label="Telefonszám megadás">
+    <div class="content">
+      <h2>Kérjük add meg a telefonszámod!</h2>
+        <input type="phone" formControlName="phone" name="phone">
+      <button mat-button matStepperNext>Kihagyás</button>
+    </div>
   </mat-step>
-  <mat-step  label="Fill out your address">
-
+  <mat-step  label="Töltsd fel a profilképed!">
+    <div class="content">
+      <input type="file" formControlName="avatar" name="avatar">
+    </div>
+    <button mat-button matStepperNext type="submit">Kihagyás</button>
   </mat-step>
-  <mat-step>
+  <mat-step label="Regisztráció befejezése">
+    <div class="content">
+      <h2>Minden rendben!</h2>
+      <h4>Jelentkezz be és használd a House Manager szolgáltatásait.</h4>
+      <a routerLink="/login"><button mat-button></button></a>
+    </div>
   </mat-step>
 
 </mat-stepper>
+</form>
 
