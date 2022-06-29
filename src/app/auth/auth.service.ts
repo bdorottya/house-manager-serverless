@@ -22,6 +22,8 @@ export class AuthService {
       console.assert(user.id === app.currentUser?.id);
       console.log(app.currentUser?.id);
       this.loggedInUser = true;
+      localStorage.setItem("userID", app.currentUser?.id as string);
+      localStorage.setItem("userEmail", email);
       return user;
     }catch(err){
       console.error("failed to log in", err);
@@ -36,6 +38,7 @@ export class AuthService {
       console.assert(user.id === app.currentUser?.id);
       console.log(app.currentUser?.id);
       this.loggedInUser = true;
+      localStorage.setItem("userID", app.currentUser?.id as string);
       return user;
     }catch(err){
       console.error("failed to log in", err);
@@ -75,6 +78,8 @@ export class AuthService {
     const app = new Realm.App({id: this.app_id});
     await app.currentUser?.logOut();
     this.loggedInUser = false;
+    localStorage.removeItem("userID");
+    localStorage.removeItem("userEmail");
   }
 }
 

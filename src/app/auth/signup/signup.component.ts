@@ -16,6 +16,10 @@ export class SignupComponent implements OnInit {
     firstName: new FormControl(''),
     lastName: new FormControl(''),
     passwordAgain: new FormControl('')
+  });
+
+  expertForm = new FormGroup({
+    
   })
 
   constructor(private authService: AuthService, private router: Router) { }

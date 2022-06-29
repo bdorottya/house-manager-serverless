@@ -21,7 +21,23 @@
                 </div>
             </mat-tab>
             <mat-tab label="Szakemberként regisztrálok">
-              <button mat-button>Kattints ide!</button>
+                <div class="flex expert-signup">
+                    <form [formGroup]="expertForm" (ngSubmit)="submitExpert">
+                        <label>Vezetéknév</label>
+                        <input type="text" matInput name="firstName" formControlName="firstName">
+                        <label>Keresztnév</label>
+                        <input type="text" matInput name="lastName" formControlName="lastName">
+                        <label>E-mail cím</label>
+                        <input type="email" matInput name="email" formControlName="email">
+                        <label>Szakterület</label>
+                        <input type="text" matInput name="firstName" formControlName="firstName">
+                        <label>Lakhely (Város)</label>
+                        <input type="text" matInput name="firstName" formControlName="firstName">
+                        <label>Jelszó</label>
+                        <input type="password" matInput name="firstName" formControlName="firstName">
+                        <button type="submit" mat-button class="primary-btn">Regisztrálok</button>
+                    </form>
+                </div>
             </mat-tab>
         </mat-tab-group>
       </div>
