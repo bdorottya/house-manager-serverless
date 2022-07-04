@@ -8,7 +8,7 @@
         <input type="password" matInput placeholder="Jelszó" name="password" formControlName="password">
       <button mat-button type="submit" class="primary-btn">Belépés</button>
     </form>
-    <button (click)="loadGoogleLogin()" class="google-btn" mat-button>Google Belépés</button>
+    <button id="google-auth" (click)="googleLogin()" mat-button>Google Belépés</button>
     <p class="small">Nincs még fiókod? <a routerLink='/signup'>Regisztráció</a> </p>
   </div>
 </section>

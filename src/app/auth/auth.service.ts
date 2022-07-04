@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ObjectId } from 'mongodb';
 import * as Realm from 'realm-web';
 import { UserDAO } from '../user/socialUser.model';
 
@@ -10,7 +9,9 @@ export class AuthService {
 
 
   app_id:string = "housemanager-zblhe";
-  loggedInUser: boolean = false;
+  admin_email:string = "admin@system.com";
+  admin_password:string = "admin1234";
+  loggedInUser?: boolean;
 
   constructor() {}
 
@@ -31,24 +32,31 @@ export class AuthService {
     }
   }
 
+  isLoggedIn(){
+    const app = new Realm.App({id: this.app_id});
+    let id = localStorage.getItem("userID");
+    if(id === app.currentUser?.id){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   async googleLogin(creds: Realm.Credentials){
     const app = new Realm.App({id: this.app_id});
-    try{
-      let user = await app.logIn(creds);
-      console.assert(user.id === app.currentUser?.id);
-      console.log(app.currentUser?.id);
-      this.loggedInUser = true;
-      localStorage.setItem("userID", app.currentUser?.id as string);
-      return user;
-    }catch(err){
-      console.error("failed to log in", err);
-      return 0;
-    }
+    app
+    .logIn(creds)
+    .then((user) => {
+      // The logIn() promise will not resolve until you call `handleAuthRedirect()`
+      // from the new window after the user has successfully authenticated.
+      console.log(`Logged in with id: ${user.id}`);
+    })
+    .catch((err) => console.error(err));
   }
 
   async signup(email: string, password: string, lastName: string, firstName: string){
     let app = new Realm.App({id: this.app_id});
-    let creds = Realm.Credentials.anonymous();
+    let creds = Realm.Credentials.emailPassword(this.admin_email, this.admin_password);
     let user = await app.logIn(creds);
     let mongo = app.currentUser?.mongoClient("mongodb-atlas");
     let collection = mongo?.db("home-maker").collection("users");    
@@ -77,7 +85,7 @@ export class AuthService {
   async logOut(){
     const app = new Realm.App({id: this.app_id});
     await app.currentUser?.logOut();
-    this.loggedInUser = false;
+    console.log(app.currentUser?.isLoggedIn);
     localStorage.removeItem("userID");
     localStorage.removeItem("userEmail");
   }

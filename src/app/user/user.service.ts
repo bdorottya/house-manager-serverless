@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ObjectId } from 'mongodb';
+import { UserDAO } from './socialUser.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,8 @@ export class UserService {
 
   constructor() { }
 
-  async getUser(userEmail:string){
+  async getUser(userEmail:string): Promise<UserDAO>{
     let app = new Realm.App({id: this.app_id});
-    return await app.currentUser?.callFunction("getUser", userEmail);
+    return await app.currentUser?.callFunction("getUser", userEmail) as UserDAO;
   }
 }

@@ -1,0 +1,66 @@
+.content{
+    padding: 2% 4%;
+    flex-direction: row;
+    .left-side{
+        width: 20%;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 1%;  
+        .rect{
+          width: 70%;
+          padding: 10% 0;
+          flex-direction: column;
+          align-items: center;  
+        } 
+        img{
+            border-radius: 100px;
+        }
+        .user-menu{
+            text-align: center;
+            p{
+                &:last-child{
+                    font-weight: 800;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    .right-side{
+        width: 75%;
+        align-items: center;
+        .tile{
+            width: 20%;
+            height: 20rem;
+            border-radius: 15px;
+            align-items: flex-end;
+            padding: 1% 1% 0 1%;
+            margin: 1%;
+            cursor: pointer;
+            h4{
+                font-size: 2rem;
+            }
+            &:hover{
+                animation-name: hover-animation;
+                animation-duration: 2s;
+                animation-timing-function: linear;
+                animation-fill-mode: forwards;
+            }
+        }
+        .green{
+            background-color: #21AE49;
+            color: white;
+        }
+        .white{
+            border: 1px solid #21AE49;
+            color: #21AE49;
+        }
+        .yellow{
+            background-color: #DCDF50;
+            color: white;
+        }
+    }
+}
+
+@keyframes hover-animation {
+        
+}

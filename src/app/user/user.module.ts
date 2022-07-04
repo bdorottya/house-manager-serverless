@@ -7,6 +7,7 @@ import { AfterFirstLoginComponent } from './after-first-login/after-first-login.
 
 import {MatStepperModule} from '@angular/material/stepper';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UploadAvatarComponent } from './upload-avatar/upload-avatar.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     OneUserComponent,
     UpdateDataComponent,
     UserDashboardComponent,
-    AfterFirstLoginComponent
+    AfterFirstLoginComponent,
+    UploadAvatarComponent
   ],
   imports: [
     CommonModule,

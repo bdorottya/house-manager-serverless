@@ -9,8 +9,8 @@
     <a routerLink="">Szolgáltatások</a>
   </span>
   <span class="flex-item">
-    <a *ngIf="!loggedInUser" routerLink="/login"><button class="secondary-btn" mat-button>Bejelentkezés</button></a>
-    <a *ngIf="!loggedInUser" routerLink="/signup"><button class="primary-btn" mat-button>Regisztráció</button></a>
-    <a *ngIf="loggedInUser" (click)="logOut()"><button class="primary-btn" mat-button>Kijelentkezés</button></a>
+    <a *ngIf="!this.authService.isLoggedIn()" routerLink="/login"><button class="secondary-btn" mat-button>Bejelentkezés</button></a>
+    <a *ngIf="!this.authService.isLoggedIn()" routerLink="/signup"><button class="primary-btn" mat-button>Regisztráció</button></a>
+    <a *ngIf="this.authService.isLoggedIn()" routerLink="/userhome"><img class="account" src="../../../assets/img/account.png"></a>
   </span>
 </div>

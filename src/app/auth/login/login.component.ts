@@ -25,30 +25,17 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    //@ts-ignore
-    window.onGoogleLibraryLoad = () => {
-      console.log('Google\'s One-tap sign in script loaded!');
-
-      // @ts-ignore
-      google.accounts.id.initialize({
-        // Ref: https://developers.google.com/identity/gsi/web/reference/js-reference#IdConfiguration
-        client_id: '383591626747-5e5o5sgr7rrvi9ml6431rdpfesuitkon.apps.googleusercontent.com',
-        callback: this.handleCredentialsResponse.bind(this), // Whatever function you want to trigger...
-        auto_select: true,
-        cancel_on_tap_outside: false
-      });
-  };
+    
+  
 }
 
-loadGoogleLogin(){
-  //@ts-ignore
-  google.accounts.id.initialize({
-    // Ref: https://developers.google.com/identity/gsi/web/reference/js-reference#IdConfiguration
-    client_id: '383591626747-5e5o5sgr7rrvi9ml6431rdpfesuitkon.apps.googleusercontent.com',
-    callback: this.handleCredentialsResponse.bind(this), // Whatever function you want to trigger...
-    auto_select: true,
-    cancel_on_tap_outside: false
-  });
+googleLogin(){
+  // The redirect URI should be on the same domain as this app and
+  // specified in the auth provider configuration.
+  const redirectUri = "https://localhost:4200/userhome";
+  const credentials = Realm.Credentials.google(redirectUri);
+  // Calling logIn() opens a Google authentication screen in a new window.
+  this.authService.googleLogin(credentials);
 }
 
   submitLogin(){
@@ -63,16 +50,5 @@ loadGoogleLogin(){
         }
       });
     }
-  }
-// @ts-ignore
-  handleCredentialsResponse(response){
-    const credentials = Realm.Credentials.google(response.credential);
-    let user = this.authService.googleLogin(credentials);
-    user.then(data => {
-      if(data){
-        
-        this.router.navigateByUrl('/userhome');
-      }
-    })
   }
 }
