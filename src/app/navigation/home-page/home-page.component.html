@@ -1,3 +1,32 @@
-<section class="search">
+<section class="search card flex">
+  <div class="left-side flex">
 
+    <div class="glass-box search-box card">
+      <form>
+        <input class="input city" type="text" placeholder="Város">
+        <div class="flex">
+          <div>
+            <input class="input" type="number" placeholder="Min nm" >
+            <input class="input" type="number" placeholder="Max nm">
+          </div>
+          <div>
+            <input class="input" type="number" placeholder="Min ár">
+            <input class="input" type="number" placeholder="Max ár">
+          </div>
+        </div>
+        <div class="radio flex">
+          <label for="Eladó">Eladó</label>
+          <input type="radio" value="elado" name="Eladó">
+          <label for="Kiadó">Kiadó</label>
+          <input type="radio" value="kiado" name="Kiadó">
+        </div>
+        <button mat-button class="primary-btn" type="submit">Keresés</button>
+      </form>
+    </div>
+  </div>
+  <div class="right-side flex">
+    <h3>Az álomotthon többé nem csak álom!</h3>
+    <h4>Keressen több száz azonnal elérhető kiadó és eladó ingatlan között.</h4>
+    <button class="primary-btn" mat-button>Szakembert keres?</button>
+  </div>
 </section>

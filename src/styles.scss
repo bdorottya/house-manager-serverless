@@ -33,12 +33,23 @@ $house-manager-serverless-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($house-manager-serverless-theme);
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 /* You can add global styles to this file, and also import other style files */
 
 
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: 'Montserrat', sans-serif; }
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 a{
   text-decoration: none;
