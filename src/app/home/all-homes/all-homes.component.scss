@@ -46,16 +46,64 @@
 
 .search-results{
   margin: 1% 4%;
+  padding: 2% 5%;
   .sorting{
     justify-content: flex-end;
     .icons{
       color: #21ae49;
     }
   }
-  .col{
-    flex-direction: column;
+.results{
+  flex-wrap: wrap;
+  .home-card{
+    padding: 0 0 2% 0;
+    background-color: rgba(220,220,220,0.3);
+    margin: 1%;
+    img{
+      border-radius: 30px;
+      width:17.5rem;
+    }
+    .tags{
+      justify-content: space-around;
+      span{
+        border-radius: 5px;
+        padding: 2% 5%;
+        margin: 3% 0;
+        &:first-child{
+          background-color: #6be316;
+          color: white;
+          font-weight: 500;
+        }
+        &:last-child{
+          background-color: #e97b48;
+          color: white;
+          font-weight: 600;
+        }
+      }
+    }
+    .price{
+      margin: 2% 5%;
+      justify-content: space-between;
+    }
+    .rooms{
+      justify-content: space-evenly;
+      align-items: center;
+      margin-bottom: 7%;
+      p{
+        max-width: 20%;
+        text-align: center;
+        font-size:13px;
+      }
+    }
+    .buttons{
+      justify-content: space-around;
+
+    }
+
   }
-  .row{
-    flex-direction: row;
-  }
+}
+}
+
+.wider{
+  width: 30rem;
 }

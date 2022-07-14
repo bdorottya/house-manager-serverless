@@ -62,6 +62,12 @@ a:hover{
 .flex{
   display: flex;
 }
+.col{
+  flex-direction: column;
+}
+.row{
+  flex-direction: row;
+}
 .grid{
   display: grid;
 }
