@@ -1,1 +1,79 @@
-<p>all-homes works!</p>
+<section class="search-filters card">
+  <form class="flex">
+    <div class="container" [ngClass]="open ? 'open' : 'close'">
+      <div class="flex first-line">
+        <div style="flex-grow:1">
+          <input type="text" class="input input-big" placeholder="Város, település..." name="city">
+          <select class="input input-small" placeholder="Kerület" name="city2">
+            <option value="" disabled selected hidden>Kerület</option>
+            <option *ngFor="let x of city2" value="{{x}}">{{x}}</option>
+          </select>
+          <input type="number" class="input input-extrasmall" placeholder="Min nm" name="sizeMin">
+          <input type="number" class="input input-extrasmall" placeholder="Max nm" name="sizeMax">
+          <input type="number" class="input input-extrasmall" placeholder="Min ár" name="priceMin">
+          <input type="number" class="input input-extrasmall" placeholder="Max ár" name="priceMax">
+        </div>
+        <div class="btns flex">
+          <button class="primary-btn" type="button" mat-button (click)="expand()" >Részletes keresés <mat-icon class="icon" [ngClass]="open ? 'transformed' : ''">expand_more</mat-icon></button>
+          <button type="submit" mat-button class="secondary-btn">Keresés <mat-icon>search</mat-icon></button>
+        </div>
+
+      </div>
+      <div class="hidden">
+        <select class="input input-medium" name="condition">
+          <option value="" disabled selected hidden>Ingatlan állapota</option>
+          <option *ngFor="let x of conditions" value="{{x}}">{{x}}</option>
+        </select>
+        <select class="input input-small" name="parking">
+          <option value="" disabled selected hidden>Parkolás</option>
+          <option *ngFor="let x of parking" value="{{x}}">{{x}}</option>
+        </select>
+        <select class="input input-medium" name="heating">
+          <option value="" disabled selected hidden>Fűtés típusa</option>
+          <option *ngFor="let x of heating" value="{{x}}">{{x}}</option>
+        </select>
+        <input type="number" class="input input-small" placeholder="Emelet" name="level">
+        <input type="number" class="input input-small" placeholder="Hálószoba db" name="bedroom">
+        <input type="number" class="input input-small" placeholder="Fürdőszoba db" name="bathroom">
+        <select class="input input-small" name="garden">
+          <option value="" disabled selected hidden>Kert</option>
+          <option *ngFor="let x of yesno" value="{{x.value}}">{{x.name}}</option>
+        </select>
+        <select class="input input-small" name="balcony">
+          <option value="" disabled selected hidden>Erkély</option>
+          <option *ngFor="let x of yesno" value="{{x.value}}">{{x.name}}</option>
+        </select>
+        <select class="input input-medium" name="attic">
+          <option value="" disabled selected hidden>Pince/Padlázs</option>
+          <option *ngFor="let x of yesno" value="{{x.value}}">{{x.name}}</option>
+        </select>
+        <select class="input input-medium" name="airConditioner">
+          <option value="" disabled selected hidden>Légkondicionáló</option>
+          <option *ngFor="let x of yesno" value="{{x.value}}">{{x.name}}</option>
+        </select>
+      </div>
+    </div>
+  </form>
+</section>
+<section class="search-results card">
+  <div class="sorting flex">
+    <select class="small-margin input-sorting" name="sorting">
+      <option value="" disabled selected hidden>Rendezés szempontja</option>
+      <option *ngFor="let x of sorting" value="{{x}}">{{x}}</option>
+    </select>
+    <mat-button-toggle-group [formControl]="viewMode" name="viewMode" class="small-margin">
+      <mat-button-toggle value="row"><mat-icon class="icons">view_headline</mat-icon></mat-button-toggle>
+      <mat-button-toggle value="col"><mat-icon class="icons">grid_view</mat-icon></mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <div class="results flex" [ngClass]="viewMode.value === 'row' ? 'col' : 'row' ">
+    <div class="home-card card">
+      <img class="icon-150" src="../../../assets/img/pexels-pixabay-259593.jpg">
+      <h3>25.000.000m Ft</h3>
+
+    </div>
+    <div class="home-card card"></div>
+    <div class="home-card card"></div>
+    <div class="home-card card"></div>
+  </div>
+</section>

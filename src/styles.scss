@@ -74,6 +74,25 @@ a:hover{
 .none{
   display: none;
 }
+.icon-25{
+  width: 25px;
+}
+.icon-50{
+  width: 45px;
+}
+.icon-100{
+  width: 100px;
+}
+.icon-150{
+  width: 150px;
+}
+
+.icon-20p{
+  width:20%;
+}
+.icon-100p{
+  width:100%;
+}
 
 .primary-btn, .secondary-btn{
   border-radius: 30px;
@@ -104,6 +123,35 @@ a:hover{
   padding: 15px 20px;
   box-shadow: 0 0 4px grey;
   border: none;
+  background-color: white;
+}
+.input-big{
+  width: 13.5rem;
+}
+
+.input-medium{
+  width: 13.5rem;
+}
+.input-small{
+  width: 8rem;
+}
+.input-extrasmall{
+  width: 3.5rem;
+}
+
+.input-sorting{
+  border-radius: 30px;
+  padding: 1%;
+  border: 1px solid #333;
+  background: white;
+  color: grey;
+}
+
+.small-margin{
+  margin: 1%;
+}
+.medium-margin{
+  margin: 3%;
 }
 
 

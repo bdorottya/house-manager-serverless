@@ -16,6 +16,13 @@ import { ExpertDashboardComponent } from './expert/expert-dashboard/expert-dashb
 import { HttpClientModule } from '@angular/common/http';
 import {MatMenuModule} from '@angular/material/menu';
 import { HomePageComponent } from './navigation/home-page/home-page.component';
+import {MatRadioModule} from '@angular/material/radio';
+import { CommonModule } from '@angular/common';
+import { AllHomesComponent } from './home/all-homes/all-homes.component';
+import { HomeModule } from './home/home.module';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+
 
 @NgModule({
   declarations: [
@@ -25,9 +32,11 @@ import { HomePageComponent } from './navigation/home-page/home-page.component';
     OneExpertComponent,
     ExpertDashboardComponent,
     HomePageComponent,
+    AllHomesComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     AuthModule,
@@ -36,7 +45,11 @@ import { HomePageComponent } from './navigation/home-page/home-page.component';
     MatIconModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MatMenuModule
+    MatMenuModule,
+    MatRadioModule,
+    HomeModule,
+    MatExpansionModule,
+    MatButtonToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
