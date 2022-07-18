@@ -1,17 +1,21 @@
+<section class="card container">
+
 <form [formGroup]="phoneForm" (ngSubmit)="submitForm()">
 <mat-stepper [linear]="isLinear" #stepper>
   <mat-step label="Telefonszám megadás">
-    <div class="content">
+    <div class="content flex col">
       <h2>Kérjük add meg a telefonszámod!</h2>
-        <input type="phone" formControlName="phone" name="phone">
-      <button mat-button matStepperNext>Kihagyás</button>
+      <input class="input" type="phone" formControlName="phone" name="phone" placeholder="+36 1 222 3333">
+      <button mat-button class="secondary-btn" matStepperNext>Kihagyás</button>
     </div>
   </mat-step>
   <mat-step  label="Töltsd fel a profilképed!">
-    <div class="content">
+    <div class="content flex col">
+      <img [src]="this.image">
       <input type="file" formControlName="avatar" name="avatar">
+      <button mat-button matStepperNext class="secondary-btn" >Kihagyás</button>
     </div>
-    <button mat-button matStepperNext type="submit">Kihagyás</button>
+
   </mat-step>
   <mat-step label="Regisztráció befejezése">
     <div class="content">
@@ -24,3 +28,4 @@
 </mat-stepper>
 </form>
 
+</section>

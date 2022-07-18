@@ -17,6 +17,8 @@ export class AfterFirstLoginComponent implements OnInit {
   firstName:string = "";
   lastName:string = "";
 
+  image:string = "../../../assets/img/no-img.jpg";
+
   phoneForm = new FormGroup({
     phone: new FormControl(''),
     avatar: new FormControl('')

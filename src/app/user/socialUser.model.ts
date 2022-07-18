@@ -19,6 +19,7 @@ export class UserDAO{
   email: string;
   firstName: string;
   lastName: string;
+  phone!:number;
 
 
   constructor(email: string, firstName: string, lastName:string){

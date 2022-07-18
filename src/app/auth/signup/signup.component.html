@@ -1,7 +1,7 @@
 <section>
     <div class="box card">
         <h1>Regisztráció</h1>
-        <mat-tab-group>
+        <mat-tab-group mat-align-tabs="center">
             <mat-tab label="Felhasználóként regisztrálok">
                 <div class="flex content">
                     <form [formGroup]="signupForm" (ngSubmit)="submitSignup()" class="signup-form flex">
@@ -21,20 +21,22 @@
                 </div>
             </mat-tab>
             <mat-tab label="Szakemberként regisztrálok">
-                <div class="flex expert-signup">
-                    <form [formGroup]="expertForm" (ngSubmit)="submitExpert">
+                <div class="flex content">
+                    <form [formGroup]="expertForm" (ngSubmit)="submitExpert" class="signup-form flex">
                         <label>Vezetéknév</label>
-                        <input type="text" matInput name="firstName" formControlName="firstName">
+                        <input class="input" type="text" matInput name="firstName" formControlName="firstName">
                         <label>Keresztnév</label>
-                        <input type="text" matInput name="lastName" formControlName="lastName">
+                        <input class="input" type="text" matInput name="lastName" formControlName="lastName">
                         <label>E-mail cím</label>
-                        <input type="email" matInput name="email" formControlName="email">
+                        <input class="input" type="email" matInput name="email" formControlName="email">
                         <label>Szakterület</label>
-                        <input type="text" matInput name="firstName" formControlName="firstName">
+                        <input class="input" type="text" matInput name="field" formControlName="field">
                         <label>Lakhely (Város)</label>
-                        <input type="text" matInput name="firstName" formControlName="firstName">
+                        <input class="input" type="text" matInput name="city" formControlName="city">
                         <label>Jelszó</label>
-                        <input type="password" matInput name="firstName" formControlName="firstName">
+                        <input class="input" type="password" matInput name="password" formControlName="password">
+                        <label>Jelszó megerősítése</label>
+                        <input class="input" type="password" matInput name="passwordAgain" formControlName="passwordAgain">
                         <button type="submit" mat-button class="primary-btn">Regisztrálok</button>
                     </form>
                 </div>

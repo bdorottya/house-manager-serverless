@@ -19,7 +19,13 @@ export class SignupComponent implements OnInit {
   });
 
   expertForm = new FormGroup({
-    
+    email: new FormControl(''),
+    password: new FormControl(''),
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    passwordAgain: new FormControl(''),
+    field: new FormControl(''),
+    city: new FormControl('')
   })
 
   constructor(private authService: AuthService, private router: Router) { }

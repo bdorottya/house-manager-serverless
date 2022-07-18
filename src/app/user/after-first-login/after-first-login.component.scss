@@ -1,0 +1,20 @@
+.container{
+  margin: 2% 10%;
+  padding: 2%;
+  .content{
+    width: 100%;
+    justify-content: centers;
+    align-items: center;
+    h2{
+      text-align: center;
+    }
+    input{
+      margin: 3% 0;
+      width: 25%;
+    }
+    button{
+      padding: 1% 3%;
+      cursor: pointer;
+    }
+  }
+}

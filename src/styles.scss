@@ -68,6 +68,12 @@ a:hover{
 .row{
   flex-direction: row;
 }
+.center-justify{
+  justify-content: center;
+}
+.align-center{
+  align-items: center;
+}
 .grid{
   display: grid;
 }
@@ -109,12 +115,14 @@ a:hover{
 .primary-btn{
   background-color: #21AE49;
   color: white;
+  border: none;
 }
 
 .secondary-btn{
   background-color: white;
   color: black;
   box-shadow: 0 0 4px #21AE49;
+  border:none;
 }
 
 .card{

@@ -22,6 +22,11 @@ import { AllHomesComponent } from './home/all-homes/all-homes.component';
 import { HomeModule } from './home/home.module';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { FooterComponent } from './navigation/footer/footer.component';
+import { PleaseSignInComponent } from './navigation/please-sign-in/please-sign-in.component';
+import { environment } from "../environments/environment";
+
+
 
 
 @NgModule({
@@ -32,7 +37,10 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     OneExpertComponent,
     ExpertDashboardComponent,
     HomePageComponent,
-    AllHomesComponent
+    AllHomesComponent,
+    FooterComponent,
+    PleaseSignInComponent,
+
   ],
   imports: [
     BrowserModule,

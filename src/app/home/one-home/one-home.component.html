@@ -1,1 +1,63 @@
-<p>one-home works!</p>
+<section class="flex images">
+  <div class="card gallery-container">
+    <img src="../../../assets/img/pexels-pixabay-259593.jpg">
+  </div>
+  <div class="card flex col uploader-data">
+    <h2>Feltöltő adatai</h2>
+    <img src="../../../assets/img/ingatlanos.png">
+    <h4>{{uploader.lastName}} {{uploader.firstName}}</h4>
+    <h4>Tulajdonos</h4>
+    <div class="contact">
+      <p class="flex col align-center"><mat-icon>phone</mat-icon><span>{{uploader.phone}}</span></p>
+      <p class="flex col align-center"><mat-icon>email</mat-icon><span>{{uploader.email}}</span></p>
+    </div>
+    <button mat-button class="primary-btn">Profil megtekintése</button>
+    <button mat-button class="secondary-btn">Üzenet küldése <mat-icon style="width:7px">message</mat-icon></button>
+  </div>
+</section>
+<section class="card flex home-data">
+  <div class="main-data">
+    <h3>{{home.type | typePipe }} {{home.buildingType}}Tégla lakás</h3>
+    <p>Utca: <span>{{home.street}}</span></p>
+    <p>Ár: <span>{{home.price}}</span></p>
+    <p>Méret: <span>{{home.size}} nm</span></p>
+    <p>Ingatlan állapota: <span>{{home.condition}}</span></p>
+    <p>Fűtés típusa: <span>{{home.heating}}</span></p>
+    <p>Parkolás: <span>{{home.parking}}</span></p>
+    <p>Épület szintjei: <span>{{home.levelsInBuilding}}</span></p>
+    <p>Emelet: <span>{{home.level}}</span></p>
+  </div>
+  <div class="additional-data">
+    <h4>Város: <span>{{home.city}}</span><span *ngIf="home.city2">, {{home.city2}}  Kerület</span></h4>
+    <p>Hálószobák száma: <span>{{home.bedroom}}</span></p>
+    <p>Fürdőszobák száma: <span>{{home.bathroom}}</span></p>
+    <p>Lift: <span>{{home.elevator | yesOrNo}}</span></p>
+    <p>Erkély: <span>{{home.balcony | yesOrNo}}</span></p>
+    <p>Kert: <span>{{home.garden | yesOrNo}}</span></p>
+    <p>Padlás/Pince: <span>{{home.attic | yesOrNo}}</span></p>
+    <p>Klíma: <span>{{home.airConditioner | yesOrNo}}</span></p>
+    <p>Dohányzás megenegedett: <span>{{home.smoke | yesOrNo}}</span></p>
+    <p>Kisállat megengedett: <span>{{home.pet | yesOrNo}}</span></p>
+  </div>
+  <div class="recom flex col">
+    <h4>Vegy igénybe szolgáltatásainkat!</h4>
+    <div class="service-card card flex">
+      <p>Kérje ingatlanos segítségét.</p>
+      <button mat-button class="primary-btn">Bővebben</button>
+    </div>
+    <div class="service-card card flex">
+      <p>Bérleti szerződés? Keresse jogászainkat.</p>
+      <button mat-button class="primary-btn">Bővebben</button>
+    </div>
+    <div class="service-card card flex">
+      <p>Költöztetési ajánlataink</p>
+      <button mat-button class="primary-btn">Bővebben</button>
+    </div>
+  </div>
+</section>
+<section class="similar-homes card">
+  <h4>Hasonló ingatlanok</h4>
+  <div class="recom-container flex">
+
+  </div>
+</section>
