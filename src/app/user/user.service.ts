@@ -41,7 +41,7 @@ export class UserService {
   async updateUserAfterHomeUpload(homeId:string){
     let app = new Realm.App({id: this.app_id});
     let user = app.currentUser;
-    let userId = localStorage.getItem("UserID") as string;
+    let userId = localStorage.getItem("userID") as string;
     console.log("userId: ", userId);
     if(user){
       let res = user.functions.callFunction("updateUserAfterHomeUpload",[userId,homeId]);
