@@ -18,7 +18,7 @@ export class OneHomeComponent implements OnInit {
   app_id:string = "housemanager-zblhe";
 
   home:HomeDAO = new HomeDAO();
-  uploader:UserDAO = new UserDAO("", "","");
+  uploader:UserDAO = new UserDAO("", "","", new Date());
 
   constructor(private httpClient: HttpClient, private router: ActivatedRoute) { }
 
@@ -36,7 +36,7 @@ export class OneHomeComponent implements OnInit {
       if(data){
         console.log(data);
         this.home = data;
-        let uploaderId = this.home.uploader as string;
+        let uploaderId = this.home.uploader as unknown as string;
         let params = new HttpParams();
         params = params.append("id", uploaderId);
         let uploaderStream = this.httpClient.get<UserDAO>(this.baseUrlUploader, {params: params});

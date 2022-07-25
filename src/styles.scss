@@ -168,4 +168,12 @@ a:hover{
   margin: 3%;
 }
 
+.card-hover-effect{
+  transition: .2s ease all;
+  &:hover{
+    box-shadow: 0 0 15px grey;
+    transform:scale(1.05);
+  }
+}
+
 

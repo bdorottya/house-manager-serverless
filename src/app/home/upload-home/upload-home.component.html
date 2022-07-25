@@ -1,1 +1,126 @@
-<p>upload-home works!</p>
+<div class="form-container">
+  <form [formGroup]="uploadHome" (ngSubmit)="submitUpload()">
+  <mat-accordion>
+    <mat-expansion-panel multi>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Típus, cím</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="expansion-content flex col">
+        <label for="type">Hirdetés típusa</label>
+        <mat-radio-group name="type" formControlName="type"  [(ngModel)]="homeType">
+          <mat-radio-button value="elado">
+            Eladó
+          </mat-radio-button>
+          <mat-radio-button value="kiado">
+            Kiadó
+          </mat-radio-button>
+        </mat-radio-group>
+        <label for="city">Város</label>
+        <input name="city" formControlName="city" type="string" class="input" [(ngModel)]="city">
+        <label for="city2" *ngIf="city === 'Budapest'">Kerület</label>
+        <select class="input" name="city2" formControlName="city2" *ngIf="city === 'Budapest'">
+          <option *ngFor="let x of city2" value="{{x}}">{{x}}</option>
+        </select>
+        <label for="street">Utca</label>
+        <input type="string" name="street" class="input" formControlName="street">
+        <label for="buildingType">Ingatlan típusa</label>
+        <select class="input" name="buildingType" formControlName="buildingType">
+          <option *ngFor="let x of buildingType" value="{{x}}">{{x}}</option>
+        </select>
+        <label for="condition">Ingatlan állapota</label>
+        <select class="input" name="condition" formControlName="condition">
+          <option *ngFor="let x of condition" value="{{x}}">{{x}}</option>
+        </select>
+        <label for="levelsInBuilding">Épület szintjei</label>
+        <input type="number" class="input" name="levelsInBuilding" formControlName="levelsInBuilding">
+        <label for="level">Ingatlan emelete</label>
+        <input class="input" type="number" name="level" formControlName="level">
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Méret, szobák száma</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="expansion-content flex col">
+        <label for="size">Ingatlan mérete</label>
+        <input type="number" class="input" name="size" formControlName="size"><span>nm</span>
+        <label for="size">Hálószobák száma</label>
+        <input type="number" class="input" name="bedroom" formControlName="bedroom">
+        <label for="size">Fürdőszobák száma</label>
+        <input type="number" class="input" name="bathroom" formControlName="bathroom">
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>További adatok</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="expansion-content flex col">
+        <label for="heatingType">Fűtés típusa</label>
+        <select class="input" name="heatingType" formControlName="heatingType">
+          <option *ngFor="let x of heating" value="{{x}}">{{x}}</option>
+        </select>
+        <label for="parking">Parkolás</label>
+        <select class="input" name="parking" formControlName="parking">
+          <option *ngFor="let x of parking" value="{{x}}">{{x}}</option>
+        </select>
+        <label for="elevator">Lift</label>
+        <mat-radio-group name="elevator" formControlName="elevator">
+          <mat-radio-button *ngFor="let x of yesno" [value]="x.value">
+            {{x.name}}
+          </mat-radio-button>
+        </mat-radio-group>
+        <label for="attic">Pince/Padlázs</label>
+        <mat-radio-group name="attic" formControlName="attic">
+          <mat-radio-button *ngFor="let x of yesno" [value]="x.value">
+            {{x.name}}
+          </mat-radio-button>
+        </mat-radio-group>
+        <label for="balcony">Erkély</label>
+        <mat-radio-group name="balcony" formControlName="balcony">
+          <mat-radio-button *ngFor="let x of yesno" [value]="x.value">
+            {{x.name}}
+          </mat-radio-button>
+        </mat-radio-group>
+        <label for="garden">Kert</label>
+        <mat-radio-group name="garden" formControlName="garden">
+        <mat-radio-button *ngFor="let x of yesno" [value]="x.value">
+          {{x.name}}
+        </mat-radio-button>
+      </mat-radio-group>
+        <label for="airCond">Légkondicionáló</label>
+        <mat-radio-group name="airCCond" formControlName="airCond">
+        <mat-radio-button *ngFor="let x of yesno" [value]="x.value">
+          {{x.name}}
+        </mat-radio-button>
+      </mat-radio-group>
+        <label for="smoke" *ngIf="homeType==='kiado'">Dohányzás megengedett</label>
+        <mat-radio-group name="smoke" formControlName="smoke">
+        <mat-radio-button *ngFor="let x of yesno" [value]="x.value">
+          {{x.name}}
+        </mat-radio-button>
+        </mat-radio-group>
+        <label for="pet" *ngIf="homeType==='kiado'">Kisállat megengedett</label>
+        <mat-radio-group name="pet" formControlName="pet">
+        <mat-radio-button *ngFor="let x of yesno" [value]="x.value">
+            {{x.name}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Ár, képek, leírás</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="expansion-content flex col">
+        <label for="price">Ár</label>
+        <input type="number" class="input" name="price" formControlName="price"><span *ngIf="homeType==='elado'">Millió Ft</span><span *ngIf="homeType==='kiado'">Ft / hónap</span>
+        <label for="description">Leírás</label>
+        <input type="textarea" class="input" name="description" formControlName="description">
+        <label for="images">Képek</label>
+        <input type="file" multiple="true" name="images" formControlName="images">
+        <button type="submit" mat-button class="primary-btn">Feltöltés</button>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  </form>
+</div>

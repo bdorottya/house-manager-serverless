@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "housemanager-597f6": {
+      "hosting": {
+        "house-manager-serverless": [
+          "housemanager-597f6"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "housemanager-597f6"
+  }
+}

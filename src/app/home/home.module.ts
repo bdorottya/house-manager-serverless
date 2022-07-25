@@ -9,6 +9,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatIconModule} from '@angular/material/icon';
 import { TypePipe } from '../pipes/type.pipe';
 import { YesNoPipe } from '../pipes/yesno.pipe';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 @NgModule({
@@ -23,7 +25,11 @@ import { YesNoPipe } from '../pipes/yesno.pipe';
     BrowserModule,
     MatExpansionModule,
     MatIconModule,
-
+    ReactiveFormsModule,
+    MatRadioModule
+  ],
+  exports: [
+    UploadHomeComponent
   ]
 })
 export class HomeModule { }

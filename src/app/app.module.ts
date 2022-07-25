@@ -25,6 +25,11 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { FooterComponent } from './navigation/footer/footer.component';
 import { PleaseSignInComponent } from './navigation/please-sign-in/please-sign-in.component';
 import { environment } from "../environments/environment";
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { provideStorage,getStorage } from '@angular/fire/storage';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
 
 
@@ -39,7 +44,7 @@ import { environment } from "../environments/environment";
     HomePageComponent,
     AllHomesComponent,
     FooterComponent,
-    PleaseSignInComponent,
+    PleaseSignInComponent
 
   ],
   imports: [
@@ -57,9 +62,15 @@ import { environment } from "../environments/environment";
     MatRadioModule,
     HomeModule,
     MatExpansionModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage())
   ],
-  providers: [],
+  providers: [
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

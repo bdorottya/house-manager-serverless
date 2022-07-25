@@ -103,6 +103,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "house-manager-serverless:build:production",
+            "firebaseProject": "housemanager-597f6",
+            "firebaseHostingSite": "housemanager-597f6"
+          }
         }
       }
     }

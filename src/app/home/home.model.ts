@@ -1,4 +1,5 @@
 import { ObjectId } from "mongodb";
+import { BSON } from "realm-web";
 
 export interface Home{
   city: string;
@@ -23,6 +24,7 @@ export interface Home{
   smoke:boolean;
   type:string;
   images:string[];
+  description: string;
   _saved:number;
   _viewed:number;
   uploader:string;
@@ -39,6 +41,7 @@ export class HomeDAO {
   price!:number;
   size!:number;
   condition!:string;
+  description?:string;
   heating!:string;
   level?:string;
   parking!:string;
@@ -52,5 +55,7 @@ export class HomeDAO {
   pet!:boolean;
   smoke!:boolean;
   type!:string;
-  uploader?:string;
+  uploader!:BSON.ObjectID;
+  uploadDate?:Date;
+  images?:string[];
 }

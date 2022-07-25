@@ -1,27 +1,56 @@
-<div class="content flex">
-    <div class="left-side card flex">
-        <div class="rect card flex">
-            <img src="../../../assets/Logo/GreenWhiteLogo.png">
-            <h4>Üdv, {{user?.firstName}} {{user?.lastName}}!</h4>
+<section class="card flex user-home">
+  <mat-spinner *ngIf="this.isLoading">
+    </mat-spinner>
+  <div class="flex user-info col" *ngIf="!this.isLoading">
+    <h3>Üdv, {{user?.lastName}}!</h3>
+    <img [src]="avatarImage">
+    <button mat-button class="secondary-btn" (click)="logOut()">Kijelentkezés</button>
+  </div>
+  <div class="user-menu" *ngIf="!this.isLoading">
+    <mat-tab-group headerPosition="above">
+      <mat-tab label="Feltöltött ingatlanok">
+        <div class="tab-content">
+          <div *ngIf="!this.user?._uploadedHomes">
+            <h3>Még nem töltöttél fel ingatlant!</h3>
+          </div>
+          <div *ngIf="this.user?._uploadedHomes" class="my-homes">
+            <div class="home-container">
+              <img>
+              <h3>Budapest, XII kerület</h3>
+              <h4>13000000 Ft.</h4>
+              <span>Megtekintések száma:</span>
+              <span>Mentések száma:</span>
+              <button>Szerkesztés</button>
+            </div>
+          </div>
         </div>
-        <div class="user-menu">
-            <p>Adataim módostása</p>
-            <p>Profilkép feltöltése</p>
-            <p (click)="logOut()">Kijelentkezés</p>
+      </mat-tab>
+      <mat-tab label="Mentett Ingatlanok">
+        <div class="tab-content">
+          <div *ngIf="!this.user?._savedHomes">
+            <h3>Még nem mentettél el ingatlant!</h3>
+          </div>
+          <div *ngIf="this.user?._savedHomes" class="saved-homes">
+            <div class="home-container">
+              <img>
+              <h3>Budapest, XII kerület</h3>
+              <h4>13000000 Ft.</h4>
+              <span>Megtekintések száma:</span>
+              <span>Mentések száma:</span>
+              <button>Szerkesztés</button>
+            </div>
+          </div>
         </div>
-    </div>
-    <div class="right-side card flex">
-        <a routerLink="/savedhomes" class="tile green flex"><div>
-            <h4>Mentett Ingatlanok</h4>
-        </div></a>
-        <a routerLink="/" class="tile white flex"><div>
-            <h4>Feltöltött Ingatlanok</h4>
-        </div></a>
-        <a routerLink="/" class="tile green flex"><div>
-            <h4>Üzenetek</h4>
-        </div></a>
-        <a routerLink="/" class="tile yellow flex"><div>
-            <h4>Mentett szakemberek</h4>
-        </div></a>
-    </div>
-</div>
+      </mat-tab>
+      <mat-tab label="Ingatlan Feltöltése">
+        <div class="tab-content">
+          <app-upload-home></app-upload-home>
+        </div>
+      </mat-tab>
+      <mat-tab label="Mentett Szakemberek"> Content 2 </mat-tab>
+      <mat-tab label="Üzeneteim"> Content 3 </mat-tab>
+      <mat-tab label="Adataim módosítása"> Content 3 </mat-tab>
+
+    </mat-tab-group>
+  </div>
+</section>

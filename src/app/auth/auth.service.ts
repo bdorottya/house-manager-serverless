@@ -54,15 +54,15 @@ export class AuthService {
     .catch((err) => console.error(err));
   }
 
-  async signup(email: string, password: string, lastName: string, firstName: string){
+  async signup(email: string, password: string, lastName: string, firstName: string, date: Date){
     let app = new Realm.App({id: this.app_id});
     let creds = Realm.Credentials.emailPassword(this.admin_email, this.admin_password);
     let user = await app.logIn(creds);
     let mongo = app.currentUser?.mongoClient("mongodb-atlas");
-    let collection = mongo?.db("home-maker").collection("users");    
+    let collection = mongo?.db("home-maker").collection("users");
     try{
       await app.emailPasswordAuth.registerUser({ email, password });
-      let user = new UserDAO(email, firstName, lastName);
+      let user = new UserDAO(email, firstName, lastName, date);
       try {
         let res = await collection?.insertOne(user);
         if(res){
