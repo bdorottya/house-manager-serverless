@@ -8,7 +8,7 @@
     <a routerLink="/allexperts">Szakemberek</a>
     <a routerLink="">Szolgáltatások</a>
   </span>
-  <span class="flex-item">
+  <span class="flex-item hide-small">
     <a *ngIf="!this.authService.isLoggedIn()" routerLink="/login"><button class="secondary-btn" mat-button>Bejelentkezés</button></a>
     <a *ngIf="!this.authService.isLoggedIn()" routerLink="/signup"><button class="primary-btn" mat-button>Regisztráció</button></a>
     <a *ngIf="this.authService.isLoggedIn()" routerLink="/userhome"><button class="primary-btn" mat-button>Profilom</button></a>

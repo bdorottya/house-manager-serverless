@@ -7,7 +7,10 @@
   padding: 0.5%;
   justify-content: space-between;
   align-items: center;
-  font-size: 15px;
+  font-size: 0.9rem;
+  .small{
+    display: none;
+  }
 
   .flex-item{
     &:first-child{
@@ -18,7 +21,7 @@
       margin-right: 2%;
       button{
         padding: 2px 24px;
-        margin: 0 10px;
+        margin: 0 2%;
         border-radius: 30px;
         font-weight: 400;
       }
@@ -47,8 +50,14 @@
     .account{
       width: 50px;
     }
-
   }
 }
 
+@media only screen and (max-width: 1000px){
+  .nav-bar{
+    .hide-small{
+      display: none;
+    }
+  }
+}
 

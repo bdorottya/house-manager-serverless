@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { BSON } from 'realm-web';
@@ -12,9 +13,13 @@ import { HomeService } from '../home.service';
 })
 export class UploadHomeComponent implements OnInit {
 
-  constructor(private homeService: HomeService) { }
+  constructor(private homeService: HomeService, private httpClient: HttpClient) { }
+
+  baseUrl = "https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/addUploadedHome"
+
   homeType!:string;
   city!:string;
+  selectedFiles!: FileList;
 
   uploadHome = new FormGroup({
     //first expansion - cím, típus
@@ -60,6 +65,10 @@ export class UploadHomeComponent implements OnInit {
     this.heating = HomeArray.heating;
     this.parking = HomeArray.parking;
     this.yesno = HomeArray.yesno;
+  }
+
+  uploadFiles(event:any){
+    this.selectedFiles = event.target.files;
   }
 
   submitUpload(){
@@ -114,6 +123,9 @@ export class UploadHomeComponent implements OnInit {
     home.uploader = new BSON.ObjectId(id);
 
     let res = this.homeService.uploadHome(home);
+    res.then(() => {
+      console.log("done");
+    })
 
   }
 

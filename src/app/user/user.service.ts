@@ -13,6 +13,7 @@ export class UserService {
   admin_email:string = "admin@system.com";
   admin_password:string = "admin1234";
   base_url:string = "https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/updateUser";
+  addhome_url:string = "https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/addUploadedHome";
   image:string = "";
 
 
@@ -39,19 +40,12 @@ export class UserService {
   }
 
   async updateUserAfterHomeUpload(homeId:string){
-    let app = new Realm.App({id: this.app_id});
-    let user = app.currentUser;
     let userId = localStorage.getItem("UserID") as string;
     console.log("userId: ", userId);
-    if(user){
-      let res = user.functions.callFunction("updateUserAfterHomeUpload",[userId,homeId]);
-      res.then(r => {
-        console.log("updateUserben");
-        console.log(r);
-      })
-    }
-
-
+    let res = this.httpClient.post(this.addhome_url, {userId: userId, homeId: homeId});
+    res.subscribe(data => {
+      console.log(data);
+    })
   }
 
 

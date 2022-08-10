@@ -11,6 +11,7 @@ import { TypePipe } from '../pipes/type.pipe';
 import { YesNoPipe } from '../pipes/yesno.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {MatRadioModule} from '@angular/material/radio';
     MatExpansionModule,
     MatIconModule,
     ReactiveFormsModule,
-    MatRadioModule
+    MatRadioModule,
+    MatDialogModule
   ],
   exports: [
     UploadHomeComponent

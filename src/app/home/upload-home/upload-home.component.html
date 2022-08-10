@@ -117,7 +117,7 @@
         <label for="description">Leírás</label>
         <input type="textarea" class="input" name="description" formControlName="description">
         <label for="images">Képek</label>
-        <input type="file" multiple="true" name="images" formControlName="images">
+        <input type="file" multiple name="images" formControlName="images" (change)="uploadFiles($event)">
         <button type="submit" mat-button class="primary-btn">Feltöltés</button>
       </div>
     </mat-expansion-panel>
