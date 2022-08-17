@@ -15,6 +15,7 @@
       <img [src]="this.image">
       <input type="file" class="input" formControlName="avatar" name="avatar" (change)="onFileChanged($event)">
       <button *ngIf="this.file" type="button" mat-button class="primary-btn" (click)="uploadImageToStorage(this.file)" matStepperNext>Feltöltés</button>
+      <div *ngIf="this.uploadDone"><p>Sikeres feltöltés!</p></div>
       <button *ngIf="!this.file" mat-button matStepperNext type="button" class="secondary-btn" >Kihagyás</button>
     </div>
 

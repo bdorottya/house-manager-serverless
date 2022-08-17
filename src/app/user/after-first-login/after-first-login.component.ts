@@ -36,6 +36,7 @@ export class AfterFirstLoginComponent implements OnInit {
   fb:any;
   file?:FileUpload;
 
+  uploadDone:boolean = false;
   constructor(private httpClient: HttpClient, private router: ActivatedRoute, private routerr: Router, private storage: AngularFireStorage, private userService: UserService) { }
 
   ngOnInit(): void {
@@ -76,7 +77,11 @@ export class AfterFirstLoginComponent implements OnInit {
         console.log(file.url);
       });
     })
-    ).subscribe();
+    ).subscribe(data => {
+      if(data){
+        this.uploadDone = true;
+      }
+    });
   }
 
   submitForm(){
