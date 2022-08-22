@@ -12,29 +12,14 @@
     display: none;
   }
 
+  
+
   .flex-item{
     &:first-child{
       margin-left: 1%;
       margin-top: 5px;
     }
-    &:last-child{
-      margin-right: 2%;
-      button{
-        padding: 2px 24px;
-        margin: 0 2%;
-        border-radius: 30px;
-        font-weight: 400;
-      }
-      .login{
-        background-color: none;
-        box-shadow: 0 0 4px #21AE49;
-
-      }
-      .signup{
-        background-color: #21AE49;
-        color: white;
-      }
-    }
+    
     &:nth-child(2){
       a{
         padding: 0 24px;
@@ -51,12 +36,47 @@
       width: 50px;
     }
   }
+  .login-buttons{
+    width:300px;
+    button{
+      padding: 2px 22px;
+      margin: 0 2%;
+      border-radius: 30px;
+      font-weight: 400;
+    }
+    .login{
+      background-color: none;
+      box-shadow: 0 0 4px #21AE49;
+    }
+    .signup{
+      background-color: #21AE49;
+      color: white;
+    }
+  }
 }
 
 @media only screen and (max-width: 1000px){
   .nav-bar{
     .hide-small{
       display: none;
+    }
+    .small{
+      display: block;
+    }
+
+    .mobile-login{
+      margin-right: 3%;
+      width: auto;
+      align-self: center;
+      mat-icon, button>mat-icon{
+        color: #21AE49;
+      }
+      button{
+        border-radius: 30px;
+      }
+    }
+    .green-logo{
+      width: 30px;
     }
   }
 }

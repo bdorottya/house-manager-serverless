@@ -1,16 +1,43 @@
 <div class="nav-bar flex">
   <span class="flex-item">
     <a routerLink="/">
-    <img src="../../../assets/Logo/TextLogo_Black.png"></a>
+    <img class="small green-logo" src="../../../assets/Logo/GreenWhiteLogo.png">
+    <img class="hide-small" src="../../../assets/Logo/TextLogo_Black.png"></a>
   </span>
-  <span class="flex-item">
+  <span class="flex-item hide-small">
     <a routerLink="/allhomes">Ingatlanok</a>
     <a routerLink="/allexperts">Szakemberek</a>
     <a routerLink="">Szolgáltatások</a>
   </span>
-  <span class="flex-item hide-small">
+  <span class="flex-item hide-small login-buttons">
     <a *ngIf="!this.authService.isLoggedIn()" routerLink="/login"><button class="secondary-btn" mat-button>Bejelentkezés</button></a>
     <a *ngIf="!this.authService.isLoggedIn()" routerLink="/signup"><button class="primary-btn" mat-button>Regisztráció</button></a>
     <a *ngIf="this.authService.isLoggedIn()" routerLink="/userhome"><button class="primary-btn" mat-button>Profilom</button></a>
+  </span>
+  <span class="flex-item small mobile-login">
+    <button *ngIf="!this.authService.isLoggedIn()" mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
+    <mat-menu #menu="matMenu" xPosition="before" >
+      <button mat-menu-item>
+        <mat-icon>maps_home_work</mat-icon>
+        <span routerLink="/allhomes">Ingatlanok</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>engineering</mat-icon>
+        <span routerLink="/allexperts">Szakemberek</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>info</mat-icon>
+        <span routerLink="">Szolgáltatások</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>person</mat-icon>
+        <span routerLink="/login">Bejelentkezés</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>key</mat-icon>
+        <span routerLink="/signup">Regisztráció</span>
+      </button>
+    </mat-menu>
+    <button *ngIf="this.authService.isLoggedIn()" mat-icon-button><mat-icon routerLink="/userhome">account_circle</mat-icon></button>
   </span>
 </div>

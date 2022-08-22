@@ -32,7 +32,8 @@
       }
     }
     .radio{
-      flex-direction: column;
+      flex-direction: row;
+      justify-content: space-evenly;
       mat-radio-button{
         margin: 3% 0;
         color: white;
@@ -43,7 +44,6 @@
     button{
       float: right;
       border-radius: 30px;
-      margin-top: -20%;
       padding: 2% 10%;
     }
   }
@@ -68,6 +68,12 @@
     }
   }
 
+}
+
+.expert{
+  margin: 2% 4%;
+  padding: 0;
+  
 }
 
 .recom{

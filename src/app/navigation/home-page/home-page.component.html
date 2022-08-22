@@ -1,22 +1,23 @@
 <section class="search card flex">
   <div class="left-side flex">
     <div class="glass-box search-box card flex">
-      <form>
-        <input class="input city" type="text" placeholder="Város">
-        <div class="flex numbers">
-          <div class="flex">
-            <input class="input" type="number" placeholder="Min nm" >
-            <input class="input" type="number" placeholder="Max nm">
-          </div>
-          <div class="flex">
-            <input class="input" type="number" placeholder="Min ár">
-            <input class="input" type="number" placeholder="Max ár">
-          </div>
-        </div>
-        <mat-radio-group class="radio flex">
+      <form [formGroup]="searchForm" (ngSubmit)="search()">
+        <input formControlName="city" class="input city" type="text" placeholder="Város">
+        <mat-radio-group formControlName="type" class="radio flex">
           <mat-radio-button labelPosition="before" value="elado" name="elado">Eladó</mat-radio-button>
           <mat-radio-button labelPosition="before" value="kiado" name="kiado">Kiadó</mat-radio-button>
         </mat-radio-group>
+        <div class="flex numbers">
+          <div class="flex">
+            <input formControlName="minSize" class="input" type="number" placeholder="Min nm" >
+            <input formControlName="maxSize" class="input" type="number" placeholder="Max nm">
+          </div>
+          <div class="flex">
+            <input formControlName="minPrice" class="input" type="number" [placeholder]="elado ? eladoTexts[0] : eladoTexts[2]">
+            <input formControlName="maxPrice" class="input" type="number" [placeholder]="elado ? eladoTexts[1] : eladoTexts[3]">
+          </div>
+        </div>
+        
         <button mat-button class="primary-btn" type="submit">Keresés</button>
       </form>
     </div>
@@ -25,6 +26,16 @@
     <h3>Az álomotthon többé nem csak álom!</h3>
     <h4>Keressen több száz azonnal elérhető kiadó és eladó ingatlan között.</h4>
     <button class="primary-btn" mat-button>Szakembert keres?</button>
+  </div>
+</section>
+<section class="card flex expert">
+  <div class="left-side flex">
+
+  </div>
+  <div class="right-side flex">
+    <div class="glass-box search-box flex">
+
+    </div>
   </div>
 </section>
 <section class="recom card">
