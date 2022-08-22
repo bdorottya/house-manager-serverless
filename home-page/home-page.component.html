@@ -1,0 +1,114 @@
+<section class="search card flex">
+  <div class="left-side flex">
+    <div class="glass-box search-box card flex">
+      <form [formGroup]="searchForm" (ngSubmit)="search()">
+        <input formControlName="city" class="input city" type="text" placeholder="Város">
+        <mat-radio-group formControlName="type" class="radio flex">
+          <mat-radio-button labelPosition="before" value="elado" name="elado">Eladó</mat-radio-button>
+          <mat-radio-button labelPosition="before" value="kiado" name="kiado">Kiadó</mat-radio-button>
+        </mat-radio-group>
+        <div class="flex numbers">
+          <div class="flex">
+            <input formControlName="minSize" class="input" type="number" placeholder="Min nm" >
+            <input formControlName="maxSize" class="input" type="number" placeholder="Max nm">
+          </div>
+          <div class="flex">
+            <input formControlName="minPrice" class="input" type="number" [placeholder]="elado ? eladoTexts[0] : eladoTexts[2]">
+            <input formControlName="maxPrice" class="input" type="number" [placeholder]="elado ? eladoTexts[1] : eladoTexts[3]">
+          </div>
+        </div>
+        
+        <button mat-button class="primary-btn" type="submit">Keresés</button>
+      </form>
+    </div>
+  </div>
+  <div class="right-side flex">
+    <h3>Az álomotthon többé nem csak álom!</h3>
+    <h4>Keressen több száz azonnal elérhető kiadó és eladó ingatlan között.</h4>
+    <button class="primary-btn" mat-button>Szakembert keres?</button>
+  </div>
+</section>
+<section class="card flex expert">
+  <div class="left-side flex">
+
+  </div>
+  <div class="right-side flex">
+    <div class="glass-box search-box flex">
+
+    </div>
+  </div>
+</section>
+<section class="recom card">
+  <h3>Frissen feltöltött ingatlanok</h3>
+  <div class="flex container">
+    <div class="home-card card card-hover-effect">
+      <img src="../../../assets/img/pexels-pixabay-259593.jpg" class="icon-100p card-img">
+      <p>25.000.000 Ft.</p>
+      <p>Budapest, XII</p>
+      <div class="icons flex">
+        <div class="flex" >
+          <img src="../../../assets/img/blueprint.png" class="icon-50">
+          <span>59 nm</span>
+        </div>
+        <div class="flex">
+          <img src="../../../assets/img/bedroom.png" class="icon-50">
+          <span>2</span>
+        </div>
+        <div class="flex">
+          <img src="../../../assets/img/bathroom.png" class="icon-50">
+          <span>1</span>
+        </div>
+      </div>
+    </div>
+    <div class="home-card card card-hover-effect">
+      <img src="../../../assets/img/pexels-pixabay-259593.jpg" class="icon-100p card-img">
+      <p>25.000.000 Ft.</p>
+      <p>Budapest, XII</p>
+      <div class="icons flex">
+        <div class="flex">
+          <img src="../../../assets/img/blueprint.png" class="icon-50">
+          <span>59 nm</span>
+        </div>
+        <div class="flex">
+          <img src="../../../assets/img/bedroom.png" class="icon-50">
+          <span>2</span>
+        </div>
+        <div class="flex">
+          <img src="../../../assets/img/bathroom.png" class="icon-50">
+          <span>1</span>
+        </div>
+      </div>
+    </div>
+    <div class="home-card card card-hover-effect">
+      <img src="../../../assets/img/pexels-pixabay-259593.jpg" class="icon-100p card-img">
+      <p>25.000.000 Ft.</p>
+      <p>Budapest, XII</p>
+      <div class="icons flex">
+        <div class="flex">
+          <img src="../../../assets/img/blueprint.png" class="icon-50">
+          <span>59 nm</span>
+        </div>
+        <div class="flex">
+          <img src="../../../assets/img/bedroom.png" class="icon-50">
+          <span>2</span>
+        </div>
+        <div class="flex">
+          <img src="../../../assets/img/bathroom.png" class="icon-50">
+          <span>1</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="services card">
+  <h3>Szolgáltatások</h3>
+  <div class="container flex">
+    <div class="card service-card" *ngFor="let service of this.services">
+      <img src="{{service.img}}" class="icon-100">
+      <h5>{{service.name}}</h5>
+      <p>{{service.desc}}</p>
+    </div>
+  </div>
+
+</section>
+
