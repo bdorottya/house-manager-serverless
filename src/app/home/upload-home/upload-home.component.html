@@ -118,6 +118,13 @@
         <input type="textarea" class="input" name="description" formControlName="description">
         <label for="images">Képek</label>
         <input type="file" multiple name="images" formControlName="images" (change)="uploadFiles($event)">
+        <div class="image-preview">
+          <img *ngIf="imagesToShow.length==0" [src]="this.noImage">
+          <div class="card" *ngFor="let image of imagesToShow">
+            <mat-icon class="icon" mat-icon-button (click)="removeImage(image)">cancel</mat-icon>
+            <img [src]="this.image">
+          </div>
+        </div>
         <button type="submit" mat-button class="primary-btn">Feltöltés</button>
       </div>
     </mat-expansion-panel>

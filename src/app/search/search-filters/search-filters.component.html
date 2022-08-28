@@ -1,1 +1,16 @@
-<p>search-filters works!</p>
+<form class="search-form" *ngIf="searchType == 'expert'" [formGroup]="expertForm" ngSubmit="search()">
+  <mat-form-field  appearance="outline">
+    <mat-label>Város</mat-label>
+    <input matInput formControlName="city">
+  </mat-form-field>
+  <mat-form-field appearance="outline" >
+    <mat-label>Terület</mat-label>
+    <mat-select matInput formControlName="field" >
+      <mat-option *ngFor="let field of this.fields" value="field">
+        {{field}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-button class="primary-btn" type="submit">Keresés</button>
+</form>
+

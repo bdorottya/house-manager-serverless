@@ -14,13 +14,9 @@
             <h3>Még nem töltöttél fel ingatlant!</h3>
           </div>
           <div *ngIf="this.user?._uploadedHomes" class="my-homes">
-            <div class="home-container">
+            <div class="home-container" *ngFor="let home of this.uploadedHomes">
               <img>
-              <h3>Budapest, XII kerület</h3>
-              <h4>13000000 Ft.</h4>
-              <span>Megtekintések száma:</span>
-              <span>Mentések száma:</span>
-              <button>Szerkesztés</button>
+
             </div>
           </div>
         </div>

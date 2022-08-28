@@ -30,7 +30,11 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
-
+import { SearchModule } from './search/search.module';
+import { SearchFiltersComponent } from './search/search-filters/search-filters.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
 
 
 
@@ -44,8 +48,8 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
     HomePageComponent,
     AllHomesComponent,
     FooterComponent,
-    PleaseSignInComponent
-
+    PleaseSignInComponent,
+    SearchFiltersComponent
   ],
   imports: [
     BrowserModule,
@@ -54,15 +58,19 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
     BrowserAnimationsModule,
     AuthModule,
     UserModule,
+    SearchModule,
     MatButtonModule,
     MatIconModule,
     HttpClientModule,
     ReactiveFormsModule,
+    MatInputModule,
     MatMenuModule,
     MatRadioModule,
     HomeModule,
+    MatFormFieldModule,
     MatExpansionModule,
     MatButtonToggleModule,
+    MatSelectModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

@@ -1,8 +1,10 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
+import { HomeDAO } from 'src/app/home/home.model';
 import { SocialUser, UserDAO } from '../socialUser.model';
 import { UserService } from '../user.service';
 
@@ -13,12 +15,14 @@ import { UserService } from '../user.service';
 })
 export class UserDashboardComponent implements OnInit {
 
+  getHomeUrl = "https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/gethome";
   user?: SocialUser;
   avatarImage?:string;
   isLoading:boolean = true;
+  uploadedHomes: HomeDAO[] = [];
 
 
-  constructor(private _snackBar: MatSnackBar, private userService: UserService, private authService: AuthService, private router: Router, private store: AngularFireStorage) { }
+  constructor(private httpClient: HttpClient, private _snackBar: MatSnackBar, private userService: UserService, private authService: AuthService, private router: Router, private store: AngularFireStorage) { }
 
   ngOnInit(): void {
     let email = localStorage.getItem("userEmail");
@@ -28,6 +32,7 @@ export class UserDashboardComponent implements OnInit {
       console.log(data);
       this.user = data;
       this.getAvatar(this.user.avatar);
+      this.getUploadedHomes();
     })
   }
 
@@ -48,6 +53,22 @@ export class UserDashboardComponent implements OnInit {
       this.avatarImage = obs;
       this.isLoading = false
     })
+  }
+
+  getUploadedHomes(){
+    console.log("enter");
+    this.user?._uploadedHomes.forEach(home => {
+      console.log(home);
+      let queryParams = new HttpParams();
+      queryParams = queryParams.append("id", home as string);
+      const foundHome = this.httpClient.get<HomeDAO>(this.getHomeUrl, {params: queryParams});
+      foundHome.subscribe(home => {
+        console.log(home);
+        this.uploadedHomes.push(home);
+      });
+    })
+
+    console.log(this.uploadedHomes);
   }
 
 

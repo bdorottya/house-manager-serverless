@@ -40,13 +40,11 @@ export class UserService {
   }
 
   async updateUserAfterHomeUpload(homeId:string){
-
-    let userId = localStorage.getItem("UserID") as string;
-
+    let userId = localStorage.getItem("userEmail") as string;
     let app = new Realm.App({id: this.app_id});
     let user = app.currentUser;
-
     console.log("userId: ", userId);
+    console.log(homeId);
     let res = this.httpClient.post(this.addhome_url, {userId: userId, homeId: homeId});
     res.subscribe(data => {
       console.log(data);

@@ -57,5 +57,5 @@ export class HomeDAO {
   type!:string;
   uploader!:BSON.ObjectID;
   uploadDate?:Date;
-  images?:string[];
+  images:any;
 }

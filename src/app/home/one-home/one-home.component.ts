@@ -5,6 +5,8 @@ import { ObjectId } from 'mongodb';
 import { HomeDAO } from '../home.model';
 import { TypePipe } from 'src/app/pipes/type.pipe';
 import { UserDAO } from 'src/app/user/socialUser.model';
+import { HomeService } from '../home.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-one-home',
@@ -13,42 +15,38 @@ import { UserDAO } from 'src/app/user/socialUser.model';
 })
 export class OneHomeComponent implements OnInit {
 
-  baseUrlHome = "https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/gethome";
-  baseUrlUploader = "https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/getUploader";
+
+
   app_id:string = "housemanager-zblhe";
 
   home:HomeDAO = new HomeDAO();
   uploader:UserDAO = new UserDAO("", "","", new Date());
+  images: string[] = [];
 
-  constructor(private httpClient: HttpClient, private router: ActivatedRoute) { }
+  constructor(private router: ActivatedRoute, private homeService: HomeService) { }
 
   ngOnInit(): void {
     let app = new Realm.App({id: this.app_id});
-    let creds = Realm.Credentials.anonymous();
-    let user = app.logIn(creds);
+    let user = app.currentUser;
     let id = this.router.snapshot.paramMap.get("id") as string;
-    let queryParams = new HttpParams();
-    queryParams = queryParams.append("id", id);
-    console.log(queryParams);
-    let home = this.httpClient.get<HomeDAO>(this.baseUrlHome, {params: queryParams});
-    home.subscribe(data => {
-      console.log(data);
-      if(data){
-        console.log(data);
-        this.home = data;
-        let uploaderId = this.home.uploader as unknown as string;
-        let params = new HttpParams();
-        params = params.append("id", uploaderId);
-        let uploaderStream = this.httpClient.get<UserDAO>(this.baseUrlUploader, {params: params});
-        uploaderStream.subscribe(data => {
-          if(data){
-            this.uploader = data;
-            console.log(this.uploader);
-          }
+    const home = this.homeService.getHome(id);
+    home.then(data => {
+      data.subscribe(homeDao => {
+        this.home = homeDao;
+        console.log(this.home);
+        const uploaderId = this.home.uploader as unknown as string;
+        const uploader = this.homeService.getUploader(uploaderId);
+        uploader.then(d=> {
+          d.subscribe(uploaderDao=>{
+            this.uploader = uploaderDao;
+          })
+        }).then( () => {
+          this.images = this.homeService.getImages(this.home.images);
+        }).finally(()=> {
+          console.log(this.images);
+          console.log(this.home);
         })
-      }else{
-        console.log("error");
-      }
+      })
     })
   }
 

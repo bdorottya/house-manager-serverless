@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ObjectId } from 'mongodb';
 import { BSON } from 'realm-web';
+import { FileUpload } from 'src/app/data-models/file-upload.model';
 import { HomeArray } from '../home.constants';
 import { HomeDAO } from '../home.model';
 import { HomeService } from '../home.service';
@@ -20,6 +22,12 @@ export class UploadHomeComponent implements OnInit {
   homeType!:string;
   city!:string;
   selectedFiles!: FileList;
+  imagesToShow: string[] = [];
+  filesToUpload: FileUpload[] = [];
+  noImage = "../../../assets/img/no-img.jpg";
+  imageUrls:string[] = [];
+
+  oId:ObjectId= new BSON.ObjectId();
 
   uploadHome = new FormGroup({
     //first expansion - cím, típus
@@ -68,7 +76,43 @@ export class UploadHomeComponent implements OnInit {
   }
 
   uploadFiles(event:any){
+    let oId = new BSON.ObjectId();
+    this.oId=oId;
     this.selectedFiles = event.target.files;
+    console.log(this.selectedFiles);
+    let length = this.selectedFiles.length;
+    this.imagesToShow = [];
+    for(let i = 0; i <= length; i++){
+      let file = this.selectedFiles[i];
+      let userID = localStorage.getItem("userID") as string;
+      let time = new Date().getUTCMinutes();
+      let filePath = `homes/${oId}/${i}_${file.name}`;
+      console.log(filePath);
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        console.log(e);
+        this.imagesToShow.push(e.target.result);
+        console.log(this.imagesToShow);
+      };
+      reader.readAsDataURL(file as Blob);
+      let fileToUpload = new FileUpload(file);
+      fileToUpload.name = filePath;
+      console.log(fileToUpload);
+      this.filesToUpload.push(fileToUpload);
+    }
+  }
+
+  removeImage(image:string){
+    console.log("remove");
+    console.log(image);
+    const index = this.imagesToShow.indexOf(image);
+    console.log(index);
+    if(index > -1){
+      console.log("index found");
+      this.imagesToShow.splice(index,1);
+      this.filesToUpload.splice(index,1);
+      console.log(this.imagesToShow);
+    }
   }
 
   submitUpload(){
@@ -96,6 +140,7 @@ export class UploadHomeComponent implements OnInit {
     let description = this.uploadHome.get("description")?.value;
 
     let home = new HomeDAO();
+    home._id = this.oId;
     home.airConditioner = airCond;
     home.attic = attic;
     home.balcony = balcony;
@@ -118,10 +163,16 @@ export class UploadHomeComponent implements OnInit {
     home.pet = pet;
     home.smoke = smoke;
     home.price = price;
+    home.images = [];
 
     let id = localStorage.getItem("userID") as string;
     home.uploader = new BSON.ObjectId(id);
-
+    console.log(localStorage.getItem("userID"));
+    let fileUpload = this.homeService.uploadImages(this.filesToUpload);
+    const urls = this.homeService.imageDownloadUrls;
+    console.log(urls);
+    home.images = urls;
+    console.log(home.images);
     let res = this.homeService.uploadHome(home);
     res.then(() => {
       console.log("done");

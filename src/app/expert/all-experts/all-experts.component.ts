@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AllExpertsComponent implements OnInit {
 
+  searchType:string="expert";
+
   constructor() { }
 
   ngOnInit(): void {
