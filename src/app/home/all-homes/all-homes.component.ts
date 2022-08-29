@@ -32,6 +32,7 @@ export class AllHomesComponent implements OnInit {
     let creds = Realm.Credentials.anonymous();
     let user = app.logIn(creds);
     let homes = this.httpClient.get<HomeDAO[]>(this.baseUrl);
+    this.viewMode.setValue('col');
     homes.subscribe(data => {
       if(data){
         this.homes = data;

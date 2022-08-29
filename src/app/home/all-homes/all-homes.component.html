@@ -66,18 +66,22 @@
       <option *ngFor="let x of sorting" value="{{x}}">{{x}}</option>
     </select>
     <mat-button-toggle-group [formControl]="viewMode" name="viewMode" class="small-margin">
-      <mat-button-toggle value="row"><mat-icon class="icons">view_headline</mat-icon></mat-button-toggle>
       <mat-button-toggle value="col"><mat-icon class="icons">grid_view</mat-icon></mat-button-toggle>
+      <mat-button-toggle value="row"><mat-icon class="icons">view_headline</mat-icon></mat-button-toggle>
     </mat-button-toggle-group>
   </div>
-  <div class="results flex" [ngClass]="viewMode.value === 'row' ? 'col' : 'row' ">
-    <div class="home-card card flex col" [ngClass]="viewMode.value === 'row' ? 'row' : 'col'" *ngFor="let home of homes">
-      <img src="../../../assets/img/pexels-pixabay-259593.jpg" [ngClass]="viewMode.value === 'row' ? 'wider' : ''">
+  <div class="results flex" [ngClass]="viewMode.value === 'row' ? 'row' : 'col' ">
+    <div class="home-card card flex" *ngFor="let home of homes">
+      <img src="../../../assets/img/pexels-pixabay-259593.jpg">
       <div class="overlay">
         <span>{{home.city}}</span>
         <span *ngIf="home.city2">{{home.city2}} Kerület</span>
       </div>
-      <div class="tags flex row">
+      <div class="city flex">
+        <p>{{home.city}}</p>
+        <p *ngIf="home.city2">{{home.city2}} Kerület</p>
+      </div>
+      <div class="tags flex">
         <span>{{home.condition}}</span>
         <span>{{home.parking}}</span>
       </div>

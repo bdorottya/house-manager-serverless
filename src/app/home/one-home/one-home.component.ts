@@ -50,4 +50,6 @@ export class OneHomeComponent implements OnInit {
     })
   }
 
+  showInBig(){}
+
 }
