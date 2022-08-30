@@ -40,13 +40,9 @@ export class SignupComponent implements OnInit {
       let lastName = this.signupForm.get("lastName")?.value;
       let firstName = this.signupForm.get("firstName")?.value;
       let date = new Date()
-      let userId = await this.authService.signup(email, password, lastName, firstName, date);
-      if(userId){
-        console.log("afterSugnup: ", userId.insertedId);
-        this.router.navigate(["/firstlogin"], {queryParams: {email: email}});
-      }else{
-        console.log("error");
-      }
+      let res = await this.authService.signup(email, password);
+      console.log("afterSugnup: ", res);
+      this.router.navigate(["/firstlogin"], {queryParams: {email: email, lastName: lastName, firstName: firstName, date: date}});
     }
   }
 

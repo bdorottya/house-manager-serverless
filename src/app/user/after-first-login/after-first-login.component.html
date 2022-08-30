@@ -6,7 +6,7 @@
     <div class="content flex col">
       <h2>Kérjük add meg a telefonszámod!</h2>
       <input class="input" type="phone" formControlName="phone" name="phone" [(ngModel)]="phoneNumber" placeholder="+36 1 222 3333">
-      <button *ngIf="phoneNumber.length > 0" type="button" class="primary-btn" mat-button>Tovább</button>
+      <button *ngIf="phoneNumber.length > 0" type="button" class="primary-btn" mat-button matStepperNext>Tovább</button>
       <button *ngIf="phoneNumber.length == 0" mat-button class="secondary-btn" type="button" matStepperNext>Kihagyás</button>
     </div>
   </mat-step>

@@ -4,6 +4,9 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { ObjectId } from 'mongodb';
+import { BSON } from 'realm-web';
+
 import { finalize, Observable } from 'rxjs';
 import { FileUpload } from 'src/app/data-models/file-upload.model';
 import { UserDAO } from '../socialUser.model';
@@ -18,10 +21,15 @@ export class AfterFirstLoginComponent implements OnInit {
 
   isLinear = false;
   baseUrl = "https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/firstlogin"
+  app_id:string = "housemanager-zblhe";
+
+
   email:string = "";
   firstName:string = "";
   lastName:string = "";
-
+  date!: Date;
+  _id!: ObjectId;
+  app:any;
   image = "../../../assets/img/no-img.jpg";
 
   phoneForm = new FormGroup({
@@ -42,13 +50,16 @@ export class AfterFirstLoginComponent implements OnInit {
   ngOnInit(): void {
     this.router.queryParams.subscribe(params => {
       this.email = params['email'];
+      this.firstName = params['firstName'];
+      this.lastName = params['lastName'];
+      this.date = params['date'];
     });
-    let res = this.httpClient.get<UserDAO>(this.baseUrl, {params: {email: this.email}});
-    res.subscribe(data => {
-      this.firstName = data.firstName;
-      this.lastName = data.lastName;
-      this.email = data.email;
-    })
+    this.app = new Realm.App({id: this.app_id});
+    let user = this.app.currentUser;
+    console.log(user);
+    let id = user?.id;
+    this._id = new BSON.ObjectId(id);
+    console.log(this._id);
   }
   onFileChanged(event:any){
     this.selectedFile = event.target.files[0];
@@ -84,18 +95,15 @@ export class AfterFirstLoginComponent implements OnInit {
     });
   }
 
+
+
   submitForm(){
     let phone = this.phoneForm.get("phone")?.value;
     let avatar = this.file?.url;
     if( !phone && !avatar){
       return;
     }
-    this.userService.updateUser(this.email, {avatar: avatar, phone: phone}).then(() => {
-      this.routerr.navigateByUrl('/login');
-    });
-
-
-
+    this.routerr.navigate(['/login'], {queryParams: {email: this.email, lastName: this.lastName, firstName: this.firstName, date: this.date, avatar: avatar, phone: phone}});
   }
 
 }

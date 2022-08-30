@@ -14,18 +14,23 @@ export interface SocialUser {
 }
 
 export class UserDAO{
+  _id: ObjectId;
   email: string;
   firstName: string;
   lastName: string;
   date: Date;
-  phone!:number;
+  phone:string;
+  avatar:string
 
 
-  constructor(email: string, firstName: string, lastName:string, date: Date){
+  constructor(id: ObjectId,email: string, firstName: string, lastName:string, date: Date, avatar:string, phone:string){
+    this._id = id;
     this.email = email;
     this.firstName = firstName;
     this.lastName = lastName;
     this.date = date;
+    this.phone = phone;
+    this.avatar = avatar;
   }
 }
 

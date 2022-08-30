@@ -47,6 +47,7 @@ export class HomeService {
         images.push(image);
       })
     })
+    console.log(images);
     return images;
   }
 

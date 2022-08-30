@@ -20,7 +20,7 @@ export class OneHomeComponent implements OnInit {
   app_id:string = "housemanager-zblhe";
 
   home:HomeDAO = new HomeDAO();
-  uploader:UserDAO = new UserDAO("", "","", new Date());
+  uploader!:UserDAO;
   images: string[] = [];
 
   constructor(private router: ActivatedRoute, private homeService: HomeService) { }
@@ -39,6 +39,7 @@ export class OneHomeComponent implements OnInit {
         uploader.then(d=> {
           d.subscribe(uploaderDao=>{
             this.uploader = uploaderDao;
+            console.log(this.uploader);
           })
         }).then( () => {
           this.images = this.homeService.getImages(this.home.images);
