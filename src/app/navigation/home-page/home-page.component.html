@@ -2,22 +2,40 @@
   <div class="left-side flex">
     <div class="glass-box search-box card flex">
       <form [formGroup]="searchForm" (ngSubmit)="search()">
-        <input formControlName="city" class="input city" type="text" placeholder="Város">
+        <mat-form-field appearance="outline">
+          <mat-label>Város</mat-label>
+          <input matInput formControlName="city" type="text">
+        </mat-form-field>
         <mat-radio-group formControlName="type" class="radio flex">
           <mat-radio-button labelPosition="before" value="elado" name="elado">Eladó</mat-radio-button>
           <mat-radio-button labelPosition="before" value="kiado" name="kiado">Kiadó</mat-radio-button>
         </mat-radio-group>
         <div class="flex numbers">
           <div class="flex">
-            <input formControlName="minSize" class="input" type="number" placeholder="Min nm" >
-            <input formControlName="maxSize" class="input" type="number" placeholder="Max nm">
+            <mat-form-field appearance="outline" class="small">
+              <mat-label>Méret (min)</mat-label>
+              <input matInput formControlName="minSize" type="number">
+              <span matSuffix>NM</span>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="small">
+              <mat-label>Méret (max)</mat-label>
+              <input matInput formControlName="maxSize" type="number" >
+              <span matSuffix>NM</span>
+            </mat-form-field>
           </div>
           <div class="flex">
-            <input formControlName="minPrice" class="input" type="number" [placeholder]="elado ? eladoTexts[0] : eladoTexts[2]">
-            <input formControlName="maxPrice" class="input" type="number" [placeholder]="elado ? eladoTexts[1] : eladoTexts[3]">
+            <mat-form-field appearance="outline" class="small">
+              <mat-label>Ár (min)</mat-label>
+              <input matInput formControlName="maxPrice" type="number">
+              <span matSuffix>{{this.elado ? eladoTexts[0] : eladoTexts[1]}}</span>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="small">
+              <mat-label>Ár (max)</mat-label>
+              <input matInput formControlName="minPrice" type="number" >
+              <span matSuffix>{{this.elado ? eladoTexts[0] : eladoTexts[1]}}</span>
+            </mat-form-field>
           </div>
         </div>
-        
         <button mat-button class="primary-btn" type="submit">Keresés</button>
       </form>
     </div>
@@ -30,7 +48,7 @@
 </section>
 <section class="card flex expert">
   <div class="left-side flex">
-
+    <h3>Még soha nem volt ilyen egyszerű szakembert találni.</h3>
   </div>
   <div class="right-side flex">
     <div class="glass-box search-box flex">

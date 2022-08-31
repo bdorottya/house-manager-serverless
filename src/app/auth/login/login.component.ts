@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
   date!:Date;
   avatar!:string;
   phone!:string
+  firstLogin!:boolean;
 
   googleLoginShow: boolean = false;
 
@@ -41,6 +42,7 @@ export class LoginComponent implements OnInit {
       this.date = params['date'];
       this.avatar = params['avatar'];
       this.phone = params['phone'];
+      this.firstLogin = params['firstLogin'];
     });
 
 }
@@ -61,16 +63,19 @@ googleLogin(){
       let user = this.authService.loginWithEmailAndPass(email, pass);
       user.then(data => {
         if(data){
-          let id = localStorage.getItem("userID") as string;
-          let _id = new BSON.ObjectId(id);
-          let newUser = new UserDAO(_id,this.email,this.firstName,this.lastName,this.date,this.avatar,this.phone);
-          const res = this.authService.insertUser(newUser);
-          if(res){
-            this.router.navigateByUrl('/userhome');
-            console.log(res);
+          if(this.firstLogin){
+            let id = localStorage.getItem("userID") as string;
+            let _id = new BSON.ObjectId(id);
+            let newUser = new UserDAO(_id,this.email,this.firstName,this.lastName,this.date,this.avatar,this.phone);
+            const res = this.authService.insertUser(newUser);
+            if(res){
+              this.router.navigateByUrl('/userhome');
+              console.log(res);
+            }
           }
-        }
-      });
+            this.router.navigateByUrl('/userhome');
+          }
+        });
     }
   }
 }

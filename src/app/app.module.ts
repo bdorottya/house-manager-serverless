@@ -35,6 +35,7 @@ import { SearchFiltersComponent } from './search/search-filters/search-filters.c
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 
@@ -71,6 +72,7 @@ import { MatInputModule } from '@angular/material/input';
     MatExpansionModule,
     MatButtonToggleModule,
     MatSelectModule,
+    MatCheckboxModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

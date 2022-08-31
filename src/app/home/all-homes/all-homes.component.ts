@@ -12,6 +12,9 @@ export class AllHomesComponent implements OnInit {
 
   baseUrl = "https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/getHomes";
   app_id:string = "housemanager-zblhe";
+  admin_email:string = "admin@system.com";
+  admin_password:string = "admin1234";
+
   city2:string[] = ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX","XXI","XXII","XXIII"];
   conditions:string[] = ["Újépítésű", "újszerű", "Frissen Felújított", "Felújításra szorul", "Telek", "Épülő"];
   parking:string[] = ["Külön építésű garázs", "Garázs az épület aljában/tetején", "Fedetlen kocsibeálló", "Utcán"];
@@ -29,8 +32,14 @@ export class AllHomesComponent implements OnInit {
 
   ngOnInit(): void {
     let app = new Realm.App({id: this.app_id});
-    let creds = Realm.Credentials.anonymous();
-    let user = app.logIn(creds);
+    let user;
+    let creds = Realm.Credentials.emailPassword(this.admin_email, this.admin_password);
+    if(app.currentUser){
+      user = app.currentUser;
+    }else{
+      user = app.logIn(creds);
+    }
+    console.log(user)
     let homes = this.httpClient.get<HomeDAO[]>(this.baseUrl);
     this.viewMode.setValue('col');
     homes.subscribe(data => {

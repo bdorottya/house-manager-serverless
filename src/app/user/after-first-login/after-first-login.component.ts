@@ -103,7 +103,7 @@ export class AfterFirstLoginComponent implements OnInit {
     if( !phone && !avatar){
       return;
     }
-    this.routerr.navigate(['/login'], {queryParams: {email: this.email, lastName: this.lastName, firstName: this.firstName, date: this.date, avatar: avatar, phone: phone}});
+    this.routerr.navigate(['/login'], {queryParams: {email: this.email, lastName: this.lastName, firstName: this.firstName, date: this.date, avatar: avatar, phone: phone, firstLogin: true}});
   }
 
 }

@@ -1,4 +1,4 @@
-<form class="search-form" *ngIf="searchType == 'expert'" [formGroup]="expertForm" ngSubmit="search()">
+<form class="search-form" *ngIf="searchType == 'expert'" [formGroup]="expertForm" ngSubmit="search('expert')">
   <mat-form-field  appearance="outline">
     <mat-label>Város</mat-label>
     <input matInput formControlName="city">
@@ -12,5 +12,134 @@
     </mat-select>
   </mat-form-field>
   <button mat-button class="primary-btn" type="submit">Keresés</button>
+</form>
+
+<form class="home-form" *ngIf="searchType=='home'" [formGroup]="homeForm" ngSubmit="search('home')">
+  <mat-form-field  appearance="outline" required class="large">
+    <mat-label>Város</mat-label>
+    <input matInput formControlName="city" type="text">
+  </mat-form-field>
+  <mat-form-field  appearance="outline" class="small">
+    <mat-label>Kerület</mat-label>
+    <mat-select formControlName="city2" multiple>
+      <mat-option *ngFor="let dist of this.city2" [value]="dist">
+        {{dist}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="radio-group">
+    <label class="radio-label">Ingatlna típusa</label>
+    <mat-radio-group name="type" formControlName="type" required>
+      <mat-radio-button value="elado">Eladó</mat-radio-button>
+      <mat-radio-button value="kiado">Kiadó</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <mat-form-field  appearance="outline" class="small">
+    <mat-label>Ingatlan ára (min)</mat-label>
+    <input matInput type="number" formControlName="minPrice">
+    <span matSuffix>HUF</span>
+  </mat-form-field>
+  <mat-form-field  appearance="outline" class="small">
+    <mat-label>Ingatlan ára (max)</mat-label>
+    <input matInput type="number" formControlName="maxPrice">
+    <span matSuffix>HUF</span>
+  </mat-form-field>
+  <mat-form-field  appearance="outline" class="medium">
+    <mat-label>Ingatlan állapota</mat-label>
+    <mat-select formControlName="condition" multiple>
+      <mat-option *ngFor="let con of this.condition" [value]="con">
+        {{con}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field  appearance="outline" class="small">
+    <mat-label>Épület szintjei (max)</mat-label>
+    <input matInput type="number" formControlName="maxLevelsInBuilding">
+  </mat-form-field>
+  <mat-form-field  appearance="outline" class="small">
+    <mat-label>Ingatlan szintje (min)</mat-label>
+    <input matInput type="number" formControlName="minLevel">
+  </mat-form-field>
+  <mat-form-field  appearance="outline" class="small">
+    <mat-label>Ingatlan szintje (max)</mat-label>
+    <input matInput type="number" formControlName="maxLevel">
+  </mat-form-field>
+  <mat-form-field  appearance="outline" class="small">
+    <mat-label>Ingatlan mérete (min)</mat-label>
+    <input matInput type="number" formControlName="minSize">
+    <span matSuffix>nm</span>
+  </mat-form-field>
+  <mat-form-field  appearance="outline" class="small">
+    <mat-label>Ingatlan mérete (max)</mat-label>
+    <input matInput type="number" formControlName="maxSize">
+    <span matSuffix>nm</span>
+  </mat-form-field>
+  <mat-form-field  appearance="outline" class="small">
+    <mat-label>Hálószobák száma (min)</mat-label>
+    <input matInput type="number" formControlName="minBedroom">
+  </mat-form-field>
+  <mat-form-field  appearance="outline" class="small">
+    <mat-label>Fürdőszobák száma (min)</mat-label>
+    <input matInput type="number" formControlName="minBathroom">
+  </mat-form-field>
+  <mat-form-field  appearance="outline" class="medium">
+    <mat-label>Fütés típusa</mat-label>
+    <mat-select formControlName="heatingType" multiple>
+      <mat-option *ngFor="let het of this.heating" [value]="het">
+        {{het}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field  appearance="outline" class="medium">
+    <mat-label>Parkolás</mat-label>
+    <mat-select formControlName="parking" multiple>
+      <mat-option *ngFor="let park of this.parking" [value]="park">
+        {{park}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  
+
+  <label class="radio-label">Lift az épületben</label>
+  <mat-radio-group formControlName="elevator" class="radio">
+    <mat-radio-button *ngFor="let x of this.yesno" [value]="x.value">
+      {{x.name}}</mat-radio-button>
+  </mat-radio-group>
+  <label class="radio-label">Pince/padlás</label>
+  <mat-radio-group formControlName="attic" class="radio">
+    <mat-radio-button *ngFor="let x of this.yesno" [value]="x.value">
+    {{x.name}}</mat-radio-button>
+  </mat-radio-group>
+  <label class="radio-label">Kert</label>
+  <mat-radio-group formControlName="garden" class="radio">
+    <mat-radio-button *ngFor="let x of this.yesno" [value]="x.value">
+      {{x.name}}</mat-radio-button>
+  </mat-radio-group>
+  <label class="radio-label">Erkély/terasz</label>
+  <mat-radio-group formControlName="balcony" class="radio">
+    <mat-radio-button *ngFor="let x of this.yesno" [value]="x.value">
+      {{x.name}}</mat-radio-button>
+  </mat-radio-group>
+  <label class="radio-label">Légkondi</label>
+  <mat-radio-group formControlName="ac" class="radio">
+    <mat-radio-button *ngFor="let x of this.yesno" [value]="x.value">
+      {{x.name}}</mat-radio-button>
+  </mat-radio-group>
+  <label class="radio-label">Kisállat megengedett</label>
+  <mat-radio-group formControlName="pet" class="radio">
+    <mat-radio-button *ngFor="let x of this.yesno" [value]="x.value">
+      {{x.name}}</mat-radio-button>
+  </mat-radio-group>
+  <label class="radio-label">Dohányzás megengedett</label>
+  <mat-radio-group formControlName="smoke" class="radio">
+    <mat-radio-button *ngFor="let x of this.yesno" [value]="x.value">
+      {{x.name}}</mat-radio-button>
+  </mat-radio-group>
+  <label class="radio-label">Csak képes hírdetés</label>
+  <mat-radio-group formControlName="hasImages" class="radio">
+    <mat-radio-button *ngFor="let x of this.yesno" [value]="x.value">
+      {{x.name}}</mat-radio-button>
+  </mat-radio-group>
+  <button type="submit" mat-button class="primary-btn small">Keresés</button>
 </form>
 

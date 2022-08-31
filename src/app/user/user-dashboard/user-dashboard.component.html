@@ -15,8 +15,9 @@
           </div>
           <div *ngIf="this.user?._uploadedHomes" class="my-homes">
             <div class="home-container" *ngFor="let home of this.uploadedHomes">
-              <img>
-
+              <div class="card">
+                <p>{{home.city}}</p>
+                </div>
             </div>
           </div>
         </div>

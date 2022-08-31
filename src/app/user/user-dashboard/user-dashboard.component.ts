@@ -18,7 +18,7 @@ export class UserDashboardComponent implements OnInit {
   getHomeUrl = "https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/gethome";
   user?: SocialUser;
   avatarImage?:string;
-  isLoading:boolean = true;
+  isLoading:boolean = false;
   uploadedHomes: HomeDAO[] = [];
 
 
@@ -28,10 +28,10 @@ export class UserDashboardComponent implements OnInit {
     let email = localStorage.getItem("userEmail");
     let user = this.userService.getUser(email as string);
     user.then(data => {
-      this.isLoading = true;
+      this.isLoading = false;
       console.log(data);
       this.user = data;
-      this.getAvatar(this.user.avatar);
+      //this.getAvatar(this.user.avatar);
       this.getUploadedHomes();
     })
   }
@@ -57,17 +57,18 @@ export class UserDashboardComponent implements OnInit {
 
   getUploadedHomes(){
     console.log("enter");
-    this.user?._uploadedHomes.forEach(home => {
-      console.log(home);
-      let queryParams = new HttpParams();
-      queryParams = queryParams.append("id", home as string);
-      const foundHome = this.httpClient.get<HomeDAO>(this.getHomeUrl, {params: queryParams});
-      foundHome.subscribe(home => {
-        console.log(home);
-        this.uploadedHomes.push(home);
-      });
-    })
-
+    if(this.user){
+      if(this.user?._uploadedHomes?.length > 0){
+        this.user?._uploadedHomes.forEach(home => {
+          let queryParams = new HttpParams();
+          queryParams = queryParams.append("id", home as string);
+          const foundHome = this.httpClient.get<HomeDAO>(this.getHomeUrl, {params: queryParams});
+          foundHome.subscribe(home => {
+            this.uploadedHomes.push(home);
+          });
+        })
+      }
+    }
     console.log(this.uploadedHomes);
   }
 

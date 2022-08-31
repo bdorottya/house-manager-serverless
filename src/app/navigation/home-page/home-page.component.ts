@@ -29,7 +29,7 @@ searchForm = this.fb.group({
 })
 
 elado:boolean=true;
-eladoTexts = ["Min ár (M)", "Max ár (M)", "Min ár (e/hó)", "Max ár (e/hó)"];
+eladoTexts = ["Millió Ft", "Ezer Ft/hó.", ];
 
 
 

@@ -52,7 +52,6 @@ export class HomeService {
   }
 
   updateHomeWIthImages(homeId:string, images: any[]){
-    let userId = localStorage.getItem("userEmail") as string;
     let app = new Realm.App({id: this.app_id});
     let user = app.currentUser;
     let res = this.httpClient.post(this.baseUrlImages, {homeId: homeId, images: images});

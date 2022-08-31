@@ -7,3 +7,25 @@
   min-width: 100%;
   justify-content: space-between;
 }
+
+.home-form{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  .large{
+    width: 35%;
+  }
+  .medium{
+    width: 25%;
+  }
+  .small{
+    width: 15%;
+  }
+  .radio-group{
+    display: inline;
+  }
+  button{
+    align-self: flex-end;
+  }
+
+}
