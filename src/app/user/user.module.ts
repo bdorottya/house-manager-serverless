@@ -13,6 +13,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { HomeModule } from '../home/home.module';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatBadgeModule,
     MatSnackBarModule,
     HomeModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule
   ]
 })
 export class UserModule { }

@@ -11,7 +11,7 @@
           <mat-radio-button labelPosition="before" value="kiado" name="kiado">Kiadó</mat-radio-button>
         </mat-radio-group>
         <div class="flex numbers">
-          <div class="flex">
+          <div class="flex" formGroupName="size">
             <mat-form-field appearance="outline" class="small">
               <mat-label>Méret (min)</mat-label>
               <input matInput formControlName="minSize" type="number">
@@ -23,15 +23,15 @@
               <span matSuffix>NM</span>
             </mat-form-field>
           </div>
-          <div class="flex">
+          <div class="flex" formGroupName="price">
             <mat-form-field appearance="outline" class="small">
               <mat-label>Ár (min)</mat-label>
-              <input matInput formControlName="maxPrice" type="number">
+              <input matInput formControlName="minPrice" type="number">
               <span matSuffix>{{this.elado ? eladoTexts[0] : eladoTexts[1]}}</span>
             </mat-form-field>
             <mat-form-field appearance="outline" class="small">
               <mat-label>Ár (max)</mat-label>
-              <input matInput formControlName="minPrice" type="number" >
+              <input matInput formControlName="maxPrice" type="number" >
               <span matSuffix>{{this.elado ? eladoTexts[0] : eladoTexts[1]}}</span>
             </mat-form-field>
           </div>

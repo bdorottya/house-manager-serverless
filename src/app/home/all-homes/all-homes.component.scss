@@ -54,9 +54,14 @@
     }
   }
 }
+.no-results{
+  h1{
+    text-align: center;
+  }
+}
 .results{
   flex-wrap: wrap;
-  
+
 }
 .col{
   flex-direction: row;

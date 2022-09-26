@@ -21,11 +21,16 @@ services:any[] = [
 
 searchForm = this.fb.group({
   city: ['', Validators.required],
-  minSize: [''],
-  maxSize: [''],
-  minPrice: [''],
-  maxPrice: [''],
   type: [''],
+  size: this.fb.group({
+    minSize: [''],
+    maxSize: [''],
+  }),
+  price: this.fb.group({
+    minPrice: [''],
+    maxPrice: [''],
+  }),
+
 })
 
 elado:boolean=true;
@@ -48,11 +53,14 @@ eladoTexts = ["Millió Ft", "Ezer Ft/hó.", ];
   search(){
     if(!this.searchForm.invalid){
       let query = this.searchForm.value;
-      this.searchService.queryHomesFromMainPage(query).then(data =>{
-        console.log(data);
-      });
+      console.log(query);
+      let results = this.searchService.queryHomes(query);
+      results.then(res => {
+        this.router.navigate(['/allhomes']);
+      })
+
     }else{
-      this.router.navigate(["/allhomes"]);
+      console.log("error");
     }
   }
 

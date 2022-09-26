@@ -54,10 +54,17 @@ export class HomeService {
   updateHomeWIthImages(homeId:string, images: any[]){
     let app = new Realm.App({id: this.app_id});
     let user = app.currentUser;
-    let res = this.httpClient.post(this.baseUrlImages, {homeId: homeId, images: images});
-    res.subscribe(data => {
-      console.log(data);
-    })
+    let observers: any[] = [];
+    console.log(images);
+    for(let i = 0; i <= images.length; i++){
+      console.log("forban");
+      let upload = this.httpClient.post(this.baseUrlImages, {homeId: homeId, images: images[i]});
+      upload.subscribe(obs => {
+        observers.push(obs);
+      })
+    }
+    return observers;
+
   }
 
   async uploadHome(home: HomeDAO){
@@ -75,6 +82,7 @@ export class HomeService {
           this.snackBar.open("Sikeres feltöltés!", "OK");
           console.log(res?.insertedId, home.images);
           let imageUpload = this.updateHomeWIthImages(res?.insertedId, home.images);
+          console.log(imageUpload);
         }).catch(err => {
           console.log(err);
         });

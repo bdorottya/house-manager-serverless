@@ -163,7 +163,6 @@ export class UploadHomeComponent implements OnInit {
     home.pet = pet;
     home.smoke = smoke;
     home.price = price;
-    home.images = [];
 
     let id = localStorage.getItem("userID") as string;
     home.uploader = new BSON.ObjectId(id);

@@ -4,6 +4,7 @@
   <div class="flex user-info col" *ngIf="!this.isLoading">
     <h3>Üdv, {{user?.lastName}}!</h3>
     <img [src]="avatarImage">
+    <button mat-button (click)="openAvatarDialog(avatarImage)" class="primary-btn">Profilkép feltöltése</button>
     <button mat-button class="secondary-btn" (click)="logOut()">Kijelentkezés</button>
   </div>
   <div class="user-menu" *ngIf="!this.isLoading">

@@ -1,31 +1,74 @@
-*{
-  width: 100%;
-}
-.search-form{
-  display: flex;
-  flex-direction: row;
-  min-width: 100%;
-  justify-content: space-between;
-}
-
 .home-form{
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  .large{
-    width: 35%;
+  padding: 2% 3%;
+  overflow: hidden;
+  height: 4.3rem;
+  transition: 1s ease-in-out all;
+  .first-row{
+    width: 100%;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    .button-icon{
+      transition: .3s ease-in-out all;
+    }
   }
-  .medium{
-    width: 25%;
+  .radio-groups{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    .checkbox-group{
+      width: 10%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      margin: .5rem 1rem;
+      .icon{
+        transform: scale(1.5);
+      }
+      label{
+        margin: 7% 0;
+        font-size: 1rem;
+        font-weight: 700;
+        text-align: center;
+      }
+    }
   }
-  .small{
-    width: 15%;
-  }
-  .radio-group{
-    display: inline;
-  }
-  button{
-    align-self: flex-end;
+  .submit-button{
+    font-size: 1rem;
+    float: right;
+    margin: 2.5rem 1rem 1rem 1.5rem;
   }
 
+
+  .radio-group{
+    width: 20%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    label{
+      align-self: flex-start;
+    }
+    mat-radio-button{
+      margin: .5rem 1rem 0 0;
+    }
+  }
+  .city-field{
+    width: 60%;
+  }
+  .form-field{
+    margin: 0 1rem;
+  }
+}
+.expanded{
+  height: fit-content;
+}
+.transform{
+  transform: rotate(180deg);
 }

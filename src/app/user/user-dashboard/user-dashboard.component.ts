@@ -1,11 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { HomeDAO } from 'src/app/home/home.model';
 import { SocialUser, UserDAO } from '../socialUser.model';
+import { UploadAvatarComponent } from '../upload-avatar/upload-avatar.component';
 import { UserService } from '../user.service';
 
 @Component({
@@ -22,7 +24,7 @@ export class UserDashboardComponent implements OnInit {
   uploadedHomes: HomeDAO[] = [];
 
 
-  constructor(private httpClient: HttpClient, private _snackBar: MatSnackBar, private userService: UserService, private authService: AuthService, private router: Router, private store: AngularFireStorage) { }
+  constructor(private httpClient: HttpClient, private _snackBar: MatSnackBar, private userService: UserService, private authService: AuthService, private router: Router, private store: AngularFireStorage, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     let email = localStorage.getItem("userEmail");
@@ -31,7 +33,7 @@ export class UserDashboardComponent implements OnInit {
       this.isLoading = false;
       console.log(data);
       this.user = data;
-      //this.getAvatar(this.user.avatar);
+      this.getAvatar(this.user.avatar);
       this.getUploadedHomes();
     })
   }
@@ -48,9 +50,10 @@ export class UserDashboardComponent implements OnInit {
   }
 
   getAvatar(url:string){
-    let observer = this.store.refFromURL(url).getDownloadURL();
+    let observer = this.store.ref(url).getDownloadURL();
     observer.subscribe(obs => {
       this.avatarImage = obs;
+      console.log(obs);
       this.isLoading = false
     })
   }
@@ -70,6 +73,17 @@ export class UserDashboardComponent implements OnInit {
       }
     }
     console.log(this.uploadedHomes);
+  }
+
+  openAvatarDialog(image:any){
+    this.dialog.open(UploadAvatarComponent, {data: {email: this.user?.email, image: image}}).afterClosed().subscribe(obs => {
+      if(obs){
+        if(this.user){
+          this.getAvatar(this.user?.avatar);
+        }
+        this._snackBar.open("Sikeres képfeltöltés!", "OK");
+      }
+    });
   }
 
 

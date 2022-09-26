@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { HomeSearchQuery } from 'src/app/search/query.model';
+import { SearchService } from 'src/app/search/search.service';
 import { HomeDAO } from '../home.model';
 
 @Component({
@@ -15,6 +18,9 @@ export class AllHomesComponent implements OnInit {
   admin_email:string = "admin@system.com";
   admin_password:string = "admin1234";
 
+  homes: HomeDAO[] = [];
+
+
   city2:string[] = ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX","XXI","XXII","XXIII"];
   conditions:string[] = ["Újépítésű", "újszerű", "Frissen Felújított", "Felújításra szorul", "Telek", "Épülő"];
   parking:string[] = ["Külön építésű garázs", "Garázs az épület aljában/tetején", "Fedetlen kocsibeálló", "Utcán"];
@@ -23,14 +29,14 @@ export class AllHomesComponent implements OnInit {
   sorting:string[]=["Ár szerint növekvő", "Ár szerint csökkenő", "Méret szerint növekvő", "Méret szerint csökkenő"];
   buildingType:string[]=["Tégla lakás","Panel lakás","Faház","Egyéb"];
 
+  query: HomeSearchQuery = new HomeSearchQuery();
+
   viewMode = new FormControl('');
-  open:boolean = false;
+  empty:boolean = false;
 
-  homes:HomeDAO[] = [];
+  constructor(private httpClient: HttpClient, private routerSnapshot: ActivatedRoute, private serachService: SearchService) { }
 
-  constructor(private httpClient: HttpClient) { }
-
-  ngOnInit(): void {
+   ngOnInit(): void {
     let app = new Realm.App({id: this.app_id});
     let user;
     let creds = Realm.Credentials.emailPassword(this.admin_email, this.admin_password);
@@ -39,26 +45,29 @@ export class AllHomesComponent implements OnInit {
     }else{
       user = app.logIn(creds);
     }
-    console.log(user)
-    let homes = this.httpClient.get<HomeDAO[]>(this.baseUrl);
-    this.viewMode.setValue('col');
-    homes.subscribe(data => {
-      if(data){
-        this.homes = data;
-        console.log(this.homes);
+    this.serachService.getAllHomes();
+    this.serachService.documents.subscribe(observer => {
+      console.log(observer);
+      this.homes = observer;
+      if(this.homes.length == 0){
+        this.empty = true;
+      }else{
+        this.empty = false;
       }
-
     })
-  }
 
-  expand(){
-    if(this.open === true){
-      this.open = false;
+    /*if(this.serachService.foundDocuments.length > 0){
+      this.homes = this.serachService.foundDocuments;
+      console.log(this.homes);
     }else{
-      this.open = true;
-    }
+      let homes = this.httpClient.get<HomeDAO[]>(this.baseUrl);
+      this.viewMode.setValue('col');
+      homes.subscribe(data => {
+        if(data){
+          this.homes = data;
+          console.log(this.homes);
+        }
+      })
+    }*/
   }
-
-
-
 }

@@ -27,7 +27,7 @@ const routes: Routes = [
   {path: "datachange", component: UpdateDataComponent},
   {path: "onehome/:id", component: OneHomeComponent},
   {path: "pleasesignin", component: PleaseSignInComponent}
-];
+]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
