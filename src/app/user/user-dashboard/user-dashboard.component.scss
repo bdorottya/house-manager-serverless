@@ -3,21 +3,57 @@
   padding: 1%;
   justify-content: space-between;
   .user-info{
+    width: 20%;
     padding: 3%;
     align-items: center;
     img{
-      border-radius: 300px;
+      border-radius: 10px;
       box-shadow: 0 0 10px grey;
       width: 90%;
       margin-bottom: 10%;
     }
     button{
+      margin: 2.5% 0;
       cursor: pointer;
     }
   }
   .user-menu{
-    .tab-content{
-      padding: 3%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    .home-card-container{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      .home-card{
+        padding: 0;
+        width: 23%;
+        margin: 0 2%;
+        img{
+          border-top-left-radius: 15px;
+          border-top-right-radius: 15px;
+          width: 100%;
+        }
+        .padding-box{
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          h3,h4, h5{
+            margin: 3% 0;
+          }
+          padding: 3% 3% 7% 3%;
+          .buttons{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            margin: 5% 0;
+            button{
+              cursor: pointer;
+            }
+          }
+        }
+      }
     }
   }
+
 }

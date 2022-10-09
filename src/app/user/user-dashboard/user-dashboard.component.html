@@ -1,54 +1,59 @@
 <section class="card flex user-home">
   <mat-spinner *ngIf="this.isLoading">
-    </mat-spinner>
+  </mat-spinner>
   <div class="flex user-info col" *ngIf="!this.isLoading">
     <h3>Üdv, {{user?.lastName}}!</h3>
     <img [src]="avatarImage">
     <button mat-button (click)="openAvatarDialog(avatarImage)" class="primary-btn">Profilkép feltöltése</button>
-    <button mat-button class="secondary-btn" (click)="logOut()">Kijelentkezés</button>
+    <button mat-button (click)="updateUserData()" class="primary-btn">Adataim módosítása</button>
+    <button mat-button (click)="openHomeUploadDialog()" class="primary-btn">Ingatlan feltöltése</button>
   </div>
   <div class="user-menu" *ngIf="!this.isLoading">
-    <mat-tab-group headerPosition="above">
-      <mat-tab label="Feltöltött ingatlanok">
-        <div class="tab-content">
-          <div *ngIf="!this.user?._uploadedHomes">
-            <h3>Még nem töltöttél fel ingatlant!</h3>
-          </div>
-          <div *ngIf="this.user?._uploadedHomes" class="my-homes">
-            <div class="home-container" *ngFor="let home of this.uploadedHomes">
-              <div class="card">
-                <p>{{home.city}}</p>
-                </div>
+    <div class="own-homes">
+      <div class="own-homes-container">
+        <h2>Feltöltött ingatlanok</h2>
+        <mat-spinner *ngIf="!this.loaded && uploadedHomes.length > 0"></mat-spinner>
+        <div *ngIf="this.loaded && uploadedHomes.length > 0" class="home-card-container">
+          <div class="home-card card" *ngFor="let home of this.uploadedHomes">
+            <img src="{{home.images ? home.images[0] : ''}}">
+            <div class="padding-box">
+              <h3>{{home.city}}<span>{{home.city2 ? ', ' + home.city2 : ''}}</span></h3>
+              <h5>{{home.street}}</h5>
+              <h4>{{home.type=="elado" ? home.price + " Millió Ft." : home.price + " ezer Ft/hó" }}</h4>
+              <span>Mentések száma: {{home._savedCount ? home._savedCount : 0}}</span>
+              <div class="buttons">
+                <a routerLink="/onehome/{{home._id}}"><button mat-button class="primary-btn">Tovább</button></a>
+                <button mat-button class="secondary-btn" (click)="openHomeUploadDialog(home)">Szerkesztés</button>
+              </div>
             </div>
           </div>
         </div>
-      </mat-tab>
-      <mat-tab label="Mentett Ingatlanok">
-        <div class="tab-content">
-          <div *ngIf="!this.user?._savedHomes">
-            <h3>Még nem mentettél el ingatlant!</h3>
-          </div>
-          <div *ngIf="this.user?._savedHomes" class="saved-homes">
-            <div class="home-container">
-              <img>
-              <h3>Budapest, XII kerület</h3>
-              <h4>13000000 Ft.</h4>
-              <span>Megtekintések száma:</span>
-              <span>Mentések száma:</span>
-              <button>Szerkesztés</button>
+        <div *ngIf="this.loaded && uploadedHomes.length<0">
+          <h3>Még nem töltöttél fel ingatlant.</h3>
+        </div>
+      </div>
+    </div>
+    <div class="saved-homes">
+      <h2>Mentett Ingatlanok</h2>
+      <mat-spinner *ngIf="!this.loadedSaved && this.savedHomes.length > 0"></mat-spinner>
+      <div *ngIf="this.loadedSaved && this.savedHomes.length > 0" class="home-card-container">
+        <div class="home-card card" *ngFor="let home of this.savedHomes">
+          <img src="{{home.images ? home.images[0] : ''}}">
+          <div class="padding-box">
+            <h3>{{home.city}}</h3>
+            <h4>{{home.type=="elado" ? home.price + " Millió Ft." : home.price + " ezer Ft/hó" }}</h4>
+            <div class="buttons">
+              <a routerLink="/onehome/{{home._id}}"><button mat-button class="primary-btn">Tovább</button></a>
             </div>
           </div>
         </div>
-      </mat-tab>
-      <mat-tab label="Ingatlan Feltöltése">
-        <div class="tab-content">
-          <app-upload-home></app-upload-home>
-        </div>
-      </mat-tab>
-      <mat-tab label="Mentett Szakemberek"> Content 2 </mat-tab>
-      <mat-tab label="Üzeneteim"> Content 3 </mat-tab>
-      <mat-tab label="Adataim módosítása"> Content 3 </mat-tab>
+      </div>
+      <div *ngIf="this.loadedSaved && savedHomes.length<0">
+        <h3>Még nem mentettél el ingatlant.</h3>
+      </div>
+    </div>
+    <div class="saved-experts">
 
-    </mat-tab-group>
+    </div>
   </div>
 </section>

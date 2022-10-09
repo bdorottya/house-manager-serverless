@@ -73,6 +73,7 @@
     width: 22%;
     margin: 1%;
     flex-direction: column;
+    align-content: space-between;
     img{
       border-top-left-radius: 30px;
       border-top-right-radius: 30px;
@@ -104,7 +105,7 @@
     }
     .tags{
       justify-content: space-around;
-      span{
+      div{
         border-radius: 5px;
         padding: 3% 5%;
         margin: 3% 0;
@@ -169,4 +170,8 @@
       flex-direction: row;
     }
   }
+}
+
+.own-home{
+  background: #21ae49c1;
 }

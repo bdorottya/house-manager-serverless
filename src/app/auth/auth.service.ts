@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import * as Realm from 'realm-web';
-import { UserDAO } from '../user/socialUser.model';
+import { User, UserDAO } from '../user/socialUser.model';
+import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +16,9 @@ export class AuthService {
   admin_password:string = "admin1234";
   loggedInUser?: boolean;
   app:any;
+  role!:string;
 
-  constructor() {}
+  constructor(private router: Router, private snackBar: MatSnackBar, private userService: UserService) {}
 
   async loginWithEmailAndPass(email: string, password: string){
     this.app = new Realm.App({id: this.app_id});
@@ -26,6 +30,10 @@ export class AuthService {
       this.loggedInUser = true;
       localStorage.setItem("userID", this.app.currentUser?.id as string);
       localStorage.setItem("userEmail", email);
+      this.userService.getUser(email).then(data => {
+        console.log(data);
+        this.role = data.role;
+      })
       return user;
     }catch(err){
       console.error("failed to log in", err);
@@ -33,20 +41,27 @@ export class AuthService {
     }
   }
 
-  async insertUser(user: UserDAO){
+  getUser(){
+
+  }
+
+  async insertUser(user: User){
     console.log(user);
-    let mongo = this.app.currentUser?.mongoClient("mongodb-atlas");
+    const app = new Realm.App({id: this.app_id});
+    let mongo = app.currentUser?.mongoClient("mongodb-atlas");
     let collection = mongo?.db("home-maker").collection("users");
     try{
       let res = await collection?.insertOne(user);
       if(res){
         console.log(res.insertedId);
         return res;
+      }else{
+        return;
       }
     }catch(err){
         console.log("error in saving user", err);
         return;
-      }
+    }
   }
 
   isLoggedIn(){
@@ -89,6 +104,7 @@ export class AuthService {
     console.log(app.currentUser?.isLoggedIn);
     localStorage.removeItem("userID");
     localStorage.removeItem("userEmail");
+    this.router.navigate(["/"]);
   }
 }
 

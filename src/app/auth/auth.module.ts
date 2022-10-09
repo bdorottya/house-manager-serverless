@@ -9,13 +9,14 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTabsModule} from '@angular/material/tabs';
-
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
     SignupComponent,
+
   ],
   imports: [
     CommonModule,
@@ -24,7 +25,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatIconModule,
     MatInputModule,
     MatButtonModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSelectModule
   ]
 })
 export class AuthModule { }

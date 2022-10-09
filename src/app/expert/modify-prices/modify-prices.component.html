@@ -1,0 +1,23 @@
+<mat-dialog-content>
+<form [formGroup]="priceForm" (ngSubmit)="addPrice()">
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Szoldáltatás neve</mat-label>
+    <input matInput formControlName="serviceName" >
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Szoldáltatás ára</mat-label>
+    <input matInput formControlName="price">
+  </mat-form-field>
+  <button type="submit"  [disabled]="!this.priceForm.dirty" mat-button class="expert-btn">Hozzáadás</button>
+</form>
+<div class="services">
+  <div class="service-container" *ngFor="let ser of this.services" (click)="editPrice(ser)">
+    <p>{{ser.service}}</p>
+    <p>{{ser.price}} Ft.</p>
+  </div>
+</div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="closeWithoutSave()">Mégsem</button>
+  <button mat-button class="primary-btn" (click)="closeAndSave()">Mentés</button>
+</mat-dialog-actions>

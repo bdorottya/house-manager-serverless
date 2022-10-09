@@ -1,0 +1,30 @@
+form{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: baseline;
+  align-items: center;
+  overflow: visible;
+  padding: 3%;
+  .form-field{
+    margin: 0 3%;
+  }
+}
+.services{
+  margin-top: 2%;
+  .service-container{
+    cursor:pointer;
+    padding: 0.5%;
+    margin: 0.5%;
+    border: 1px solid goldenrod;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+mat-dialog-actions{
+  margin-top: 2%;
+  display: flex;
+  justify-content: space-around;
+}

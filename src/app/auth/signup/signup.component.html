@@ -5,39 +5,71 @@
             <mat-tab label="Felhasználóként regisztrálok">
                 <div class="flex content">
                     <form [formGroup]="signupForm" (ngSubmit)="submitSignup()" class="signup-form flex">
-                        <label>E-mail cím</label>
-                        <input class="input" type="email" matInput name="email" formControlName="email">
-                        <label>Vezetéknév</label>
-                        <input class="input" type="text" matInput name="firstName" formControlName="firstName">
-                        <label>Kersztnév</label>
-                        <input class="input" type="text" matInput name="lastName" formControlName="lastName">
-                        <label>Jelszó</label>
-                        <input class="input" type="password" matInput name="password" formControlName="password">
-                        <label>Jelszó megerősítése</label>
-                        <input class="input" type="password" matInput name="passwordAgain" formControlName="passwordAgain">
-                        <button mat-button class="primary-btn" type="submit">Regisztráció</button>
+                      <mat-form-field appearance="outline" >
+                        <mat-label>E-mail cím</mat-label>
+                        <input matInput formControlName="email" type="email" required>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" >
+                        <mat-label>Vezetéknév</mat-label>
+                        <input matInput formControlName="firstName">
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" >
+                        <mat-label>Keresztnév</mat-label>
+                        <input matInput formControlName="lastName" required>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" >
+                        <mat-label>Jelszó</mat-label>
+                        <input matInput formControlName="password" type="password" required>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" >
+                        <mat-label>Jelszó megerősítése</mat-label>
+                        <input matInput formControlName="passwordAgain" type="password" required>
+                      </mat-form-field>
+                      <button mat-button class="primary-btn" type="submit">Regisztráció</button>
                     </form>
                     <p class="small">Van már fiókod? <a routerLink='/login'>Bejelentkezés</a></p>
                 </div>
             </mat-tab>
             <mat-tab label="Szakemberként regisztrálok">
                 <div class="flex content">
-                    <form [formGroup]="expertForm" (ngSubmit)="submitExpert" class="signup-form flex">
-                        <label>Vezetéknév</label>
-                        <input class="input" type="text" matInput name="firstName" formControlName="firstName">
-                        <label>Keresztnév</label>
-                        <input class="input" type="text" matInput name="lastName" formControlName="lastName">
-                        <label>E-mail cím</label>
-                        <input class="input" type="email" matInput name="email" formControlName="email">
-                        <label>Szakterület</label>
-                        <input class="input" type="text" matInput name="field" formControlName="field">
-                        <label>Lakhely (Város)</label>
-                        <input class="input" type="text" matInput name="city" formControlName="city">
-                        <label>Jelszó</label>
-                        <input class="input" type="password" matInput name="password" formControlName="password">
-                        <label>Jelszó megerősítése</label>
-                        <input class="input" type="password" matInput name="passwordAgain" formControlName="passwordAgain">
-                        <button type="submit" mat-button class="primary-btn">Regisztrálok</button>
+                    <form [formGroup]="expertForm" (ngSubmit)="submitExpert()" class="signup-form flex">
+                      <mat-form-field appearance="outline" >
+                        <mat-label>E-mail cím</mat-label>
+                        <input matInput formControlName="email" type="email" required>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" >
+                        <mat-label>Vezetéknév</mat-label>
+                        <input matInput formControlName="firstName">
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" >
+                        <mat-label>Keresztnév</mat-label>
+                        <input matInput formControlName="lastName" required>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" >
+                        <mat-label>Szakterület</mat-label>
+                        <mat-select formControlName="field" required>
+                          <mat-option *ngFor="let field of this.fields" [value]="field">
+                            {{field}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" >
+                        <mat-label>Város</mat-label>
+                        <input matInput formControlName="city" required>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline">
+                        <mat-label>Telefonszám</mat-label>
+                        <input matInput formControlName="phone" type="phone">
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" >
+                        <mat-label>Jelszó</mat-label>
+                        <input matInput formControlName="password" type="password" required>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" >
+                        <mat-label>Jelszó megerősítése</mat-label>
+                        <input matInput formControlName="passwordAgain" type="password" required>
+                      </mat-form-field>
+                      <button type="submit" mat-button class="primary-btn">Regisztrálok</button>
                     </form>
                 </div>
             </mat-tab>

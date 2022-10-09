@@ -2,12 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { ObjectId } from 'mongodb';
-import { SocialUser, updateUserDao, UserDAO } from './socialUser.model';
+import { Subject } from 'rxjs';
+import { SocialUser, updateUserDao, User, UserDAO } from './socialUser.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+
+  loggedInUser:Subject<any> = new Subject();
 
   app_id:string = "housemanager-zblhe";
   admin_email:string = "admin@system.com";
@@ -20,10 +23,15 @@ export class UserService {
 
   constructor(private httpClient: HttpClient, private store: AngularFireStorage) { }
 
-  async getUser(userEmail:string): Promise<SocialUser>{
+  async getUser(userEmail:string): Promise<User>{
     let app = new Realm.App({id: this.app_id});
-    return await app.currentUser?.callFunction("getUser", userEmail) as SocialUser;
+    let mongo = app.currentUser?.mongoClient("mongodb-atlas");
+    let collection = mongo?.db("home-maker").collection("users");
+    return await collection?.findOne({email: userEmail});
+
   }
+
+
 
   async updateUser(email: string, user: updateUserDao){
     console.log("update userben");
@@ -38,6 +46,8 @@ export class UserService {
       console.log(data);
     })
   }
+
+
 
   async updateUserAfterHomeUpload(homeId:string){
     let userId = localStorage.getItem("userEmail") as string;

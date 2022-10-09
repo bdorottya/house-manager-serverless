@@ -101,6 +101,11 @@ export class SearchFiltersComponent implements OnInit {
 
     search(searchType:string){
       console.log("lefut");
+      if(searchType === "expert"){
+        if(this.expertForm.valid){
+
+        }
+      }
       if(searchType === "home"){
         if(!this.homeForm.invalid){
           console.log("valid");

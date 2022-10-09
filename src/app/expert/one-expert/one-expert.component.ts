@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { User } from 'src/app/user/socialUser.model';
+import { ExpertService } from '../expert.service';
 
 @Component({
   selector: 'app-one-expert',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OneExpertComponent implements OnInit {
 
-  constructor() { }
+
+
+  expert!:User;
+
+  constructor(private router: ActivatedRoute, private expertService: ExpertService) { }
 
   ngOnInit(): void {
+    let id = this.router.snapshot.paramMap.get("id") as string;
+    let expert = this.expertService.getExpert(id);
+    expert.then(data => {
+      this.expert = data;
+    })
   }
 
 }

@@ -2,8 +2,11 @@ import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY_PROVIDER_FACTORY } from "@angular
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { AnyNaptrRecord } from "dns";
+import { ObjectId } from "mongodb";
+import { BSON } from "realm-web";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { HomeDAO } from "../home/home.model";
+import { User } from "../user/socialUser.model";
 import { HomeSearchQuery } from "./query.model";
 
 export class Minmax{
@@ -19,6 +22,7 @@ export class SearchService {
     foundDocuments: HomeDAO[] = [];
 
     documents: Subject<HomeDAO[]> = new Subject();
+    expertDocs: Subject<User[]> = new Subject();
 
     app_id:string = "housemanager-zblhe";
     admin_email:string = "admin@system.com";
@@ -26,9 +30,44 @@ export class SearchService {
 
     constructor(private router: Router){}
 
+    async expertResults(city:string, field:string){
+      let app = new Realm.App({id: this.app_id});
+      let user: any;
+      let creds = Realm.Credentials.emailPassword(this.admin_email, this.admin_password);
+      if(app.currentUser){
+        user = app.currentUser;
+      }else{
+        user = app.logIn(creds);
+      }
+      let mongo = app.currentUser?.mongoClient("mongodb-atlas");
+      let collection = mongo?.db("home-maker").collection("users");
+      let result = collection?.find({role: 'expert', city: city, field: field});
+      result?.then(data => {
+        this.expertDocs.next(data);
+      })
+    }
+
+    async getAllExperts(){
+      let app = new Realm.App({id: this.app_id});
+      let user:any;
+      let creds = Realm.Credentials.emailPassword(this.admin_email, this.admin_password);
+      if(app.currentUser){
+        user = app.currentUser;
+      }else{
+        user = app.logIn(creds);
+      }
+      let mongo = app.currentUser?.mongoClient("mongodb-atlas");
+      let collection = mongo?.db("home-maker").collection('users');
+      let results = collection?.find({role: 'expert'});
+      results?.then(data => {
+        this.expertDocs.next(data);
+      })
+
+    }
+
     async getAllHomes(){
       let app = new Realm.App({id: this.app_id});
-      let user;
+      let user: any;
       let creds = Realm.Credentials.emailPassword(this.admin_email, this.admin_password);
       if(app.currentUser){
         user = app.currentUser;
@@ -41,6 +80,40 @@ export class SearchService {
       results?.then(data => {
         this.documents.next(data);
       })
+    }
+
+    getMostRecentHomes(){
+      let app = new Realm.App({id: this.app_id});
+      let user: any;
+      let creds = Realm.Credentials.emailPassword(this.admin_email, this.admin_password);
+      if(app.currentUser){
+        user = app.currentUser;
+      }else{
+        user = app.logIn(creds);
+      }
+      let mongo = app.currentUser?.mongoClient("mongodb-atlas");
+      let collection = mongo?.db("home-maker").collection("homes");
+      return collection?.find({}, {sort: {_uploadDate: 1}, limit: 3});
+    }
+
+    async getSimilarHomes(home: HomeDAO){
+      let app = new Realm.App({id: this.app_id});
+      let user;
+      let creds = Realm.Credentials.emailPassword(this.admin_email, this.admin_password);
+      if(app.currentUser){
+        user = app.currentUser;
+      }else{
+        user = app.logIn(creds);
+      }
+      let mongo = app.currentUser?.mongoClient("mongodb-atlas");
+      let collection = mongo?.db("home-maker").collection("homes");
+      let priceLimit = {$lt: home.price+100};
+      let sizeLimit = {$gt: home.size-5, $lt: home.size+15};
+      let query = {city: home.city, price: priceLimit, size: sizeLimit};
+      console.log(query);
+      return collection?.find(query,{limit:4});
+
+
     }
 
     async queryHomes(rawQuery:any){
@@ -85,7 +158,6 @@ export class SearchService {
               finalQuery[key] = {$or: options};
               return;
             }
-
             if(!Object.values(values)[0] && !Object.values(values)[1]){
               return;
             }

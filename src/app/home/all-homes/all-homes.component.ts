@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HomeSearchQuery } from 'src/app/search/query.model';
 import { SearchService } from 'src/app/search/search.service';
 import { HomeDAO } from '../home.model';
+import { HomeService } from '../home.service';
 
 @Component({
   selector: 'app-all-homes',
@@ -29,45 +30,55 @@ export class AllHomesComponent implements OnInit {
   sorting:string[]=["Ár szerint növekvő", "Ár szerint csökkenő", "Méret szerint növekvő", "Méret szerint csökkenő"];
   buildingType:string[]=["Tégla lakás","Panel lakás","Faház","Egyéb"];
 
+  user:any;
+
   query: HomeSearchQuery = new HomeSearchQuery();
 
   viewMode = new FormControl('');
   empty:boolean = false;
 
-  constructor(private httpClient: HttpClient, private routerSnapshot: ActivatedRoute, private serachService: SearchService) { }
+  isLoading:boolean = true;
+
+  fromHomePage?:boolean;
+
+  constructor(private httpClient: HttpClient, private routerSnapshot: ActivatedRoute, private serachService: SearchService, public homeService: HomeService) { }
 
    ngOnInit(): void {
     let app = new Realm.App({id: this.app_id});
-    let user;
+    let user:any;
     let creds = Realm.Credentials.emailPassword(this.admin_email, this.admin_password);
     if(app.currentUser){
       user = app.currentUser;
+      this.user = user;
     }else{
       user = app.logIn(creds);
+      this.user = user;
     }
-    this.serachService.getAllHomes();
-    this.serachService.documents.subscribe(observer => {
-      console.log(observer);
-      this.homes = observer;
-      if(this.homes.length == 0){
-        this.empty = true;
-      }else{
-        this.empty = false;
-      }
-    })
 
-    /*if(this.serachService.foundDocuments.length > 0){
-      this.homes = this.serachService.foundDocuments;
-      console.log(this.homes);
-    }else{
-      let homes = this.httpClient.get<HomeDAO[]>(this.baseUrl);
-      this.viewMode.setValue('col');
-      homes.subscribe(data => {
-        if(data){
-          this.homes = data;
-          console.log(this.homes);
+
+    this.routerSnapshot.queryParamMap.subscribe(query => {
+      console.log(query.get('params'));
+      if(query.get('params')){
+
+        this.isLoading = false;
+        if(this.homes.length == 0){
+          this.empty = true;
+          }else{
+            this.empty = false;
+          }
+        }else{
+          this.serachService.getAllHomes();
+          this.serachService.documents.subscribe(observer => {
+          console.log(observer);
+          this.homes = observer;
+          this.isLoading = false;
+          if(this.homes.length == 0){
+            this.empty = true;
+            }else{
+              this.empty = false;
+            }
+          })
         }
       })
-    }*/
   }
 }

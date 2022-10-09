@@ -12,14 +12,14 @@
     display: none;
   }
 
-  
+
 
   .flex-item{
     &:first-child{
       margin-left: 1%;
       margin-top: 5px;
     }
-    
+
     &:nth-child(2){
       a{
         padding: 0 24px;
@@ -40,7 +40,7 @@
     width:300px;
     button{
       padding: 2px 22px;
-      margin: 0 2%;
+      margin: 0 0 0 2%;
       border-radius: 30px;
       font-weight: 400;
     }

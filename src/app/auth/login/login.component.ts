@@ -5,6 +5,7 @@ import { AuthService } from '../auth.service';
 import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
 import { UserDAO } from 'src/app/user/socialUser.model';
 import { BSON } from 'realm-web';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-login',
@@ -29,10 +30,12 @@ export class LoginComponent implements OnInit {
   phone!:string
   firstLogin!:boolean;
 
+  app_id:string = "housemanager-zblhe";
+
   googleLoginShow: boolean = false;
 
 
-  constructor(private authService: AuthService, private router: Router, private activated: ActivatedRoute) { }
+  constructor(private userService: UserService, private authService: AuthService, private router: Router, private activated: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.activated.queryParams.subscribe(params => {
@@ -47,14 +50,14 @@ export class LoginComponent implements OnInit {
 
 }
 
-googleLogin(){
-  // The redirect URI should be on the same domain as this app and
-  // specified in the auth provider configuration.
-  const redirectUri = "https://localhost:4200/userhome";
-  const credentials = Realm.Credentials.google(redirectUri);
-  // Calling logIn() opens a Google authentication screen in a new window.
-  this.authService.googleLogin(credentials);
-}
+googleLogin(response:any){
+  const app = new Realm.App({
+    id: this.app_id
+  });
+  const credentials = Realm.Credentials.google(response.credential);
+  app.logIn(credentials).then((user) => alert(`Logged in with id: ${user.id}`));
+  }
+
 
   submitLogin(){
     if(this.loginForm.valid){
@@ -63,17 +66,20 @@ googleLogin(){
       let user = this.authService.loginWithEmailAndPass(email, pass);
       user.then(data => {
         if(data){
-          if(this.firstLogin){
-            let id = localStorage.getItem("userID") as string;
-            let _id = new BSON.ObjectId(id);
-            let newUser = new UserDAO(_id,this.email,this.firstName,this.lastName,this.date,this.avatar,this.phone);
-            const res = this.authService.insertUser(newUser);
-            if(res){
-              this.router.navigateByUrl('/userhome');
-              console.log(res);
-            }
-          }
-            this.router.navigateByUrl('/userhome');
+            const app = new Realm.App({
+              id: this.app_id
+            });
+            let mongo = app.currentUser?.mongoClient("mongodb-atlas");
+            let collection = mongo?.db("home-maker").collection("users");
+            let email = localStorage.getItem("userEmail") as string;
+            let res = collection?.findOne({email: email});
+            res?.then(data => {
+              if(data.role === "user"){
+                this.router.navigateByUrl('/userhome');
+              }else{
+                this.router.navigate(['/expertdashboard']);
+              }
+            })
           }
         });
     }

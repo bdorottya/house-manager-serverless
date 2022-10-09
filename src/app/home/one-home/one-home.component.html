@@ -1,34 +1,36 @@
 <section class="flex images">
   <div class="card gallery-container">
-    <img class="big-img" src="../../../assets/img/pexels-pixabay-259593.jpg">
-    <div class="thumbnails">
-      <img *ngFor="let image of this.images" [src]=image>
+    <div *ngIf="this.isLoading" >
+      <mat-spinner></mat-spinner>
+    </div>
+    <div *ngIf="!this.isLoading">
+      <img class="big-img" [src]="bigImage">
+      <div class="thumbnails">
+        <img *ngFor="let image of this.images" [src]="image" (click)="showInBig(image)">
+      </div>
     </div>
   </div>
   <div class="card flex col uploader-data">
     <h2>Feltöltő adatai</h2>
-    <img src="../../../assets/img/ingatlanos.png">
     <h4>{{uploader.lastName}} {{uploader.firstName}}</h4>
     <h4>Tulajdonos</h4>
     <div class="contact">
       <p class="flex col align-center"><mat-icon>phone</mat-icon><span>{{uploader.phone}}</span></p>
       <p class="flex col align-center"><mat-icon>email</mat-icon><span>{{uploader.email}}</span></p>
     </div>
-    <button mat-button class="primary-btn">Profil megtekintése</button>
-    <button mat-button class="secondary-btn">Üzenet küldése <mat-icon style="width:7px">message</mat-icon></button>
   </div>
 </section>
 <section class="card flex home-data">
   <div class="main-data">
-    <h3>{{home.type | typePipe }} {{home.buildingType}}Tégla lakás</h3>
+    <h3>{{home.type | typePipe }} {{home.buildingType}}</h3>
     <p>Utca: <span>{{home.street}}</span></p>
-    <p>Ár: <span>{{home.price}}</span></p>
+    <p>Ár: <span>{{home.price}} {{home.type=='elado' ? 'Millió Ft' : 'Ezer Ft/hó'}}</span></p>
     <p>Méret: <span>{{home.size}} nm</span></p>
     <p>Ingatlan állapota: <span>{{home.condition}}</span></p>
-    <p>Fűtés típusa: <span>{{home.heating}}</span></p>
+    <p>Fűtés típusa: <span>{{home.heatingType}}</span></p>
     <p>Parkolás: <span>{{home.parking}}</span></p>
     <p>Épület szintjei: <span>{{home.levelsInBuilding}}</span></p>
-    <p>Emelet: <span>{{home.level}}</span></p>
+    <p *ngIf="home.level">Emelet: <span>{{home.level}}</span></p>
   </div>
   <div class="additional-data">
     <h4>Város: <span>{{home.city}}</span><span *ngIf="home.city2">, {{home.city2}}  Kerület</span></h4>
@@ -38,9 +40,9 @@
     <p>Erkély: <span>{{home.balcony | yesOrNo}}</span></p>
     <p>Kert: <span>{{home.garden | yesOrNo}}</span></p>
     <p>Padlás/Pince: <span>{{home.attic | yesOrNo}}</span></p>
-    <p>Klíma: <span>{{home.airConditioner | yesOrNo}}</span></p>
-    <p>Dohányzás megenegedett: <span>{{home.smoke | yesOrNo}}</span></p>
-    <p>Kisállat megengedett: <span>{{home.pet | yesOrNo}}</span></p>
+    <p>Klíma: <span>{{home.ac | yesOrNo}}</span></p>
+    <p *ngIf="home.type == 'kiado'">Dohányzás megenegedett: <span>{{home.smoke | yesOrNo}}</span></p>
+    <p *ngIf="home.type == 'kiado'">Kisállat megengedett: <span>{{home.pet | yesOrNo}}</span></p>
   </div>
   <div class="recom flex col">
     <h4>Vegy igénybe szolgáltatásainkat!</h4>
@@ -61,6 +63,10 @@
 <section class="similar-homes card">
   <h4>Hasonló ingatlanok</h4>
   <div class="recom-container flex">
-
+    <div class="home-container">
+      <div class="home-card card" *ngFor="let similar of similarHomes">
+        <h3>{{similar.city}}</h3>
+      </div>
+    </div>
   </div>
 </section>

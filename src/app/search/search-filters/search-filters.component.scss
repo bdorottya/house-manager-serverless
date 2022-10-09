@@ -72,3 +72,13 @@
 .transform{
   transform: rotate(180deg);
 }
+
+.expert-form{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: baseline;
+  .form-field{
+    min-width: 35%;
+  }
+}

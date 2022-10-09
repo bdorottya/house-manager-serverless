@@ -1,1 +1,23 @@
-<p>update-data works!</p>
+<div class="container">
+  <h2>Adataim módosítása</h2>
+  <form (ngSubmit)="submit()" [formGroup]="updateForm" class="flex">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>E-mail cím</mat-label>
+      <input matInput formControlName="email" type="email">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Vezetéknév</mat-label>
+      <input matInput formControlName="firstName">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Keresztnév</mat-label>
+      <input matInput formControlName="lastName">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Telefonszám</mat-label>
+      <input matInput formControlName="phone" type="phone">
+    </mat-form-field>
+    <button mat-button class="primary-btn" type="submit">Adatok módosítása</button>
+    <button class="secondary-btn" mat-button (click)="this.dialogRef.close()">Mégsem</button>
+  </form>
+</div>

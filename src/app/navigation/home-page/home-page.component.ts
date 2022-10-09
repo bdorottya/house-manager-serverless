@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HomeDAO } from 'src/app/home/home.model';
 import { SearchService } from 'src/app/search/search.service';
 
 @Component({
@@ -36,6 +37,7 @@ searchForm = this.fb.group({
 elado:boolean=true;
 eladoTexts = ["Millió Ft", "Ezer Ft/hó.", ];
 
+mostRecent:HomeDAO[] = [];
 
 
   constructor(private fb: FormBuilder, private searchService: SearchService, private router: Router) { }
@@ -48,6 +50,13 @@ eladoTexts = ["Millió Ft", "Ezer Ft/hó.", ];
         this.elado = true
       }
     })
+    let res = this.searchService.getMostRecentHomes();
+    res?.then(data => {
+      this.mostRecent = data;
+      console.log(this.mostRecent);
+    })
+
+    console.log(this.mostRecent);
   }
 
   search(){
@@ -56,7 +65,7 @@ eladoTexts = ["Millió Ft", "Ezer Ft/hó.", ];
       console.log(query);
       let results = this.searchService.queryHomes(query);
       results.then(res => {
-        this.router.navigate(['/allhomes']);
+        this.router.navigate(['/allhomes'], {queryParams: {fromHomePage: true}});
       })
 
     }else{

@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ObjectId } from 'mongodb';
-import { finalize, Observable } from 'rxjs';
+import { BSON } from 'realm-web';
+import { finalize, first, map, Observable } from 'rxjs';
 import { FileUpload } from '../data-models/file-upload.model';
 import { UserDAO } from '../user/socialUser.model';
 import { UserService } from '../user/user.service';
@@ -20,8 +21,13 @@ export class HomeService {
   baseUrlHome = "https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/gethome";
   baseUrlUploader = "https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/getUploader";
   baseUrlImages = "https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/updateHomeImages";
+  saveHomeUrl = "https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/saveHome";
 
-  imageDownloadUrls:any[]=[];
+  imageDownloadUrls!:string;
+
+  file!: FileUpload;
+
+  urlsLoaded!:boolean;
 
   constructor(private userService: UserService, private snackBar: MatSnackBar, private storage: AngularFireStorage, private httpClient: HttpClient) { }
 
@@ -39,7 +45,7 @@ export class HomeService {
     return await this.httpClient.get<UserDAO>(this.baseUrlUploader, {params: params});
   }
 
-  getImages(imageRefs: string[]){
+   getImages(imageRefs: string[]){
     let images: string[] = [];
     imageRefs.forEach(ref => {
       let obs = this.storage.refFromURL(ref).getDownloadURL();
@@ -51,72 +57,116 @@ export class HomeService {
     return images;
   }
 
-  updateHomeWIthImages(homeId:string, images: any[]){
+  updateHomeWIthImages(homeId:string, images: string[]){
     let app = new Realm.App({id: this.app_id});
     let user = app.currentUser;
-    let observers: any[] = [];
+    let observers;
     console.log(images);
-    for(let i = 0; i <= images.length; i++){
+    images.forEach(image => {
       console.log("forban");
-      let upload = this.httpClient.post(this.baseUrlImages, {homeId: homeId, images: images[i]});
+      console.log(image);
+      let upload = this.httpClient.post(this.baseUrlImages, {homeId: homeId, images: image});
       upload.subscribe(obs => {
+        console.log(obs);
         observers.push(obs);
       })
-    }
+    })
     return observers;
-
   }
 
-  async uploadHome(home: HomeDAO){
+  updateHome(homeId: ObjectId, home: HomeDAO){
+    let app = new Realm.App({id: this.app_id});
+    let user = app.currentUser;
+    let mongo = app.currentUser?.mongoClient("mongodb-atlas");
+    let collection = mongo?.db("home-maker").collection("homes");
+    try {
+      console.log(homeId, home);
+      let newId = new BSON.ObjectID(homeId)
+      let result = collection?.updateOne({_id: newId}, {$set: home});
+      result?.then(data => {
+        console.log(data);
+      })
+    }catch(error){
+      console.log(error);
+    }
+  }
+
+  async uploadHome(home: HomeDAO, files: FileUpload[]){
     const app = new Realm.App({id: this.app_id});
     let date = new Date();
     let mongo = app.currentUser?.mongoClient("mongodb-atlas");
     let collection = mongo?.db("home-maker").collection("homes");
     home.uploadDate = date;
-    console.log(home);
     try {
+      console.log(home);
       let res = await collection?.insertOne(home);
       if(res){
         let promise = this.userService.updateUserAfterHomeUpload(res.insertedId);
         promise.then(() => {
-          this.snackBar.open("Sikeres feltöltés!", "OK");
-          console.log(res?.insertedId, home.images);
-          let imageUpload = this.updateHomeWIthImages(res?.insertedId, home.images);
-          console.log(imageUpload);
-        }).catch(err => {
-          console.log(err);
-        });
-      }
-    }
+          files.forEach(file => {
+            this.uploadImages(res?.insertedId, file);
+        })
+      }).then(() => {
+        this.snackBar.open("Sikeres feltöltés", "OK", {panelClass: 'success-snackbar'});
+      })
+    }}
     catch(err){
       console.log(err);
     }
   }
 
-  uploadImages(files: FileUpload[]){
-
-    files.forEach(file => {
-      const filepath = file.name;
-      const storageRef = this.storage.ref(filepath);
-      const upload = this.storage.upload(filepath, file.file);
-      upload.snapshotChanges().pipe(finalize(() => {
+  uploadImages(homeId: ObjectId, file: FileUpload){
+    console.log(file);
+    const filepath = file.name;
+    const storageRef = this.storage.ref(filepath);
+    const upload = this.storage.upload(filepath, file.file);
+      upload.snapshotChanges().pipe(map(obs => {
+        console.log("inside map: ", obs);
         storageRef.getDownloadURL().subscribe(url => {
+          console.log("getdownloadban");
           file.url = url;
           console.log(file.url);
-          this.imageDownloadUrls.push(url as string);
-        });
-      })
-      ).subscribe(data => {
-        if(data){
+          let updateHome = this.httpClient.post(this.baseUrlImages, {homeId: homeId, image: url});
+          updateHome.subscribe(data => {
+            console.log("updateHome subban");
+            console.log(data);
+          })
+        })
         }
+      )).subscribe(obs => {
+        console.log("snapshot subscribe");
       });
+
+
+
+  }
+
+  saveHome(home?: ObjectId){
+    let app = new Realm.App({id: this.app_id});
+    let user = app.currentUser;
+    console.log("save me: ", home as unknown as string);
+    console.log(user);
+    let data = {
+      userId: user?.id,
+      homeId: home
+    }
+    let alreadySaved = user?.callFunction("alreadySavedHome", home as unknown as string, user?.id as unknown as string);
+    alreadySaved?.then(res => {
+      console.log(res);
+      let ress:any = res;
+      if(ress.length>0){
+        console.log(res);
+        this.snackBar.open("Már elmentetted ezt az ingatlant.", "OK", {panelClass: 'error-snackbar'});
+      }else{
+        let results = this.httpClient.post<any>(this.saveHomeUrl, data);
+        results.subscribe(obs => {
+          console.log(obs);
+          if(obs != null){
+            this.snackBar.open("Sikeres mentés!", "OK", {panelClass: 'secondary-snackbar'});
+          }
+        })
+      }
     })
   }
 
-  getHomeImages(id: ObjectId){
-
-  }
-
-  viewed(){}
-  saved(){}
 }

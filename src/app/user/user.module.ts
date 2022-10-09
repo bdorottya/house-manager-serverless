@@ -14,6 +14,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { HomeModule } from '../home/home.module';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDialogModule} from '@angular/material/dialog';
+import {RouterModule} from '@angular/router';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -32,8 +35,11 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatBadgeModule,
     MatSnackBarModule,
     HomeModule,
+    MatDialogModule,
     MatProgressSpinnerModule,
-    MatDialogModule
+    RouterModule,
+    MatFormFieldModule,
+    MatInputModule
   ]
 })
 export class UserModule { }

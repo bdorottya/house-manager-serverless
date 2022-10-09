@@ -1,1 +1,19 @@
-<p>expert-dashboard works!</p>
+<div class="flex">
+  <section class="card flex expert-data">
+    <h2>Üdv, {{this.expert.lastName}}!</h2>
+    <img [src]="this.image">
+    <p><span><mat-icon>phone</mat-icon></span>{{this.expert.phone}}</p>
+    <button mat-button class="expert-btn">Profilkép feltöltése</button>
+    <button mat-button class="expert-btn">Adatok módosítása</button>
+    <button mat-button class="expert-btn" (click)="modifyPrices()">Árak szerkesztése</button>
+    <button mat-button class="expert-btn">Bemutatkozás szerkesztése</button>
+    <a routerLink="/oneexpert/{{expert._id}}"><button mat-button class="expert-btn">Profil megtekintése</button></a>
+  </section>
+  <section class="card flex ratings">
+    <h2>Értékelések</h2>
+    <div class="rating-container">
+
+    </div>
+  </section>
+</div>
+

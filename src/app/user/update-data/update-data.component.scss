@@ -1,0 +1,13 @@
+.container{
+
+  padding: 5% 10%;
+  form{
+    flex-direction: column;
+    justify-content: center;
+
+    button{
+      margin: 5% 0;
+      cursor: pointer;
+    }
+  }
+}

@@ -12,38 +12,39 @@
       <mat-button-toggle value="row"><mat-icon class="icons">view_headline</mat-icon></mat-button-toggle>
     </mat-button-toggle-group>
   </div>
-  <div class="results flex" [ngClass]="viewMode.value === 'row' ? 'row' : 'col'">
-    <div *ngIf="this.empty" class="no-results">
-      <h1>Sajnáljunk, nincs a keresésnek megfelelő elem. :(</h1>
-    </div>
-    <div class="home-card card flex" *ngFor="let home of homes">
-      <img src="../../../assets/img/pexels-pixabay-259593.jpg">
-      <div class="overlay">
-        <span>{{home.city}}</span>
-        <span *ngIf="home.city2">{{home.city2}} Kerület</span>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <div *ngIf="!isLoading" class="results flex" [ngClass]="viewMode.value === 'row' ? 'row' : 'col'">
+      <div *ngIf="this.empty" class="no-results">
+        <h1>Sajnáljunk, nincs a keresésnek megfelelő elem. :(</h1>
       </div>
-      <div class="city flex">
-        <p>{{home.city}}</p>
-        <p *ngIf="home.city2">{{home.city2}} Kerület</p>
-      </div>
-      <div class="tags flex">
-        <span>{{home.condition}}</span>
-        <span>{{home.parking}}</span>
-      </div>
-      <div class="price flex">
-        <h3>{{home.price}} Ft</h3>
-        <p>{{home.size}} nm</p>
-      </div>
-      <div class="rooms flex">
-        <p>{{home.bedroom}} hálószoba</p>
-        <p>{{home.bathroom}} fürdőszoba</p>
-        <p *ngIf="home.garden">Kert</p>
-      </div>
-      <div class="flex buttons">
-        <button mat-button class="secondary-btn">Mentés <mat-icon>favorite_border</mat-icon></button>
-        <a routerLink="/onehome/{{home._id}}"><button mat-button class="primary-btn">Tovább<mat-icon>navigate_next</mat-icon></button></a>
-      </div>
-    </div>
+        <div class="home-card card flex" *ngFor="let home of homes" [ngClass]="this.user.id === home.uploader.toString() ? 'own-home' : ''">
+          <img src="{{home.images[0]}}">
+          <div class="overlay">
+            <span>{{home.city}}</span>
+            <span *ngIf="home.city2">{{home.city2}}</span>
+          </div>
+          <div class="city flex">
+            <p>{{home.city}}</p>
+            <p *ngIf="home.city2">{{home.city2}}</p>
+          </div>
+          <div class="tags flex">
+            <div>{{home.condition}}</div>
+            <div>{{home.parking}}</div>
+          </div>
+          <div class="price flex">
+            <h3>{{home.type === 'elado' ? home.price + ' Millió Ft' : home.price + " ezer Ft/hó."}}</h3>
+            <p>{{home.size}} nm</p>
+          </div>
+          <div class="rooms flex">
+            <p>{{home.bedroom}} hálószoba</p>
+            <p>{{home.bathroom}} fürdőszoba</p>
+            <p *ngIf="home.garden">Kert</p>
+          </div>
+          <div class="flex buttons">
+            <button *ngIf="!(this.user.id === home.uploader.toString())" (click)="this.homeService.saveHome(home._id)" mat-button class="secondary-btn">Mentés <mat-icon>favorite_border</mat-icon></button>
+            <a routerLink="/onehome/{{home._id}}"><button mat-button class="primary-btn">Tovább<mat-icon>navigate_next</mat-icon></button></a>
+          </div>
+        </div>
   </div>
 </section>
 

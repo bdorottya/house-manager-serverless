@@ -32,7 +32,7 @@ export interface Home{
 }
 
 export class HomeDAO {
-  _id?: ObjectId;
+  _id!: ObjectId;
   city!: string;
   city2?: string;
   street!:string;
@@ -42,7 +42,7 @@ export class HomeDAO {
   size!:number;
   condition!:string;
   description?:string;
-  heating!:string;
+  heatingType!:string;
   level?:string;
   parking!:string;
   bedroom?:number;
@@ -51,11 +51,12 @@ export class HomeDAO {
   attic!:boolean;
   garden!:boolean;
   balcony!:boolean;
-  airConditioner!:boolean;
+  ac!:boolean;
   pet!:boolean;
   smoke!:boolean;
   type!:string;
-  uploader!:BSON.ObjectID;
+  uploader!:ObjectId;
   uploadDate?:Date;
   images:any;
+  _savedCount!:number;
 }

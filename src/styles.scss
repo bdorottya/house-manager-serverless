@@ -106,7 +106,29 @@ a:hover{
   width:100%;
 }
 
-.primary-btn, .secondary-btn{
+.success-snackbar{
+  background: #21AE49;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.secondary-snackbar{
+  background: white;
+  border: #21AE49;
+  color: #21AE49;
+  letter-spacing: 0.075em;
+}
+
+.error-snackbar{
+  background: rgb(242, 188, 62);
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+
+}
+
+.primary-btn, .secondary-btn, .expert-btn{
   border-radius: 30px;
   padding: 10px 15px;
   font-weight: 500;
@@ -123,6 +145,12 @@ a:hover{
   color: black;
   box-shadow: 0 0 4px #21AE49;
   border:none;
+}
+
+.expert-btn{
+  background-color: goldenrod;
+  color: white;
+  border: none;
 }
 
 .card{

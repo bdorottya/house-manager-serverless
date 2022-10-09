@@ -59,63 +59,26 @@
 <section class="recom card">
   <h3>Frissen feltöltött ingatlanok</h3>
   <div class="flex container">
-    <div class="home-card card card-hover-effect">
-      <img src="../../../assets/img/pexels-pixabay-259593.jpg" class="icon-100p card-img">
-      <p>25.000.000 Ft.</p>
-      <p>Budapest, XII</p>
+    <div class="home-card card card-hover-effect" *ngFor="let home of this.mostRecent">
+      <img src="{{home.images[0]}}" class="icon-100p card-img">
+      <p>{{home.type == "elado" ? home.price + ' Millió Ft' : home.price + ' ezer Ft/hó'}}</p>
+      <p>{{home.city}}, <span *ngIf="home.city2">{{home.city2}}</span></p>
       <div class="icons flex">
         <div class="flex" >
           <img src="../../../assets/img/blueprint.png" class="icon-50">
-          <span>59 nm</span>
+          <span>{{home.size}} nm</span>
         </div>
         <div class="flex">
           <img src="../../../assets/img/bedroom.png" class="icon-50">
-          <span>2</span>
+          <span>{{home.bedroom}}</span>
         </div>
         <div class="flex">
           <img src="../../../assets/img/bathroom.png" class="icon-50">
-          <span>1</span>
+          <span>{{home.bathroom}}</span>
         </div>
       </div>
     </div>
-    <div class="home-card card card-hover-effect">
-      <img src="../../../assets/img/pexels-pixabay-259593.jpg" class="icon-100p card-img">
-      <p>25.000.000 Ft.</p>
-      <p>Budapest, XII</p>
-      <div class="icons flex">
-        <div class="flex">
-          <img src="../../../assets/img/blueprint.png" class="icon-50">
-          <span>59 nm</span>
-        </div>
-        <div class="flex">
-          <img src="../../../assets/img/bedroom.png" class="icon-50">
-          <span>2</span>
-        </div>
-        <div class="flex">
-          <img src="../../../assets/img/bathroom.png" class="icon-50">
-          <span>1</span>
-        </div>
-      </div>
-    </div>
-    <div class="home-card card card-hover-effect">
-      <img src="../../../assets/img/pexels-pixabay-259593.jpg" class="icon-100p card-img">
-      <p>25.000.000 Ft.</p>
-      <p>Budapest, XII</p>
-      <div class="icons flex">
-        <div class="flex">
-          <img src="../../../assets/img/blueprint.png" class="icon-50">
-          <span>59 nm</span>
-        </div>
-        <div class="flex">
-          <img src="../../../assets/img/bedroom.png" class="icon-50">
-          <span>2</span>
-        </div>
-        <div class="flex">
-          <img src="../../../assets/img/bathroom.png" class="icon-50">
-          <span>1</span>
-        </div>
-      </div>
-    </div>
+
   </div>
 </section>
 <section class="services card">

@@ -1,3 +1,20 @@
 .search-container{
   margin: 2% 4%;
 }
+
+.results{
+  margin: 2% 4%;
+  padding: 2% 5%;
+  .card-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    .expert-card{
+      width: 20%;
+      padding: 0;
+      .padding-box{
+        padding: 2%;
+      }
+    }
+  }
+}

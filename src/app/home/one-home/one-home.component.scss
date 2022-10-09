@@ -2,14 +2,16 @@
   margin: 2% 4%;
   justify-content: space-between;
   .gallery-container{
-    max-width: 73%;
+    width: 73%;
     margin: 0 1% 0 0;
     padding: 0;
     .thumbnails{
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
       padding: .75%;
       img{
+        margin: 5px 8px;
         max-width: 205px;
         box-shadow: 1px 1px 10px grey;
         border-radius: 15px;
@@ -23,9 +25,10 @@
   }
   .uploader-data{
     align-items: center;
+    max-width: 23%;
     img{
-      border-radius: 100px;
-      width: 60%;
+      border-radius: 10px;
+      width: 70%;
       box-shadow: 0 0 10px grey;
     }
     .contact{

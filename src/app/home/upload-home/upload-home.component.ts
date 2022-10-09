@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatRadioButton } from '@angular/material/radio';
 import { ObjectId } from 'mongodb';
 import { BSON } from 'realm-web';
 import { FileUpload } from 'src/app/data-models/file-upload.model';
@@ -15,7 +17,7 @@ import { HomeService } from '../home.service';
 })
 export class UploadHomeComponent implements OnInit {
 
-  constructor(private homeService: HomeService, private httpClient: HttpClient) { }
+  constructor(private dialogRef: MatDialogRef<UploadHomeComponent>, private homeService: HomeService, private httpClient: HttpClient, private fb: FormBuilder) { }
 
   baseUrl = "https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/addUploadedHome"
 
@@ -27,37 +29,11 @@ export class UploadHomeComponent implements OnInit {
   noImage = "../../../assets/img/no-img.jpg";
   imageUrls:string[] = [];
 
+  imagesForUpdate:string[] = [];;
+
   oId:ObjectId= new BSON.ObjectId();
 
-  uploadHome = new FormGroup({
-    //first expansion - cím, típus
-    type: new FormControl(''),
-    city: new FormControl(''),
-    city2: new FormControl(''),
-    street: new FormControl(''),
-    buildingType: new FormControl(''),
-    condition: new FormControl(''),
-    levelsInBuilding: new FormControl(''),
-    level: new FormControl(''),
-    //second expansion - méret
-    size: new FormControl(''),
-    bedroom: new FormControl(''),
-    bathroom: new FormControl(''),
-    //third expansion - további adatok
-    heatingType: new FormControl(''),
-    elevator: new FormControl(''),
-    attic: new FormControl(''),
-    garden: new FormControl(''),
-    balcony: new FormControl(''),
-    pet: new FormControl(''),
-    smoke: new FormControl(''),
-    airCond: new FormControl(''),
-    parking: new FormControl(''),
-    //fourth expansion - ár, képek, leírás
-    price: new FormControl(''),
-    description: new FormControl(''),
-    images: new FormControl(''),
-  });
+  uploadHome!:FormGroup;
 
   city2:any;
   buildingType:any;
@@ -66,6 +42,8 @@ export class UploadHomeComponent implements OnInit {
   parking: any;
   yesno: any;
 
+  editableHome!:HomeDAO;
+
   ngOnInit(): void {
     this.city2 = HomeArray.city2;
     this.buildingType = HomeArray.buildingType;
@@ -73,6 +51,45 @@ export class UploadHomeComponent implements OnInit {
     this.heating = HomeArray.heating;
     this.parking = HomeArray.parking;
     this.yesno = HomeArray.yesno;
+
+    this.uploadHome = this.fb.group({
+      type: ['', Validators.required],
+      city: ['', [Validators.required]],
+      city2: [''],
+      street: [''],
+      buildingType: [''],
+      levelsInBuilding: [''],
+      condition: [''],
+      level: [''],
+      size: [''],
+      price: [''],
+      bedroom: [''],
+      bathroom: [''],
+      heatingType: [''],
+      parking: [''],
+      elevator: [''],
+      balcony: [''],
+      garden: [''],
+      attic: [''],
+      ac: [''],
+      pet: [''],
+      smoke: [''],
+      description: [''],
+      images: ['']
+    });
+
+    if(this.editableHome){
+      this.uploadHome.patchValue(this.editableHome);
+      this.imagesToShow = this.editableHome.images;
+      this.uploadHome.get("images")?.patchValue(this.editableHome.images);
+      console.log(this.uploadHome.value);
+      console.log(this.uploadHome);
+      if(this.editableHome.type === "elado"){
+        this.uploadHome.get("type")?.setValue('elado');
+      }else{
+        this.uploadHome.get("type")?.setValue('kiado');
+      }
+    }
   }
 
   uploadFiles(event:any){
@@ -86,7 +103,8 @@ export class UploadHomeComponent implements OnInit {
       let file = this.selectedFiles[i];
       let userID = localStorage.getItem("userID") as string;
       let time = new Date().getUTCMinutes();
-      let filePath = `homes/${oId}/${i}_${file.name}`;
+      let fileName="img_" + i;
+      let filePath = `homes/${oId}/${fileName}`;
       console.log(filePath);
       const reader = new FileReader();
       reader.onload = (e: any) => {
@@ -116,66 +134,71 @@ export class UploadHomeComponent implements OnInit {
   }
 
   submitUpload(){
-    let city = this.uploadHome.get("city")?.value;
-    let city2 = this.uploadHome.get("city2")?.value;
-    let type = this.uploadHome.get("type")?.value;
-    let street = this.uploadHome.get("street")?.value;
-    let buildingType = this.uploadHome.get("buildingType")?.value;
-    let condition = this.uploadHome.get("condition")?.value;
-    let levelsInBuilding = this.uploadHome.get("levelsInBuilding")?.value;
-    let level = this.uploadHome.get("level")?.value;
-    let size = this.uploadHome.get("size")?.value;
-    let bedroom = this.uploadHome.get("bedroom")?.value;
-    let bathroom = this.uploadHome.get("bathroom")?.value;
-    let heatingType = this.uploadHome.get("heatingType")?.value;
-    let parking = this.uploadHome.get("parking")?.value;
-    let elevator = this.uploadHome.get("elevator")?.value;
-    let attic = this.uploadHome.get("attic")?.value;
-    let garden = this.uploadHome.get("garden")?.value;
-    let balcony = this.uploadHome.get("balcony")?.value;
-    let airCond = this.uploadHome.get("airCond")?.value;
-    let pet = this.uploadHome.get("pet")?.value;
-    let smoke = this.uploadHome.get("smoke")?.value;
-    let price = this.uploadHome.get("price")?.value;
-    let description = this.uploadHome.get("description")?.value;
+    if(this.uploadHome.valid){
+      if(this.editableHome){
+        this.homeService.updateHome(this.editableHome._id, this.uploadHome.value);
+        this.dialogRef.close();
+        return;
+      }
+      let city = this.uploadHome.get("city")?.value;
+      let city2 = this.uploadHome.get("city2")?.value;
+      let type = this.uploadHome.get("type")?.value;
+      let street = this.uploadHome.get("street")?.value;
+      let buildingType = this.uploadHome.get("buildingType")?.value;
+      let condition = this.uploadHome.get("condition")?.value;
+      let levelsInBuilding = this.uploadHome.get("levelsInBuilding")?.value;
+      let level = this.uploadHome.get("level")?.value;
+      let size = this.uploadHome.get("size")?.value;
+      let bedroom = this.uploadHome.get("bedroom")?.value;
+      let bathroom = this.uploadHome.get("bathroom")?.value;
+      let heatingType = this.uploadHome.get("heatingType")?.value;
+      let parking = this.uploadHome.get("parking")?.value;
+      let elevator = this.uploadHome.get("elevator")?.value;
+      let attic = this.uploadHome.get("attic")?.value;
+      let garden = this.uploadHome.get("garden")?.value;
+      let balcony = this.uploadHome.get("balcony")?.value;
+      let airCond = this.uploadHome.get("ac")?.value;
+      let pet = this.uploadHome.get("pet")?.value;
+      let smoke = this.uploadHome.get("smoke")?.value;
+      let price = this.uploadHome.get("price")?.value;
+      let description = this.uploadHome.get("description")?.value;
 
-    let home = new HomeDAO();
-    home._id = this.oId;
-    home.airConditioner = airCond;
-    home.attic = attic;
-    home.balcony = balcony;
-    home.bathroom = bathroom;
-    home.bedroom = bedroom;
-    home.buildingType = buildingType;
-    home.levelsInBuilding = levelsInBuilding;
-    home.city = city;
-    home.city2 = city2;
-    home.condition = condition;
-    home.description = description;
-    home.elevator = elevator;
-    home.garden = garden;
-    home.type = type;
-    home.street = street;
-    home.heating = heatingType;
-    home.level = level;
-    home.size = size;
-    home.parking = parking;
-    home.pet = pet;
-    home.smoke = smoke;
-    home.price = price;
+      let home = new HomeDAO();
+      home._id = this.oId;
+      home.ac = airCond;
+      home.attic = attic;
+      home.balcony = balcony;
+      home.bathroom = bathroom;
+      home.bedroom = bedroom;
+      home.buildingType = buildingType;
+      home.levelsInBuilding = levelsInBuilding;
+      home.city = city;
+      home.city2 = city2;
+      home.condition = condition;
+      home.description = description;
+      home.elevator = elevator;
+      home.garden = garden;
+      home.type = type;
+      home.street = street;
+      home.heatingType = heatingType;
+      home.level = level;
+      home.size = size;
+      home.parking = parking;
+      home.pet = pet;
+      home.smoke = smoke;
+      home.price = price;
 
-    let id = localStorage.getItem("userID") as string;
-    home.uploader = new BSON.ObjectId(id);
-    console.log(localStorage.getItem("userID"));
-    let fileUpload = this.homeService.uploadImages(this.filesToUpload);
-    const urls = this.homeService.imageDownloadUrls;
-    console.log(urls);
-    home.images = urls;
-    console.log(home.images);
-    let res = this.homeService.uploadHome(home);
-    res.then(() => {
-      console.log("done");
-    })
+      let id = localStorage.getItem("userID") as string;
+      home.uploader = new BSON.ObjectId(id);
+      console.log(localStorage.getItem("userID"));
+      let res = this.homeService.uploadHome(home, this.filesToUpload);
+      res.then(() => {
+        console.log("done");
+        this.uploadHome.reset();
+        this.dialogRef.close();
+      })
+    }
+
 
   }
 

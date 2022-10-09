@@ -1,14 +1,26 @@
+<script src="https://unpkg.com/realm-web/dist/bundle.iife.js"></script>
+<script src="https://accounts.google.com/gsi/client"></script>
+
 <section>
   <div class="grey-box">
     <h1>Bejelentkezés</h1>
     <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" class="login-form">
-        <label>E-mail cím</label>
-        <input type="email" matInput placeholder="valami@gmail.com" name="email" formControlName="email">
-        <label>Jelszó</label>
-        <input type="password" matInput placeholder="Jelszó" name="password" formControlName="password">
+      <mat-form-field appearance="outline" required class="form-field">
+        <mat-label>E-mail cím</mat-label>
+        <input type="email" matInput  formControlName="email">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Jelszó</mat-label>
+        <input type="password" matInput formControlName="password">
+      </mat-form-field>
       <button mat-button type="submit" class="primary-btn">Belépés</button>
     </form>
-    <button id="google-auth" (click)="googleLogin()" mat-button>Google Belépés</button>
+    <button id="google-auth" mat-button>Google Belépés</button>
+    <div
+      id="g_id_onload"
+      data-client_id="383591626747-5e5o5sgr7rrvi9ml6431rdpfesuitkon.apps.googleusercontent.com"
+      data-callback="googleLogin"
+    ></div>
     <p class="small">Nincs még fiókod? <a routerLink='/signup'>Regisztráció</a> </p>
   </div>
 </section>

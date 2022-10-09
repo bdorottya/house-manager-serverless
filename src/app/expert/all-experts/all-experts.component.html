@@ -1,4 +1,17 @@
-<section class="search-container flex card">
+<section class="search-container card">
   <app-search-filters></app-search-filters>
+</section>
+<section class="card results">
+  <div class="card-container">
+    <div class="card expert-card" *ngFor="let exp of this.experts">
+      <img>
+      <div class="padding-box">
+        <h3>{{exp.firstName}} {{exp.lastName}}</h3>
+        <h3>{{exp.field}}</h3>
+        <h3>{{exp.city}}</h3>
+        <h3>{{exp._currentRate}}</h3>
+      </div>
+    </div>
+  </div>
 </section>
 

@@ -24,7 +24,6 @@
     "@types/google-one-tap": "^1.2.0",
     "firebase": "^9.9.0",
     "mongodb": "^4.7.0",
-    "ng-gallery": "^7.0.0",
     "realm": "^10.19.2",
     "realm-web": "^1.7.0",
     "rxjs": "~7.5.0",

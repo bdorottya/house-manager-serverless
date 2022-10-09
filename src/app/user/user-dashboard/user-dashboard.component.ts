@@ -6,7 +6,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { HomeDAO } from 'src/app/home/home.model';
-import { SocialUser, UserDAO } from '../socialUser.model';
+import { HomeService } from 'src/app/home/home.service';
+import { UploadHomeComponent } from 'src/app/home/upload-home/upload-home.component';
+import { SocialUser, User, UserDAO } from '../socialUser.model';
+import { UpdateDataComponent } from '../update-data/update-data.component';
 import { UploadAvatarComponent } from '../upload-avatar/upload-avatar.component';
 import { UserService } from '../user.service';
 
@@ -18,13 +21,18 @@ import { UserService } from '../user.service';
 export class UserDashboardComponent implements OnInit {
 
   getHomeUrl = "https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/gethome";
-  user?: SocialUser;
+  user?: User;
   avatarImage?:string;
   isLoading:boolean = false;
   uploadedHomes: HomeDAO[] = [];
+  savedHomes: HomeDAO[] = [];
+  homeImage!:string;
+
+  loaded:boolean = false;
+  loadedSaved:boolean=false;
 
 
-  constructor(private httpClient: HttpClient, private _snackBar: MatSnackBar, private userService: UserService, private authService: AuthService, private router: Router, private store: AngularFireStorage, public dialog: MatDialog) { }
+  constructor(private homeService: HomeService, private httpClient: HttpClient, private _snackBar: MatSnackBar, private userService: UserService, private authService: AuthService, private router: Router, private store: AngularFireStorage, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     let email = localStorage.getItem("userEmail");
@@ -35,6 +43,7 @@ export class UserDashboardComponent implements OnInit {
       this.user = data;
       this.getAvatar(this.user.avatar);
       this.getUploadedHomes();
+      this.getSavedHomes();
     })
   }
 
@@ -49,6 +58,15 @@ export class UserDashboardComponent implements OnInit {
     })
   }
 
+  getHomeImage(url:string){
+    let obs = this.store.ref(url).getDownloadURL();
+    obs.subscribe(observer => {
+      this.loaded = true;
+      console.log(observer);
+      this.homeImage = observer;
+    })
+  }
+
   getAvatar(url:string){
     let observer = this.store.ref(url).getDownloadURL();
     observer.subscribe(obs => {
@@ -58,18 +76,29 @@ export class UserDashboardComponent implements OnInit {
     })
   }
 
+  updateUserData(){
+    this.dialog.open(UpdateDataComponent);
+  }
+
   getUploadedHomes(){
     console.log("enter");
     if(this.user){
       if(this.user?._uploadedHomes?.length > 0){
         this.user?._uploadedHomes.forEach(home => {
+          this.loaded = false;
           let queryParams = new HttpParams();
-          queryParams = queryParams.append("id", home as string);
+          queryParams = queryParams.append("id", home as unknown as string);
           const foundHome = this.httpClient.get<HomeDAO>(this.getHomeUrl, {params: queryParams});
           foundHome.subscribe(home => {
-            this.uploadedHomes.push(home);
+            if(home){
+              this.loaded = true;
+              this.uploadedHomes.push(home);
+              //this.getHomeImage(home.images[0]);
+            }
           });
         })
+      }else{
+        this.loaded = true;
       }
     }
     console.log(this.uploadedHomes);
@@ -84,6 +113,35 @@ export class UserDashboardComponent implements OnInit {
         this._snackBar.open("Sikeres képfeltöltés!", "OK");
       }
     });
+  }
+
+  openHomeUploadDialog(home?:HomeDAO){
+    if(!home){
+      this.dialog.open(UploadHomeComponent);
+    }else{
+      let dialog = this.dialog.open(UploadHomeComponent);
+      dialog.componentInstance.editableHome = home;
+    }
+  }
+
+  getSavedHomes(){
+    if(this.user){
+      if(this.user._savedHomes?.length > 0){
+        this.user._savedHomes.forEach(home => {
+          let queryParams = new HttpParams();
+          queryParams = queryParams.append("id", home as unknown as string);
+          const foundHome = this.httpClient.get<HomeDAO>(this.getHomeUrl, {params: queryParams});
+          foundHome.subscribe(data => {
+            if(data){
+              this.savedHomes.push(data);
+              this.loadedSaved = true;
+            }
+          })
+        })
+      }else{
+        this.loadedSaved = true;
+      }
+    }
   }
 
 

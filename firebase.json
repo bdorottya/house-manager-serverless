@@ -25,11 +25,13 @@
         ]
       }
     ],
+    "appAssociation": "AUTO",
     "rewrites": [
       {
         "source": "**",
         "destination": "/index.html"
-      }
+      },
+      { "source": "/img/**", "dynamicLinks": true }
     ]
   }
 }

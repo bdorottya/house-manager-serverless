@@ -1,17 +1,19 @@
-<form class="search-form" *ngIf="searchType == 'expert'" [formGroup]="expertForm" ngSubmit="search('expert')">
-  <mat-form-field  appearance="outline">
-    <mat-label>Város</mat-label>
-    <input matInput formControlName="city">
-  </mat-form-field>
-  <mat-form-field appearance="outline" >
-    <mat-label>Terület</mat-label>
-    <mat-select matInput formControlName="field" >
-      <mat-option *ngFor="let field of this.fields" value="field">
-        {{field}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <button mat-button class="primary-btn" type="submit">Keresés</button>
+<form *ngIf="searchType == 'expert'" [formGroup]="expertForm" ngSubmit="search('expert')">
+  <div class="flex expert-form">
+    <mat-form-field  appearance="outline" class="form-field">
+      <mat-label>Város</mat-label>
+      <input matInput formControlName="city" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Szakterület</mat-label>
+      <mat-select matInput formControlName="field" required>
+        <mat-option *ngFor="let field of this.fields" value="field">
+          {{field}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-button class="primary-btn" type="submit">Keresés</button>
+  </div>
 </form>
 
 <form class="home-form" *ngIf="searchType=='home'"  [formGroup]="homeForm" [ngClass]="this.open ? 'expanded' : ''" (ngSubmit)="search('home')">
@@ -26,6 +28,7 @@
     <mat-form-field  appearance="outline" required class="form-field city-field">
       <mat-label>Város</mat-label>
       <input matInput formControlName="city" type="text">
+      <button matSuffix mat-icon-button type="submit"><mat-icon>search</mat-icon></button>
     </mat-form-field>
     <button class="expand-button primary-btn" mat-button type="button" (click)="expand()">
       Részletes keresés <mat-icon class="button-icon" [ngClass]="this.open ? 'transform' : ''">expand_more</mat-icon>
@@ -57,6 +60,14 @@
       <mat-select formControlName="condition" multiple>
         <mat-option *ngFor="let con of this.condition" [value]="con">
           {{con}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field  appearance="outline" class="form-field medium">
+      <mat-label>Ingatlan típusa</mat-label>
+      <mat-select formControlName="buildingType" multiple>
+        <mat-option *ngFor="let type of this.buildingType" [value]="type">
+          {{type}}
         </mat-option>
       </mat-select>
     </mat-form-field>

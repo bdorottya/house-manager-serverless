@@ -13,6 +13,8 @@ import { UploadAvatarComponent } from './user/upload-avatar/upload-avatar.compon
 import { UserDashboardComponent } from './user/user-dashboard/user-dashboard.component';
 import { AuthGuard } from './auth/auth.guard';
 import { PleaseSignInComponent } from './navigation/please-sign-in/please-sign-in.component';
+import { ExpertDashboardComponent } from './expert/expert-dashboard/expert-dashboard.component';
+import { OneExpertComponent } from './expert/one-expert/one-expert.component';
 
 const routes: Routes = [
   {path: "", component:HomePageComponent},
@@ -26,7 +28,9 @@ const routes: Routes = [
   {path: "avatarupload", component: UploadAvatarComponent},
   {path: "datachange", component: UpdateDataComponent},
   {path: "onehome/:id", component: OneHomeComponent},
-  {path: "pleasesignin", component: PleaseSignInComponent}
+  {path: "pleasesignin", component: PleaseSignInComponent},
+  {path: "expertdashboard", component: ExpertDashboardComponent},
+  {path: "oneexpert/:id", component: OneExpertComponent}
 ]
 
 @NgModule({

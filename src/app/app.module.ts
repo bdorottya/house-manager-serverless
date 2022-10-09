@@ -36,7 +36,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { SpinnerComponent } from './navigation/spinner/spinner.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ModifyPricesComponent } from './expert/modify-prices/modify-prices.component';
 
 
 @NgModule({
@@ -50,7 +53,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     AllHomesComponent,
     FooterComponent,
     PleaseSignInComponent,
-    SearchFiltersComponent
+    SearchFiltersComponent,
+    SpinnerComponent,
+    ModifyPricesComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +70,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     HttpClientModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatDialogModule,
     MatMenuModule,
     MatRadioModule,
     HomeModule,
@@ -73,6 +79,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatButtonToggleModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatProgressSpinnerModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

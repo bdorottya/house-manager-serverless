@@ -24,10 +24,11 @@ export class UploadAvatarComponent implements OnInit {
 
   updateuserUrl="https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/updateUser";
 
+  _userType:any;
+
   ngOnInit(): void {
 
     this.previewImage = this.data.image;
-
   }
 
   onFileChanged(event:any){
