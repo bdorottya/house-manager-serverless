@@ -20,7 +20,7 @@
       }
     }
     button{
-      border-radius: 30px;
+      border-radius: 15px;
       padding: 1% 5%;
       margin: 0 1%;
       width:fit-content;
@@ -61,26 +61,26 @@
 }
 .results{
   flex-wrap: wrap;
+  justify-content: center;
 
 }
-.col{
+
+.home-card{
+  padding: 0;
+  background-color: rgba(220,220,220,0.3);
+  width: 42%;
+  margin: 1%;
   flex-direction: row;
-  justify-content: center;
-  .home-card{
-    position:relative;
-    padding: 0 0 2% 0;
-    background-color: rgba(220,220,220,0.3);
-    width: 22%;
-    margin: 1%;
-    flex-direction: column;
-    align-content: space-between;
+  .image-container{
+    position: relative;
+    width: 100%;
     img{
-      border-top-left-radius: 30px;
-      border-top-right-radius: 30px;
-      width:100%;
-    }
-    .city{
-      display: none;
+      width: 100%;
+      height: 13.5rem;
+      border-top-left-radius: 15px;
+      border-bottom-left-radius: 15px;
+      object-fit: cover;
+      padding: 0;
     }
     .overlay{
       position: absolute;
@@ -88,90 +88,85 @@
       left:0px;
       padding: 3% 0 0 0;
       width:100%;
-      height: 15%;
-      border-top-right-radius: 30px;
-      border-top-left-radius: 30px;
+      height: 20%;
+      border-bottom-left-radius: 15px;
+      border-top-left-radius: 15px;
       background-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
       span{
-        margin:0 10%;
+        margin:0 5%;
         color: white;
         font-weight: 600;
-        font-size:18px;
+        font-size: 100%;
         &:nth-child(2){
           font-weight:400;
           font-size: 13px;
         }
       }
     }
+  }
+  .info-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     .tags{
-      justify-content: space-around;
-      div{
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      span{
         border-radius: 5px;
         padding: 3% 5%;
         margin: 3% 0;
         font-size: 14px;
-        &:first-child{
-          border: 1px solid #21ae49;
-          color: #21ae49;
-          font-weight: 500;
-        }
-        &:last-child{
-          background-color: #21ae49;
-          color: white;
-          border: 1px solid white;
-          font-weight: 600;
-        }
+        display: flex;
+        align-content: center;
+        //border: 1px solid #21ae49;
+        color: #21ae49;
+        font-weight: 500;
       }
     }
     .price{
       margin: 2% 5%;
-      justify-content: space-between;
+      justify-content: space-evenly;
     }
     .rooms{
+      display: flex;
       justify-content: space-evenly;
-      align-items: center;
-      margin-bottom: 7%;
-      p{
-        max-width: 20%;
-        text-align: center;
-        font-size:13px;
-      }
     }
     .buttons{
+      margin-top: 6%;
       justify-content: space-around;
     }
   }
-}
-.row{
-  flex-direction: column;
-  justify-content: center;
-  flex-wrap: wrap;
-  flex-basis: content;
-  .home-card{
-    padding: 0 0 0 0;
-    margin: 1% 0;
-    width: 100%;
-    flex-direction: row;
-    background-color: rgba(220,220,220,0.3);
-    img{
-      width: 30%;
-      border-top-left-radius: 30px;
-      border-bottom-left-radius: 30px;
-    }
-    .overlay{
-      display: none;
-    }
-    .city{
-      flex-direction: row;
-      font-size: 20px;
-      font-weight: 600;
-    }
-    .tags{
-      flex-direction: row;
-    }
-  }
+
+
+
 }
 
-.own-home{
-  background: #21ae49c1;
+
+@media only screen and (max-width: 460px){
+  .filters{
+    max-height: fit-content;
+  }
+ .results{
+  flex-direction: column;
+  padding: 0 2%;
+  .home-card{
+    img{
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      border-bottom-left-radius: 0;
+    }
+    .overlay{
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      border-bottom-left-radius: 0;
+    }
+    width: 100%;
+    flex-direction: column;
+    .info-container{
+      padding: 5%;
+    }
+  }
+ }
 }

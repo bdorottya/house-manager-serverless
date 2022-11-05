@@ -5,18 +5,18 @@
       <h3>Típus, cím</h3>
       <div class="radio-group">
         <label for="type">Hirdetés típusa</label>
-        <mat-radio-group name="type" required formControlName="type"  [(ngModel)]="homeType">
-          <mat-radio-button class="radio-btn" value="elado" #eladoButton>
+        <mat-radio-group name="type" formControlName="type"  [(ngModel)]="homeType">
+          <mat-radio-button class="radio-btn" value="elado" #eladoButton [checked]="this.editableHome && this.editableHome.type == 'elado'">
             Eladó
           </mat-radio-button>
-          <mat-radio-button class="radio-btn" value="kiado" #kiadoButton>
+          <mat-radio-button class="radio-btn" value="kiado" #kiadoButton [checked]="this.editableHome && this.editableHome.type == 'kiado'">
             Kiadó
           </mat-radio-button>
         </mat-radio-group>
       </div>
       <mat-form-field appearance="outline">
         <mat-label>Város</mat-label>
-        <input matInput required formControlName="city" style="text-transform:capitalize">
+        <input matInput required formControlName="city" [style.text-transform]="'capitalize'">
       </mat-form-field>
       <mat-form-field *ngIf="this.uploadHome.get('city')?.value === 'Budapest'" appearance="outline" >
         <mat-label>Kerület</mat-label>
@@ -69,7 +69,7 @@
       </mat-form-field>
       <mat-form-field  appearance="outline" class="form-field medium">
         <mat-label>Ingatlan emelete</mat-label>
-        <input matInput formControlName="level" type="number">
+        <input matInput formControlName="level" type="number" [max]="this.uploadHome.get('levelsInBuilding')?.value">
       </mat-form-field>
     </div>
 
@@ -157,12 +157,12 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Leírás</mat-label>
-        <input matInput formControlName="description">
+        <textarea matInput formControlName="description"></textarea>
       </mat-form-field>
       <label>Képek</label>
       <input type="file" formControlName="images" multiple (change)="uploadFiles($event)">
       <div class="image-preview">
-        <img *ngIf="imagesToShow.length==0" [src]="this.noImage">
+        <img *ngIf="imagesToShow && imagesToShow.length==0" [src]="this.noImage">
         <div *ngFor="let image of imagesToShow">
           <mat-icon class="icon" mat-icon-button (click)="removeImage(image)">cancel</mat-icon>
           <img [src]="this.image">
@@ -170,6 +170,10 @@
       </div>
     </div>
   </div>
-  <button mat-button class="primary-btn" type="submit">Feltöltés</button>
+  <div class="buttons">
+    <button mat-button class="primary-btn" type="submit">{{this.editableHome ? 'Módosítása' : 'Feltöltés'}}</button>
+    <button *ngIf="this.editableHome" mat-button class="warning-btn" type="button" (click)="deleteHome(this.editableHome._id)">Ingatlan törlése</button>
+    <button mat-button class="secondary-btn" type="button" mat-dialog-close>Mégsem</button>
+  </div>
   </form>
 </div>

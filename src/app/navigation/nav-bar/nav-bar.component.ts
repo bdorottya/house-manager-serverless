@@ -11,13 +11,17 @@ import { UserService } from 'src/app/user/user.service';
 export class NavBarComponent implements OnInit {
 
 
-
+  role!:string;
 
   constructor(public authService: AuthService, private userService: UserService) {
 
   }
 
   ngOnInit(): void {
+    this.authService.getUser().then(data => {
+      this.role = data.role;
+    });
+
 
   }
 

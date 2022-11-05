@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { HomeDAO } from 'src/app/home/home.model';
 import { HomeService } from 'src/app/home/home.service';
 import { UploadHomeComponent } from 'src/app/home/upload-home/upload-home.component';
+import { SpinnerComponent } from 'src/app/navigation/spinner/spinner.component';
 import { SocialUser, User, UserDAO } from '../socialUser.model';
 import { UpdateDataComponent } from '../update-data/update-data.component';
 import { UploadAvatarComponent } from '../upload-avatar/upload-avatar.component';
@@ -18,7 +19,7 @@ import { UserService } from '../user.service';
   templateUrl: './user-dashboard.component.html',
   styleUrls: ['./user-dashboard.component.scss']
 })
-export class UserDashboardComponent implements OnInit {
+export class UserDashboardComponent implements OnInit, AfterViewInit {
 
   getHomeUrl = "https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/gethome";
   user?: User;
@@ -28,23 +29,34 @@ export class UserDashboardComponent implements OnInit {
   savedHomes: HomeDAO[] = [];
   homeImage!:string;
 
-  loaded:boolean = false;
-  loadedSaved:boolean=false;
 
 
   constructor(private homeService: HomeService, private httpClient: HttpClient, private _snackBar: MatSnackBar, private userService: UserService, private authService: AuthService, private router: Router, private store: AngularFireStorage, public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.dialog.open(SpinnerComponent);
     let email = localStorage.getItem("userEmail");
     let user = this.userService.getUser(email as string);
     user.then(data => {
       this.isLoading = false;
       console.log(data);
       this.user = data;
+      this.authService.role = data.role;
       this.getAvatar(this.user.avatar);
       this.getUploadedHomes();
+      this.homeService.ownHomes.subscribe(data => {
+        console.log(data);
+        this.uploadedHomes = data;
+        this.uploadedHomes.sort((a,b) => b.price - a.price);
+      })
       this.getSavedHomes();
+      this.dialog.closeAll();
     })
+  }
+
+  ngAfterViewInit(): void {
+
+
   }
 
   logOut(){
@@ -61,7 +73,6 @@ export class UserDashboardComponent implements OnInit {
   getHomeImage(url:string){
     let obs = this.store.ref(url).getDownloadURL();
     obs.subscribe(observer => {
-      this.loaded = true;
       console.log(observer);
       this.homeImage = observer;
     })
@@ -72,7 +83,6 @@ export class UserDashboardComponent implements OnInit {
     observer.subscribe(obs => {
       this.avatarImage = obs;
       console.log(obs);
-      this.isLoading = false
     })
   }
 
@@ -80,25 +90,26 @@ export class UserDashboardComponent implements OnInit {
     this.dialog.open(UpdateDataComponent);
   }
 
-  getUploadedHomes(){
+  async getUploadedHomes(){
     console.log("enter");
     if(this.user){
       if(this.user?._uploadedHomes?.length > 0){
-        this.user?._uploadedHomes.forEach(home => {
-          this.loaded = false;
+        let homes:HomeDAO[] = [];
+        this.user?._uploadedHomes.forEach(async home => {
           let queryParams = new HttpParams();
           queryParams = queryParams.append("id", home as unknown as string);
-          const foundHome = this.httpClient.get<HomeDAO>(this.getHomeUrl, {params: queryParams});
+          const foundHome = await this.httpClient.get<HomeDAO>(this.getHomeUrl, {params: queryParams});
           foundHome.subscribe(home => {
             if(home){
-              this.loaded = true;
-              this.uploadedHomes.push(home);
+              console.log(home);
+              homes.push(home);
+              console.log(homes);
+              this.homeService.ownHomes.next(homes);
               //this.getHomeImage(home.images[0]);
             }
           });
         })
-      }else{
-        this.loaded = true;
+
       }
     }
     console.log(this.uploadedHomes);
@@ -132,14 +143,13 @@ export class UserDashboardComponent implements OnInit {
           queryParams = queryParams.append("id", home as unknown as string);
           const foundHome = this.httpClient.get<HomeDAO>(this.getHomeUrl, {params: queryParams});
           foundHome.subscribe(data => {
+
             if(data){
               this.savedHomes.push(data);
-              this.loadedSaved = true;
+
             }
           })
         })
-      }else{
-        this.loadedSaved = true;
       }
     }
   }

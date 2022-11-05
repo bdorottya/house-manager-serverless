@@ -1,1 +1,26 @@
-<p>add-rating works!</p>
+<form [formGroup]="ratingForm" (ngSubmit)="sendReview()">
+  <div class="flex field-container">
+    <mat-form-field class="form-field">
+      <mat-label>Szakember</mat-label>
+      <input matInput formControlName="expert">
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <mat-label>Értékelés</mat-label>
+      <mat-select formControlName="star" required>
+        <mat-option value=1>1</mat-option>
+        <mat-option value=2>2</mat-option>
+        <mat-option value=3>3</mat-option>
+        <mat-option value=4>4</mat-option>
+        <mat-option value=5>5</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Értékelés szövege</mat-label>
+      <textarea matInput formControlName="review" style="height:5rem"></textarea>
+    </mat-form-field>
+  </div>
+  <div class="buttons">
+    <button mat-button type="button" class="secondary-btn" (click)="close()">Mégsem</button>
+    <button mat-button type="submit" class="expert-btn" mat-dialog-close>Értékelés küldése</button>
+  </div>
+</form>

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { MatDialog } from '@angular/material/dialog';
 import { SpinnerComponent } from 'src/app/navigation/spinner/spinner.component';
 import { User } from 'src/app/user/socialUser.model';
 import { UserService } from 'src/app/user/user.service';
 import { ModifyPricesComponent } from '../modify-prices/modify-prices.component';
+import { UpdateAvatarComponent } from '../update-avatar/update-avatar.component';
+import { UpdateDataComponent } from '../update-data/update-data.component';
 
 @Component({
   selector: 'app-expert-dashboard',
@@ -12,7 +15,7 @@ import { ModifyPricesComponent } from '../modify-prices/modify-prices.component'
 })
 export class ExpertDashboardComponent implements OnInit {
 
-  constructor(private userService: UserService, private dialog: MatDialog) { }
+  constructor(private userService: UserService, private dialog: MatDialog, private store: AngularFireStorage) { }
 
   expert:User = new User();
   image = '../../../assets/img/no-img.jpg';
@@ -28,9 +31,16 @@ export class ExpertDashboardComponent implements OnInit {
     })
   }
 
-  uploadAvatar(){}
+  uploadAvatar(){
+    let dialog = this.dialog.open(UpdateAvatarComponent);
+    dialog.componentInstance.expert = this.expert;
+    dialog.componentInstance.image = this.image;
+  }
 
-  updateData(){}
+  updateData(){
+    let dialog = this.dialog.open(UpdateDataComponent);
+    dialog.componentInstance.expert = this.expert;
+  }
 
   modifyPrices(){
     this.dialog.open(ModifyPricesComponent);

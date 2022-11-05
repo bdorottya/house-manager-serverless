@@ -1,18 +1,21 @@
-<form *ngIf="searchType == 'expert'" [formGroup]="expertForm" ngSubmit="search('expert')">
+<form *ngIf="searchType == 'expert'" [formGroup]="expertForm" (ngSubmit)="search('expert')">
   <div class="flex expert-form">
     <mat-form-field  appearance="outline" class="form-field">
       <mat-label>Város</mat-label>
-      <input matInput formControlName="city" required>
+      <input matInput formControlName="city" [style.text-transform]="'capitalize'">
     </mat-form-field>
     <mat-form-field appearance="outline" class="form-field">
       <mat-label>Szakterület</mat-label>
-      <mat-select matInput formControlName="field" required>
-        <mat-option *ngFor="let field of this.fields" value="field">
+      <mat-select matInput formControlName="field">
+        <mat-option *ngFor="let field of this.fields" [value]="field">
           {{field}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-button class="primary-btn" type="submit">Keresés</button>
+    <div class="buttons">
+      <button [disabled]="this.expertForm.pristine" mat-button class="secondary-btn" type="button" (click)="clearForm()">Feltételek törlése</button>
+      <button mat-button class="primary-btn" type="submit">Keresés</button>
+    </div>
   </div>
 </form>
 
@@ -27,15 +30,18 @@
     </div>
     <mat-form-field  appearance="outline" required class="form-field city-field">
       <mat-label>Város</mat-label>
-      <input matInput formControlName="city" type="text">
+      <input matInput formControlName="city" type="text" [style.text-transform]="'capitalize'">
       <button matSuffix mat-icon-button type="submit"><mat-icon>search</mat-icon></button>
     </mat-form-field>
-    <button class="expand-button primary-btn" mat-button type="button" (click)="expand()">
-      Részletes keresés <mat-icon class="button-icon" [ngClass]="this.open ? 'transform' : ''">expand_more</mat-icon>
-    </button>
+    <div class="buttons">
+      <button mat-button class="secondary-btn" [disabled]="this.homeForm.pristine" type="button" (click)="clearForm()">Feltételek törlése</button>
+      <button class="expand-button primary-btn" mat-button type="button" (click)="expand()">
+        Részletes keresés <mat-icon class="button-icon" [ngClass]="this.open ? 'transform' : ''">expand_more</mat-icon>
+      </button>
+    </div>
   </div>
   <div class="hidden-panel">
-    <mat-form-field  appearance="outline" class="form-field small">
+    <mat-form-field  appearance="outline" class="form-field small" *ngIf="this.homeForm.get('city')?.value === 'Budapest'">
       <mat-label>Kerület</mat-label>
       <mat-select formControlName="city2" multiple>
         <mat-option *ngFor="let dist of this.city2" [value]="dist">

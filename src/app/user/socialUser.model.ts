@@ -1,4 +1,5 @@
 import { ObjectId } from "mongodb";
+import { Rate } from "../rate/rate.model";
 
 export interface SocialUser {
     id: string;
@@ -29,8 +30,7 @@ export class User{
   prices!:any[];
   _uploadedHomes!:ObjectId[];
   _savedHomes!:ObjectId[];
-  _currentRate!:number;
-  _ratings!:string[];
+  _ratings!:ObjectId;
 
 }
 

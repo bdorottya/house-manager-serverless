@@ -39,7 +39,7 @@ $house-manager-serverless-theme: mat.define-light-theme((
 
 
 
-html, body { height: 100%; }
+html, body { height: 100%}
 body { margin: 0; font-family: 'Montserrat', sans-serif; }
 
 input[type=number] {
@@ -50,6 +50,8 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+
 
 a{
   text-decoration: none;
@@ -106,6 +108,12 @@ a:hover{
   width:100%;
 }
 
+@media only screen and (max-width:460px){
+  .success-snackbar, .secondary-snackbar, .error-snackbar{
+    max-width: 75%;
+  }
+}
+
 .success-snackbar{
   background: #21AE49;
   color: white;
@@ -128,8 +136,14 @@ a:hover{
 
 }
 
-.primary-btn, .secondary-btn, .expert-btn{
-  border-radius: 30px;
+.warning-btn{
+  border-radius: 5px;
+  border: none;
+  color: white;
+  background-color: crimson;
+}
+
+.primary-btn, .secondary-btn, .expert-btn, .warning-btn{
   padding: 10px 15px;
   font-weight: 500;
 }
@@ -138,6 +152,7 @@ a:hover{
   background-color: #21AE49;
   color: white;
   border: none;
+  border-radius: 5px;
 }
 
 .secondary-btn{
@@ -145,6 +160,7 @@ a:hover{
   color: black;
   box-shadow: 0 0 4px #21AE49;
   border:none;
+  border-radius: 5px;
 }
 
 .expert-btn{
@@ -154,13 +170,13 @@ a:hover{
 }
 
 .card{
-  border-radius: 30px;
+  border-radius: 15px;
   box-shadow: 0 0 4px grey;
   padding: 1%;
 }
 
 .input{
-  border-radius: 30px;
+  border-radius: 15px;
   font-size: 1rem;
   padding: 15px 20px;
   box-shadow: 0 0 4px grey;
@@ -182,7 +198,7 @@ a:hover{
 }
 
 .input-sorting{
-  border-radius: 30px;
+  border-radius: 15px;
   padding: 1%;
   border: 1px solid #333;
   background: white;

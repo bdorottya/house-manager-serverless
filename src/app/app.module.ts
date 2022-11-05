@@ -40,6 +40,13 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { SpinnerComponent } from './navigation/spinner/spinner.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ModifyPricesComponent } from './expert/modify-prices/modify-prices.component';
+import { RateModule } from './rate/rate.module';
+import { UpdateAvatarComponent } from './expert/update-avatar/update-avatar.component';
+import { UpdateDataComponent } from './expert/update-data/update-data.component';
+import { ErrorMessageComponent } from './navigation/error-message/error-message.component';
+import { GetRatingsComponent } from './rate/get-ratings/get-ratings.component';
+import { MovingComponent } from './navigation/moving/moving.component';
+import { ServicesComponent } from './navigation/services/services.component';
 
 
 @NgModule({
@@ -55,7 +62,13 @@ import { ModifyPricesComponent } from './expert/modify-prices/modify-prices.comp
     PleaseSignInComponent,
     SearchFiltersComponent,
     SpinnerComponent,
-    ModifyPricesComponent
+    ModifyPricesComponent,
+    UpdateAvatarComponent,
+    UpdateDataComponent,
+    ErrorMessageComponent,
+    GetRatingsComponent,
+    MovingComponent,
+    ServicesComponent
   ],
   imports: [
     BrowserModule,
@@ -80,6 +93,7 @@ import { ModifyPricesComponent } from './expert/modify-prices/modify-prices.comp
     MatSelectModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
+    RateModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

@@ -40,18 +40,26 @@ export class ModifyPricesComponent implements OnInit {
         service: serviceName,
         price: price
       }
-      let index = this.services.findIndex(s => s.service === service.service);
-      console.log(index);
-      if(index > -1){
-        console.log(service)
-        this.services[index] = service;
-        this.priceForm.reset();
+      if(this.services && this.services.length>0){
+        let index = this.services.findIndex(s => s.service === service.service);
+        console.log(index);
+        if(index > -1){
+          console.log(service)
+          this.services[index] = service;
+          this.priceForm.reset();
+        }else{
+          console.log(service)
+          this.services.push(service);
+          console.log(this.services);
+          this.priceForm.reset();
+        }
       }else{
-        console.log(service)
+        this.services = [];
         this.services.push(service);
         console.log(this.services);
         this.priceForm.reset();
       }
+
     }
   }
 

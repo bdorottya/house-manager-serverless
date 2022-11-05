@@ -1,0 +1,16 @@
+.field-container{
+  flex-direction: column;
+  padding: 2% 3%;
+  margin: 2%;
+  align-items: center;
+  .form-field{
+    width: 20rem;
+  }
+}
+.buttons{
+  display: flex;
+  justify-content: space-evenly;
+}
+button{
+  cursor:pointer;
+}

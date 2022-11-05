@@ -9,6 +9,9 @@ import { HomeService } from '../home.service';
 import { Observable } from 'rxjs';
 import { SearchService } from 'src/app/search/search.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { BSON } from 'realm-web';
+import { MatDialog } from '@angular/material/dialog';
+import { SpinnerComponent } from 'src/app/navigation/spinner/spinner.component';
 
 @Component({
   selector: 'app-one-home',
@@ -32,12 +35,13 @@ export class OneHomeComponent implements OnInit {
 
   similarHomes: HomeDAO[] = [];
 
-  constructor(private router: ActivatedRoute, private homeService: HomeService, private searchService: SearchService, private store: AngularFireStorage) { }
+  constructor(private routerr: Router, private dialog: MatDialog, private router: ActivatedRoute, private homeService: HomeService, private searchService: SearchService, private store: AngularFireStorage) { }
 
   ngOnInit(): void {
     let app = new Realm.App({id: this.app_id});
     let user:any;
     let creds = Realm.Credentials.emailPassword(this.admin_email, this.admin_password);
+    this.dialog.open(SpinnerComponent);
     if(app.currentUser){
       user = app.currentUser;
     }else{
@@ -52,11 +56,18 @@ export class OneHomeComponent implements OnInit {
         console.log(this.home);
         const uploaderId = this.home.uploader as unknown as string;
         const uploader = this.homeService.getUploader(uploaderId);
-        this.searchService.getSimilarHomes(this.home).then(data => {
+        this.searchService.getSimilarHomes(this.home).then((data:any) => {
           console.log(data);
-          if(data){
-            this.similarHomes = data;
+          console.log(this.home._id);
+          let newArray:any;
+          let index = data?.findIndex(((home: { _id: ObjectId; }) => home._id != this.home._id));
+          console.log(index);
+          if(index > -1){
+            newArray = data?.splice(index, 1);
+            this.similarHomes = newArray;
+            return;
           }
+          this.similarHomes = data;
         })
         uploader.then(d=> {
           d.subscribe(uploaderDao=>{
@@ -73,6 +84,7 @@ export class OneHomeComponent implements OnInit {
           console.log(this.images);
           console.log(this.home);
           this.showInBig(this.home.images[0]);
+          this.dialog.closeAll();
         })
       })
     })
@@ -89,6 +101,13 @@ export class OneHomeComponent implements OnInit {
 
   showInBig(img:string){
     this.bigImage = img;
+  }
+
+  navigate(homeId:any){
+    this.routerr.navigate(['/allhomes']).then(() => {
+      this.routerr.navigate([`/onehome/${homeId}`]);
+    })
+
   }
 
 }

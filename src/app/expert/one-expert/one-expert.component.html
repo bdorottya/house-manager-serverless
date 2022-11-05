@@ -1,21 +1,33 @@
-<div class="flex">
+<div class="container flex">
   <section class="expert-container card">
     <div class="basic-data">
-      <img>
       <h2>{{expert.firstName}} {{expert.lastName}}</h2>
+      <img [src]="expert.avatar ? expert.avatar : this.noImg">
       <h3>{{expert.field}}</h3>
-      <h3>{{expert.phone}}</h3>
-      <h3>{{expert.city}}</h3>
-      <h3><mat-icon style="color:gold">star</mat-icon>{{expert._currentRate}}</h3>
+      <h4>{{expert.city}}</h4>
+      <a href="{{'tel:'+expert.phone}}"><button class="expert-btn" mat-button><mat-icon style="color:white">phone</mat-icon> {{expert.phone}}</button></a>
+      <a href="{{'mailto:'+expert.email}}"><button class="expert-btn" mat-button><mat-icon style="color:white">mail</mat-icon> {{expert.email}}</button></a>
+      <h5 *ngIf="this.ratings.length > 0"><mat-icon style="color:gold">star</mat-icon>{{currentRate | number: '0.1-1' }}</h5>
     </div>
     <div class="introduction">
-      {{expert.welcomeText}}
+      <h2>Bemutatkozás</h2>
+      <p *ngIf="expert.welcomeText">{{expert.welcomeText}}</p>
+      <p *ngIf="!expert.welcomeText">{{expert.lastName}} még nem töltött fel bemutatkozást.</p>
     </div>
     <div class="prices">
-
+      <h2>Árak</h2>
+      <div *ngIf="expert.prices">
+        <div class="price-card card" *ngFor="let price of expert.prices">
+          <p>{{price.service}}</p>
+          <p>{{price.price}} Forint.</p>
+        </div>
+      </div>
+      <p *ngIf="!expert.prices">
+        {{expert.lastName}} még nem adott meg árakat.
+      </p>
     </div>
   </section>
   <section class="card ratings">
-
+    <app-get-ratings [expert]="this.expert"></app-get-ratings>
   </section>
 </div>

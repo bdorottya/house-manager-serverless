@@ -32,6 +32,8 @@ export class SearchFiltersComponent implements OnInit {
   yesno: any;
   open:boolean = false;
 
+  @Input() setQuery:any;
+
   extras: Array<any> = [
     {name: 'Lift az épületben', value: 'elevator', icon: 'elevator'},
     {name: 'Padlás/Pince', value: 'attic', icon: 'warehouse'},
@@ -40,7 +42,7 @@ export class SearchFiltersComponent implements OnInit {
     {name: 'Légkondi', value: 'ac', icon: 'ac_unit'},
     {name: 'Kisállat megengedett', value: 'pet', icon: 'pets'},
     {name: 'Dohányzás megengedett', value: 'smoke', icon: 'smoking_rooms'},
-    {name: 'Csak képes hirdetés', value: 'hasImage', icon: 'image'},
+    {name: 'Csak képes hirdetés', value: 'hasImages', icon: 'image'},
   ]
 
 
@@ -55,8 +57,8 @@ export class SearchFiltersComponent implements OnInit {
 
     this.fields = Constants.expertFields;
     this.homeForm = this.fb.group({
-      type: ['elado', Validators.required],
-      city: ['', [Validators.required]],
+      type: ['', Validators.required],
+      city: [''],
       city2: [''],
       buildingType: [''],
       condition: [''],
@@ -86,12 +88,26 @@ export class SearchFiltersComponent implements OnInit {
       hasImages: ['']
     })
 
+    if(this.setQuery){
+      this.homeForm.patchValue(this.setQuery);
+    }
+
 
 
   }
 
-    expand(){
+  clearForm(){
+    if(this.searchType == 'home'){
+      this.homeForm.reset();
+      this.searchService.getAllHomes();
+    }else{
+      this.expertForm.reset();
+      this.searchService.getAllExperts();
+    }
 
+  }
+
+    expand(){
       if(this.open === true){
         this.open = false;
       }else{
@@ -103,21 +119,27 @@ export class SearchFiltersComponent implements OnInit {
       console.log("lefut");
       if(searchType === "expert"){
         if(this.expertForm.valid){
-
+          console.log("query experts");
+          let query;
+          if(this.expertForm.get('city')?.value){
+            if(this.expertForm.get('field')?.value){
+              query = {city: this.expertForm.get("city")?.value, field: this.expertForm.get('field')?.value}
+              this.searchService.expertResults(query);
+              return;
+            }
+            query = {city: this.expertForm.get("city")?.value}
+            this.searchService.expertResults(query);
+            return;
+          }else{
+            query = {field: this.expertForm.get("field")?.value}
+          }
+          this.searchService.expertResults(query);
         }
       }
       if(searchType === "home"){
         if(!this.homeForm.invalid){
           console.log("valid");
           let query = this.homeForm.value;
-          if(this.homeForm.get('type')?.value == 'kiado'){
-            query.price.minPrice = query.price.minPrice*1000;
-            query.price.maxPrice = query.price.maxPrice*1000
-          }
-          if(this.homeForm.get('type')?.value == "elado"){
-            query.price.minPrice = query.price.minPrice*1000000;
-            query.price.maxPrice = query.price.maxPrice*1000000;
-          }
           let results = this.searchService.queryHomes(query);
           results.then(data => {
             console.log(this.searchService.foundDocuments);

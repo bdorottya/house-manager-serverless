@@ -1,0 +1,13 @@
+<div class="preview">
+  <img [src]="image">
+</div>
+<form [formGroup]="avatarForm" (ngSubmit)="upload(this.file)">
+  <div class="field-container">
+    <input type="file" formControlName="avatar" (change)="onFileChanged($event)">
+  </div>
+  <div class="buttons">
+    <button mat-buttton class="secondary-btn" (click)="close()" type="submit">Mégsem</button>
+    <button mat-button class="primary-btn" type="submit">Feltöltés</button>
+  </div>
+
+</form>

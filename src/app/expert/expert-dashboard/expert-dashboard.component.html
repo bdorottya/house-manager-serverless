@@ -1,18 +1,45 @@
-<div class="flex">
+<div class="container flex">
   <section class="card flex expert-data">
     <h2>Üdv, {{this.expert.lastName}}!</h2>
-    <img [src]="this.image">
-    <p><span><mat-icon>phone</mat-icon></span>{{this.expert.phone}}</p>
-    <button mat-button class="expert-btn">Profilkép feltöltése</button>
-    <button mat-button class="expert-btn">Adatok módosítása</button>
-    <button mat-button class="expert-btn" (click)="modifyPrices()">Árak szerkesztése</button>
-    <button mat-button class="expert-btn">Bemutatkozás szerkesztése</button>
-    <a routerLink="/oneexpert/{{expert._id}}"><button mat-button class="expert-btn">Profil megtekintése</button></a>
+    <img [src]="this.expert.avatar ? this.expert.avatar : image">
+    <div class="buttons">
+      <button mat-button class="expert-btn" (click)="uploadAvatar()">Profilkép feltöltése</button>
+      <button mat-button class="expert-btn" (click)="updateData()">Adatok módosítása</button>
+      <button mat-button class="expert-btn" (click)="modifyPrices()">Árak szerkesztése</button>
+      <button mat-button class="expert-btn"><a routerLink="/oneexpert/{{expert._id}}">Profil megtekintése</a></button>
+    </div>
   </section>
-  <section class="card flex ratings">
-    <h2>Értékelések</h2>
-    <div class="rating-container">
+  <section class="flex double-card">
+    <div class="data card">
+      <div class="row">
+        <p>E-mail cím:</p>
+        <p>{{expert.email}}</p>
+      </div>
+      <div class="row">
+        <p>Telefonszám:</p>
+        <p>{{expert.phone}}</p>
+      </div>
+      <div class="row">
+        <p>Szakterület:</p>
+        <p>{{expert.field}}</p>
+      </div>
+      <div class="row">
+        <p>Aktív város:</p>
+        <p>{{expert.city}}</p>
+      </div>
+      <div class="prices">
+        <h3>Szolgáltatások:</h3>
+        <div class="price-row" *ngFor="let price of expert.prices">
+          <p>{{price.service}}</p>
+          <p>{{price.price}} Forint.</p>
+        </div>
+      </div>
+    </div>
+    <div class="ratings card">
+      <h2>Értékelések</h2>
+      <div class="rating-container">
 
+      </div>
     </div>
   </section>
 </div>

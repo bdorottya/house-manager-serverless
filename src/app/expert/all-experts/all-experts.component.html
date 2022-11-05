@@ -2,15 +2,16 @@
   <app-search-filters></app-search-filters>
 </section>
 <section class="card results">
-  <div class="card-container">
+  <div class="no-result" *ngIf="this.experts.length == 0">
+    <h2 [style.text-align]="'center'">Sajnáljuk, nincs a keresésnek megfelelő találat. :(</h2>
+  </div>
+  <div class="card-container" *ngIf="this.experts.length > 0">
     <div class="card expert-card" *ngFor="let exp of this.experts">
-      <img>
-      <div class="padding-box">
-        <h3>{{exp.firstName}} {{exp.lastName}}</h3>
-        <h3>{{exp.field}}</h3>
-        <h3>{{exp.city}}</h3>
-        <h3>{{exp._currentRate}}</h3>
-      </div>
+      <img [src]="exp.avatar ? exp.avatar : this.noImg">
+      <h3>{{exp.firstName}} {{exp.lastName}}</h3>
+      <h4>{{exp.field}}</h4>
+      <h4>{{exp.city}}</h4>
+      <a routerLink="/oneexpert/{{exp._id}}"><button mat-button class="primary-btn">Tovább</button></a>
     </div>
   </div>
 </section>

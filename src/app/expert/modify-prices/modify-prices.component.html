@@ -7,6 +7,7 @@
   <mat-form-field appearance="outline" class="form-field">
     <mat-label>Szoldáltatás ára</mat-label>
     <input matInput formControlName="price">
+    <span matSuffix>Forint</span>
   </mat-form-field>
   <button type="submit"  [disabled]="!this.priceForm.dirty" mat-button class="expert-btn">Hozzáadás</button>
 </form>
@@ -18,6 +19,6 @@
 </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="closeWithoutSave()">Mégsem</button>
-  <button mat-button class="primary-btn" (click)="closeAndSave()">Mentés</button>
+  <button mat-button (click)="closeWithoutSave()" class="secondary-btn" type="button">Mégsem</button>
+  <button mat-button class="primary-btn" (click)="closeAndSave()" type="button">Mentés</button>
 </mat-dialog-actions>

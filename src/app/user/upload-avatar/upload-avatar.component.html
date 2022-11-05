@@ -1,6 +1,11 @@
-
+<div class="container">
   <img class="preview" [src]="this.previewImage">
   <input type="file" accept="image/*" (change)="onFileChanged($event)">
-  <button (click)="submit(this.file)" mat-button class="primary-btn">Feltöltés</button>
-  <button mat-button class="secondary-btn" mat-dialog-close>Mégsem</button>
+  <div class="buttons">
+    <button (click)="submit(this.file)" mat-button class="primary-btn">Feltöltés</button>
+    <button mat-button class="secondary-btn" mat-dialog-close>Mégsem</button>
+  </div>
+</div>
+
+
 

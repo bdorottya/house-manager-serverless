@@ -1,5 +1,23 @@
-.preview{
-  width: 400px;
-  border: 1px solid grey;
-  border-radius: 30px;
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .preview{
+    width: 400px;
+    max-height: 70%;
+    object-fit: cover;
+    border: 1px solid grey;
+    border-radius: 15px;
+  }
+  .buttons{
+    display: flex;
+    padding: 2% 5%;
+    width: 100%;
+    flex-direction: column;
+    button{
+      margin: 2% 0;
+      cursor: pointer;
+    }
+  }
 }
+

@@ -3,8 +3,8 @@
   padding: 0;
   .left-side{
     max-width: 46%;
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
     background-image: url("../../../assets/img/martin-knize-JjT_7MwREm4-unsplash.jpg");
     background-position: center center;
     background-size: cover;
@@ -24,7 +24,7 @@
         width: 35%;
       }
     }
-    
+
     .radio{
       flex-direction: row;
       justify-content: flex-start;
@@ -37,8 +37,9 @@
       }
     }
     button{
+      align-self: flex-end;
       justify-self: flex-end;
-      border-radius: 30px;
+      border-radius: 15px;
       padding: 2% 10%;
     }
   }
@@ -58,7 +59,7 @@
     }
     button{
       align-self: flex-end;
-      border-radius: 30px;
+      border-radius: 15px;
       padding: .4rem 1rem;
     }
   }
@@ -68,7 +69,7 @@
 .expert{
   margin: 2% 4%;
   padding: 0;
-  
+
 }
 
 .recom{
@@ -86,8 +87,8 @@
     width: 25%;
     margin: 2.5%;
     .card-img{
-      border-top-left-radius: 30px;
-      border-top-right-radius: 30px;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
     }
      p{
        padding: .5% 2%;
@@ -134,4 +135,49 @@
   }
 }
 
+@media only screen and (max-width: 460px){
+  .search{
+    flex-direction: column;
+    .left-side{
+      min-width: 100%;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      border-bottom-left-radius: 0;
+      .glass-box{
+        max-width: 100%;
+        .numbers{
+          width: 100%;
+          justify-content: flex-start;
+          div{
+            .small{
+              width: 25%;
+            }
+
+          }
+        }
+      }
+    }
+  }
+  .recom{
+    .container{
+      flex-direction: column;
+      padding: 0 5%;
+      align-items: center;
+      .home-card{
+        width: 100%;
+        margin: 2% 0;
+      }
+    }
+  }
+  .services{
+    .container{
+      flex-direction: column;
+      align-items: center;
+      .service-card{
+        max-width: 100%;
+        padding: 5%;
+      }
+    }
+  }
+}
 

@@ -1,42 +1,65 @@
 .images{
   margin: 2% 4%;
   justify-content: space-between;
+  align-items: flex-start;
   .gallery-container{
-    width: 73%;
-    margin: 0 1% 0 0;
-    padding: 0;
+    width: 75%;
+    max-height: 80%;
+    margin: 0 0.5% 0 0;
+    padding: 0.5%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    .big-img{
+      max-width:100%;
+      height: 40rem;
+      object-fit: cover;
+    }
     .thumbnails{
+      width: 100%;
+      background: rgba(0,0,0,0.3);
       display: flex;
+      justify-content: center;
       flex-direction: row;
       flex-wrap: wrap;
-      padding: .75%;
+      padding: 1%;
+      padding-right: 0;
+      position: absolute;
+      bottom: 0;
+      left: 0;
       img{
         margin: 5px 8px;
-        max-width: 205px;
+        max-width: 15%;
+        max-height: 4rem;
+        overflow: hidden;
+        object-fit: cover;
         box-shadow: 1px 1px 10px grey;
         border-radius: 15px;
       }
     }
-    .big-img{
-      width:100%;
-      border-top-left-radius: 30px;
-      border-top-right-radius: 30px;
-    }
   }
   .uploader-data{
     align-items: center;
-    max-width: 23%;
+    max-width: 18%;
     img{
       border-radius: 10px;
       width: 70%;
       box-shadow: 0 0 10px grey;
     }
     .contact{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       margin: 3% 0 16% 0;
+      button{
+        cursor:pointer;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 5px;
+        margin: 2% 0;
+      }
     }
-    button{
-      margin: 2% 0;
-    }
+
   }
 }
 .home-data{
@@ -84,4 +107,77 @@
 
 .similar-homes{
   margin: 2% 4%;
+  .recom-container{
+    img{
+      width: 100%;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      max-height: 14rem;
+      object-fit: cover;
+    }
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    .home-card{
+      padding: 0;
+      margin: 2%;
+      width: 20%;
+      .padding-box{
+        padding: 2% 4%;
+        .spans{
+          span{
+            width: 45%;
+            text-align: center;
+          }
+          display: flex;
+          justify-content: space-evenly;
+        }
+        .buttons{
+          button{
+            cursor: pointer;
+          }
+          margin-top: 5%;
+          display: flex;
+          justify-content: center;
+        }
+      }
+
+    }
+  }
+
+}
+
+@media only screen and (max-width: 460px){
+ .images{
+  flex-direction: column;
+  align-items: stretch;
+  .gallery-container{
+    width: 100%;
+    .big-image{
+      background-position: cover;
+      height: 100%;
+      object-fit: auto;
+    }
+    .thumbnails{
+      img{
+        width: 20%;
+      }
+    }
+  }
+  .uploader-data{
+    min-width: 100%;
+    justify-content: flex-start;
+  }
+ }
+ .home-data{
+  flex-direction: column;
+ }
+ .recom-container{
+  flex-direction: column;
+  align-items: center;
+  padding: 2% 5%;
+  .home-card{
+    min-width: 100%;
+  }
+ }
 }

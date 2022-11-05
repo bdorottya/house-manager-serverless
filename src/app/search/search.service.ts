@@ -30,7 +30,7 @@ export class SearchService {
 
     constructor(private router: Router){}
 
-    async expertResults(city:string, field:string){
+    async expertResults(query:any){
       let app = new Realm.App({id: this.app_id});
       let user: any;
       let creds = Realm.Credentials.emailPassword(this.admin_email, this.admin_password);
@@ -41,8 +41,10 @@ export class SearchService {
       }
       let mongo = app.currentUser?.mongoClient("mongodb-atlas");
       let collection = mongo?.db("home-maker").collection("users");
-      let result = collection?.find({role: 'expert', city: city, field: field});
+      console.log(query);
+      let result = collection?.find(query);
       result?.then(data => {
+        console.log(data);
         this.expertDocs.next(data);
       })
     }
@@ -109,11 +111,9 @@ export class SearchService {
       let collection = mongo?.db("home-maker").collection("homes");
       let priceLimit = {$lt: home.price+100};
       let sizeLimit = {$gt: home.size-5, $lt: home.size+15};
-      let query = {city: home.city, price: priceLimit, size: sizeLimit};
+      let query = {type: home.type, city: home.city, price: priceLimit, size: sizeLimit};
       console.log(query);
       return collection?.find(query,{limit:4});
-
-
     }
 
     async queryHomes(rawQuery:any){
@@ -133,6 +133,7 @@ export class SearchService {
       console.log(query);
       results = collection?.find(query);
       await results?.then(data => {
+          console.log(data);
           this.documents.next(data);
           this.foundDocuments = data;
       })
@@ -153,9 +154,9 @@ export class SearchService {
             if(values.length >= 1){
               let options:any[] = [];
               values.forEach((value: any) => {
-                options.push({key: value})
+                options.push(value);
               });
-              finalQuery[key] = {$or: options};
+              finalQuery[key] = {$in: options};
               return;
             }
             if(!Object.values(values)[0] && !Object.values(values)[1]){
@@ -164,32 +165,45 @@ export class SearchService {
             if(Object.values(values)[0] && Object.values(values)[1]){
               limits.min = Object.values(values)[0] as unknown as number;
               limits.max = Object.values(values)[1] as unknown as number;
-              limit = {$gt: limits.min, $lt: limits.max}
+              limit = {$gte: limits.min, $lte: limits.max}
               finalQuery[key] = limit;
               return;
             }
-            if(Object.values(values)[0] && !Object.values(values)[1]){
-              limits.min = Object.values(values)[0] as unknown as number;
-              limit = {$gt: limits.min}
-              finalQuery[key] = limit;
-              return;
-            }
-            if(Object.values(values)[1] && !Object.values(values)[0]){
-              limits.max = Object.values(values)[1] as unknown as number;
-              limit = {$lt: limits.max}
-              finalQuery[key] = limit;
-              return;
+
+            if(Object.values(values)){
+              console.log("ide be kéne jönni", values);
+              if((Object.keys(values)[0] as string).includes("min") || (Object.keys(values)[1] as string).includes('min')){
+                console.log(Object.keys(values));
+                limits.min = Object.values(values)[1] as unknown as number;
+                limit = {$gte: limits.min}
+                finalQuery[key] = limit;
+                return;
+              }
+              if((Object.keys(values)[0] as string).includes("max") || (Object.keys(values)[1] as string).includes('max')){
+                console.log(key);
+                limits.max = Object.values(values)[1] as unknown as number;
+                limit = {$lte: limits.max}
+                finalQuery[key] = limit;
+                return;
+              }
             }
           }
           if(key == "minBathroom"){
             let goodKey = "bathroom"
-            let limit = {$gt: value as number};
+            let limit = {$gte: value as number};
             finalQuery[goodKey] = limit;
+            return;
           }
           if(key == "minBedroom"){
             let goodKey = "bedroom";
-            let limit = {$gt: value as number};
+            let limit = {$gte: value as number};
             finalQuery[goodKey] = limit;
+            return;
+          }
+          if(key == 'hasImages'){
+            let goodKey = "images";
+            finalQuery[goodKey] = {$exists: true};
+            return;
           }
           else{
             finalQuery[key] = value;

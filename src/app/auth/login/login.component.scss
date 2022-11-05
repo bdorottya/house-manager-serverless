@@ -6,7 +6,7 @@ section{
 .grey-box{
   display: flex;
   box-shadow: 0 0 4px grey;
-  border-radius: 30px;
+  border-radius: 15px;
   flex-direction: column;
   padding: 0 5%;
 
@@ -25,7 +25,7 @@ section{
   }
   .google-btn{
     width: 35%;
-    border-radius: 30px;
+    border-radius: 15px;
     box-shadow: 0 0 4px grey;
     margin: 5% 0;
     padding: 0 10px;
@@ -44,4 +44,10 @@ section{
     }
   }
 
+}
+
+@media only screen and (max-width: 460px){
+  section{
+    padding: 2% 5%;
+  }
 }

@@ -1,0 +1,21 @@
+.field-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .form-field{
+    width: 25rem;
+  }
+}
+.buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+@media only screen and (max-width: 460px){
+  .field-container{
+    .form-field{
+      max-width: 14rem;
+    }
+  }
+}

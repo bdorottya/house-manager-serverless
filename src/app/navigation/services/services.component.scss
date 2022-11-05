@@ -1,0 +1,48 @@
+.services-card{
+  margin: 2% 4%;
+  padding: 2%;
+  h1{
+    text-align: center;
+    margin: 0 0 5% 0;
+  }
+  .service-container{
+    display: flex;
+    margin: 5% 2%;
+    img{
+      padding: 3%;
+    }
+    .texts{
+      text-align: justify;
+      padding: 0 10% 0 5%;
+    }
+    &:nth-child(odd){
+      flex-direction: row-reverse;
+    }
+    &:target{
+      background-color: #21ae4952;
+    }
+  }
+}
+
+@media only screen and (max-width: 460px){
+  .services-card{
+    padding: 4% 2%;
+    h1{
+      margin-bottom: 10%;
+    }
+    .service-container{
+      img{
+        width: 65%;
+      }
+      h3{
+        text-align: center;
+      }
+      align-items: center;
+      flex-direction: column;
+      &:nth-child(odd){
+        flex-direction: column;
+      }
+    }
+
+  }
+}

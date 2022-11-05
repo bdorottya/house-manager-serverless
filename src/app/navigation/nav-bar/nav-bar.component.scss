@@ -3,7 +3,7 @@
   margin: 1% 4%;
   border: none;
   box-shadow: 0px 0px 4px grey;
-  border-radius: 30px;
+  border-radius: 15px;
   padding: 0.5%;
   justify-content: space-between;
   align-items: center;
@@ -41,7 +41,6 @@
     button{
       padding: 2px 22px;
       margin: 0 0 0 2%;
-      border-radius: 30px;
       font-weight: 400;
     }
     .login{
@@ -55,15 +54,20 @@
   }
 }
 
-@media only screen and (max-width: 1000px){
+@media only screen and (max-width: 460px){
   .nav-bar{
+    max-width: 90%;
+    padding: 1.5%;
     .hide-small{
       display: none;
+    }
+    .menu{
+      z-index: 100;
+      margin-left: -300px;
     }
     .small{
       display: block;
     }
-
     .mobile-login{
       margin-right: 3%;
       width: auto;
@@ -72,11 +76,12 @@
         color: #21AE49;
       }
       button{
-        border-radius: 30px;
+        border-radius: 15px;
       }
     }
     .green-logo{
-      width: 30px;
+      padding: 1% 2%;
+      width: 10px;
     }
   }
 }

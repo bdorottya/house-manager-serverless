@@ -32,7 +32,8 @@ export class SignupComponent implements OnInit {
     lastName: new FormControl(''),
     passwordAgain: new FormControl(''),
     field: new FormControl(''),
-    city: new FormControl('')
+    city: new FormControl(''),
+    phone: new FormControl('')
   })
 
   fields:string[]=[];
@@ -69,6 +70,7 @@ export class SignupComponent implements OnInit {
       let loggedInUser = app.currentUser;
       let id = new BSON.ObjectID(loggedInUser?.id);
       let user = new User();
+      user._id = id;
       user.email = email;
       user.firstName = firstName;
       user.lastName = lastName;

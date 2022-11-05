@@ -24,9 +24,34 @@
       }
     }
   }
-  button{
-    padding: 15px 20px;
-    font-size: 1rem;
-    margin: 16px;
+  .buttons{
+    margin-top: 5%;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    button{
+      padding: 15px 20px;
+      font-size: 1rem;
+      margin: 16px;
+      cursor: pointer;
+    }
   }
+
+}
+
+@media only screen and (max-width:460px){
+  .form-container{
+    .form-flex-container{
+      flex-direction: column;
+      justify-content: stretch;
+      .flex-container{
+        width: 100%;
+      }
+    }
+    .buttons{
+      flex-direction: column;
+      justify-content: stretch;
+    }
+  }
+
 }

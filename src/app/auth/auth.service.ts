@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import * as Realm from 'realm-web';
+import { ErrorMessageComponent } from '../navigation/error-message/error-message.component';
 import { User, UserDAO } from '../user/socialUser.model';
 import { UserService } from '../user/user.service';
 
@@ -18,7 +20,9 @@ export class AuthService {
   app:any;
   role!:string;
 
-  constructor(private router: Router, private snackBar: MatSnackBar, private userService: UserService) {}
+  user:any;
+
+  constructor(private dialog: MatDialog, private router: Router, private snackBar: MatSnackBar, private userService: UserService) {}
 
   async loginWithEmailAndPass(email: string, password: string){
     this.app = new Realm.App({id: this.app_id});
@@ -35,14 +39,24 @@ export class AuthService {
         this.role = data.role;
       })
       return user;
-    }catch(err){
-      console.error("failed to log in", err);
+    }catch(err: any){
+      const {error, statusCode} = err;
+      console.log(statusCode);
+      if(statusCode == 401){
+        let dialog = this.dialog.open(ErrorMessageComponent);
+        dialog.componentInstance.title = "Hibás email cím/jelszó";
+        dialog.componentInstance.message = "A megadott email cím és/vagy jelszó nem megfelelő."
+      }
       return 0;
     }
   }
 
-  getUser(){
-
+  async getUser(){
+    const app = new Realm.App({id: this.app_id});
+    let mongo = app.currentUser?.mongoClient("mongodb-atlas");
+    let collection = mongo?.db("home-maker").collection("users");
+    let id = new Realm.BSON.ObjectID(localStorage.getItem("userID") as string);
+    return await collection?.findOne({_id: id})
   }
 
   async insertUser(user: User){

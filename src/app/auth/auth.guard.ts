@@ -6,6 +6,8 @@ import {
     RouterStateSnapshot,
     UrlTree
 } from "@angular/router";
+import { Observable } from "rxjs";
+import { UserService } from "../user/user.service";
 import { AuthService } from "./auth.service";
 
 @Injectable()
@@ -19,5 +21,46 @@ export class AuthGuard implements CanActivate {
           this.router.navigateByUrl('/pleasesignin');
       }
       return isAuthenticated;
+  }
+}
+
+@Injectable()
+export class UserTypeGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router){}
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
+    let email = localStorage.getItem("userEmail") as string;
+    let user = this.authService.role;
+    console.log(user);
+    let result: boolean;
+    if(user === 'expert'){
+      this.router.navigate(['/expertdashboard']);
+      result = false;
+    }else{
+      result = true;
+    }
+
+    return result;
+
+  }
+}
+
+@Injectable()
+export class ExpertTypeGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router){}
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
+    let email = localStorage.getItem("userEmail") as string;
+    let user = this.authService.role;
+    console.log(user);
+    let result:boolean;
+    if(user === 'expert'){
+      this.router.navigate(['/userhome']);
+      result = false;
+    }else{
+      result = true;
+    }
+
+    return result;
   }
 }

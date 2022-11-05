@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OneUserComponent } from './one-user.component';
+import { UpdateAvatarComponent } from './update-avatar.component';
 
-describe('OneUserComponent', () => {
-  let component: OneUserComponent;
-  let fixture: ComponentFixture<OneUserComponent>;
+describe('UpdateAvatarComponent', () => {
+  let component: UpdateAvatarComponent;
+  let fixture: ComponentFixture<UpdateAvatarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OneUserComponent ]
+      declarations: [ UpdateAvatarComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OneUserComponent);
+    fixture = TestBed.createComponent(UpdateAvatarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

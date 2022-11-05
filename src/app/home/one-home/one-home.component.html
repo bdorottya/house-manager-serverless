@@ -1,6 +1,6 @@
 <section class="flex images">
   <div class="card gallery-container">
-    <div *ngIf="this.isLoading" >
+    <div *ngIf="this.isLoading">
       <mat-spinner></mat-spinner>
     </div>
     <div *ngIf="!this.isLoading">
@@ -12,11 +12,10 @@
   </div>
   <div class="card flex col uploader-data">
     <h2>Feltöltő adatai</h2>
-    <h4>{{uploader.lastName}} {{uploader.firstName}}</h4>
-    <h4>Tulajdonos</h4>
+    <h4>{{uploader.firstName}} {{uploader.lastName}}</h4>
     <div class="contact">
-      <p class="flex col align-center"><mat-icon>phone</mat-icon><span>{{uploader.phone}}</span></p>
-      <p class="flex col align-center"><mat-icon>email</mat-icon><span>{{uploader.email}}</span></p>
+      <a *ngIf="uploader.phone" href="{{'tel:'+uploader.phone}}"><button mat-button class="primary-btn"><mat-icon>phone</mat-icon> {{uploader.phone}}</button></a>
+      <a href="{{'mailto:'+uploader.email}}"><button mat-button class="primary-btn"><mat-icon>email</mat-icon> {{uploader.email}}</button></a>
     </div>
   </div>
 </section>
@@ -36,13 +35,13 @@
     <h4>Város: <span>{{home.city}}</span><span *ngIf="home.city2">, {{home.city2}}  Kerület</span></h4>
     <p>Hálószobák száma: <span>{{home.bedroom}}</span></p>
     <p>Fürdőszobák száma: <span>{{home.bathroom}}</span></p>
-    <p>Lift: <span>{{home.elevator | yesOrNo}}</span></p>
-    <p>Erkély: <span>{{home.balcony | yesOrNo}}</span></p>
-    <p>Kert: <span>{{home.garden | yesOrNo}}</span></p>
-    <p>Padlás/Pince: <span>{{home.attic | yesOrNo}}</span></p>
-    <p>Klíma: <span>{{home.ac | yesOrNo}}</span></p>
-    <p *ngIf="home.type == 'kiado'">Dohányzás megenegedett: <span>{{home.smoke | yesOrNo}}</span></p>
-    <p *ngIf="home.type == 'kiado'">Kisállat megengedett: <span>{{home.pet | yesOrNo}}</span></p>
+    <p *ngIf="home.elevator != undefined">Lift: <span>{{home.elevator | yesOrNo}}</span></p>
+    <p *ngIf="home.balcony != undefined">Erkély: <span>{{home.balcony | yesOrNo}}</span></p>
+    <p *ngIf="home.garden!=undefined">Kert: <span>{{home.garden | yesOrNo}}</span></p>
+    <p *ngIf="home.attic!=undefined">Padlás/Pince: <span>{{home.attic | yesOrNo}}</span></p>
+    <p *ngIf="home.ac!=undefined">Klíma: <span>{{home.ac | yesOrNo}}</span></p>
+    <p *ngIf="home.type == 'kiado' && home.smoke !=undefined">Dohányzás megenegedett: <span>{{home.smoke | yesOrNo}}</span></p>
+    <p *ngIf="home.type == 'kiado' && home.pet!=undefined">Kisállat megengedett: <span>{{home.pet | yesOrNo}}</span></p>
   </div>
   <div class="recom flex col">
     <h4>Vegy igénybe szolgáltatásainkat!</h4>
@@ -63,9 +62,18 @@
 <section class="similar-homes card">
   <h4>Hasonló ingatlanok</h4>
   <div class="recom-container flex">
-    <div class="home-container">
-      <div class="home-card card" *ngFor="let similar of similarHomes">
-        <h3>{{similar.city}}</h3>
+    <div class="home-card card" *ngFor="let home of this.similarHomes">
+      <img src="{{home.images ? home.images[0] : ''}}">
+      <div class="padding-box">
+        <h3>{{home.city}}<span>{{home.city2 ? ', ' + home.city2 : ''}}</span></h3>
+        <h4>{{home.type=="elado" ? home.price + " Millió Ft." : home.price + " ezer Ft/hó" }}</h4>
+        <div class="spans">
+          <span>Hálószobák száma: {{home.bedroom}}</span>
+          <span>Méret: {{home.size}}nm</span>
+        </div>
+        <div class="buttons">
+          <button (click)="navigate(home._id)" type="button" mat-button class="primary-btn">Tovább</button>
+        </div>
       </div>
     </div>
   </div>

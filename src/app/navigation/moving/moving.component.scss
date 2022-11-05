@@ -1,0 +1,49 @@
+.moving-card{
+  margin: 2% 4%;
+  padding: 2% 5%;
+  h1{
+    text-align: center;
+    font-weight: 800;
+    margin: 5% 0 10%;
+  }
+  p{
+    font-weight: 300;
+    margin: 2% 0;
+    text-align: justify;
+  }
+  hr{
+    margin: 10% 6% 4% 6%;
+    background-color: #21ae49;
+    border:none;
+    height: 0.5pt;
+  }
+  h2{
+    margin: 0 0 5% 0;
+  }
+  .buttons{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
+
+@media only screen and (max-width: 460px){
+  .moving-card{
+    p{
+      line-height: 1.2rem;
+      margin: 10% 5%;
+    }
+  }
+  h2{
+    text-align: center;
+  }
+  .buttons{
+    height: fit-content;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    button{
+      margin: 5% 0;
+    }
+  }
+}

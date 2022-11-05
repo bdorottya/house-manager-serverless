@@ -4,7 +4,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ObjectId } from 'mongodb';
 import { BSON } from 'realm-web';
-import { finalize, first, map, Observable } from 'rxjs';
+import { finalize, first, map, Observable, Subject } from 'rxjs';
 import { FileUpload } from '../data-models/file-upload.model';
 import { UserDAO } from '../user/socialUser.model';
 import { UserService } from '../user/user.service';
@@ -24,6 +24,9 @@ export class HomeService {
   saveHomeUrl = "https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/saveHome";
 
   imageDownloadUrls!:string;
+
+  ownHomes: Subject<HomeDAO[]> = new Subject();
+  savedHomes: Subject<HomeDAO[]> = new Subject();
 
   file!: FileUpload;
 
@@ -74,7 +77,7 @@ export class HomeService {
     return observers;
   }
 
-  updateHome(homeId: ObjectId, home: HomeDAO){
+  async updateHome(homeId: ObjectId, home: HomeDAO){
     let app = new Realm.App({id: this.app_id});
     let user = app.currentUser;
     let mongo = app.currentUser?.mongoClient("mongodb-atlas");
@@ -82,12 +85,24 @@ export class HomeService {
     try {
       console.log(homeId, home);
       let newId = new BSON.ObjectID(homeId)
-      let result = collection?.updateOne({_id: newId}, {$set: home});
-      result?.then(data => {
-        console.log(data);
-      })
+      return await collection?.updateOne({_id: newId}, {$set: home});
     }catch(error){
       console.log(error);
+      return error;
+    }
+  }
+
+  async deleteHome(homeId:ObjectId){
+    let app = new Realm.App({id: this.app_id});
+    let user = app.currentUser;
+    let mongo = app.currentUser?.mongoClient("mongodb-atlas");
+    let collection = mongo?.db("home-maker").collection("homes");
+    try {
+      let newId = new BSON.ObjectID(homeId);
+      return await collection?.deleteOne({_id: newId});
+    }catch(err) {
+      console.log(err);
+      return err;
     }
   }
 

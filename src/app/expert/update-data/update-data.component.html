@@ -1,0 +1,33 @@
+<form [formGroup]="dataForm" (ngSubmit)="submit()">
+  <h2>Adatok módosítása</h2>
+  <div class="field-container">
+    <mat-form-field class="form-field">
+      <mat-label>E-mail cím</mat-label>
+      <input formControlName="email" matInput>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Vezetéknév</mat-label>
+      <input formControlName="firstName" matInput>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Keresztnév</mat-label>
+      <input formControlName="lastName" matInput>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Város</mat-label>
+      <input formControlName="city" matInput>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Telefonszám</mat-label>
+      <input formControlName="phone" matInput>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Bemutatkozás</mat-label>
+      <textarea formControlName="welcomeText" matInput style="height:6rem"></textarea>
+    </mat-form-field>
+  </div>
+  <div class="buttons">
+    <button mat-button (click)="close()" type='button' class="secondary-btn">Mégsem</button>
+    <button mat-button type="submit" class="primary-btn">Mentés</button>
+  </div>
+</form>

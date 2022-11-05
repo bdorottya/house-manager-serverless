@@ -55,13 +55,19 @@ export class UpdateDataComponent implements OnInit {
       phone: this.updateForm.get("phone")?.value}});
       res?.then(data => {
         console.log(data);
-        this.dialogRef.close();
-        this.snackBar.open("Adatok módosítása sikeres!", "OK", {panelClass: 'success-snackbar'});
+        if(data){
+          this.snackBar.open("Adatok módosítása sikeres!", "OK", {panelClass: 'success-snackbar'});
+          this.dialogRef.close();
+        }
       })
     }else{
       console.log("invalid");
     }
 
+  }
+
+  close(){
+    this.dialogRef.close();
   }
 
 }

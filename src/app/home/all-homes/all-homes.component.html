@@ -1,48 +1,46 @@
 <section class="search-filters card">
-<app-search-filters [searchType]="'home'"></app-search-filters>
+<app-search-filters class="filters" [searchType]="'home'" [setQuery]="this.setQuery"></app-search-filters>
 </section>
 <section class="search-results card">
   <div class="sorting flex">
-    <select class="small-margin input-sorting" name="sorting">
-      <option value="" disabled selected hidden>Rendezés szempontja</option>
-      <option *ngFor="let x of sorting" value="{{x}}">{{x}}</option>
-    </select>
-    <mat-button-toggle-group [formControl]="viewMode" name="viewMode" class="small-margin">
-      <mat-button-toggle value="col"><mat-icon class="icons">grid_view</mat-icon></mat-button-toggle>
-      <mat-button-toggle value="row"><mat-icon class="icons">view_headline</mat-icon></mat-button-toggle>
-    </mat-button-toggle-group>
+    <form [formGroup]="sortingForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Rendezés szempontja</mat-label>
+        <mat-select formControlName="sortingSelect">
+          <mat-option *ngFor="let x of sorting" value="{{x.value}}">{{x.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
   </div>
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <div *ngIf="!isLoading" class="results flex" [ngClass]="viewMode.value === 'row' ? 'row' : 'col'">
+  <div class="results flex">
       <div *ngIf="this.empty" class="no-results">
         <h1>Sajnáljunk, nincs a keresésnek megfelelő elem. :(</h1>
       </div>
-        <div class="home-card card flex" *ngFor="let home of homes" [ngClass]="this.user.id === home.uploader.toString() ? 'own-home' : ''">
-          <img src="{{home.images[0]}}">
-          <div class="overlay">
-            <span>{{home.city}}</span>
-            <span *ngIf="home.city2">{{home.city2}}</span>
+        <div class="home-card card flex" *ngFor="let home of homes">
+          <div class="image-container">
+            <img src="{{home.images ? home.images[0] : ''}}">
+            <div class="overlay">
+              <span>{{home.city}}</span>
+              <span *ngIf="home.city2">{{home.city2}}</span>
+            </div>
           </div>
-          <div class="city flex">
-            <p>{{home.city}}</p>
-            <p *ngIf="home.city2">{{home.city2}}</p>
-          </div>
-          <div class="tags flex">
-            <div>{{home.condition}}</div>
-            <div>{{home.parking}}</div>
-          </div>
-          <div class="price flex">
-            <h3>{{home.type === 'elado' ? home.price + ' Millió Ft' : home.price + " ezer Ft/hó."}}</h3>
-            <p>{{home.size}} nm</p>
-          </div>
-          <div class="rooms flex">
-            <p>{{home.bedroom}} hálószoba</p>
-            <p>{{home.bathroom}} fürdőszoba</p>
-            <p *ngIf="home.garden">Kert</p>
-          </div>
-          <div class="flex buttons">
-            <button *ngIf="!(this.user.id === home.uploader.toString())" (click)="this.homeService.saveHome(home._id)" mat-button class="secondary-btn">Mentés <mat-icon>favorite_border</mat-icon></button>
-            <a routerLink="/onehome/{{home._id}}"><button mat-button class="primary-btn">Tovább<mat-icon>navigate_next</mat-icon></button></a>
+          <div class="info-container">
+            <div class="tags">
+              <span>{{home.condition}}</span>
+              <span>{{home.buildingType}}</span>
+            </div>
+            <div class="price flex">
+              <h3>{{home.type === 'elado' ? home.price + ' Millió Ft' : home.price + " ezer Ft/hó."}}</h3>
+              <p>{{home.size}} nm</p>
+            </div>
+            <div class="rooms">
+              <span>{{home.bedroom}} hálószoba</span>
+              <span>{{home.bathroom}} fürdőszoba</span>
+            </div>
+            <div class="flex buttons">
+              <button *ngIf="((this.isLoggedIn) && !(this.user.id === home.uploader))" (click)="this.homeService.saveHome(home._id)" mat-button class="secondary-btn">Mentés <mat-icon>favorite_border</mat-icon></button>
+              <a routerLink="/onehome/{{home._id}}"><button mat-button class="primary-btn">Tovább<mat-icon>navigate_next</mat-icon></button></a>
+            </div>
           </div>
         </div>
   </div>

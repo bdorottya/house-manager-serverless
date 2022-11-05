@@ -1,0 +1,21 @@
+.preview{
+  padding: 3%;
+  img{
+    width: 60%;
+  }
+}
+.field-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+
+}
+.buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  button{
+    cursor: pointer;
+  }
+}

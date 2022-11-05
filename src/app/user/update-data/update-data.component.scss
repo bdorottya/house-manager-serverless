@@ -1,13 +1,28 @@
 .container{
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 5% 10%;
   form{
     flex-direction: column;
     justify-content: center;
-
+    .form-field{
+      width: 20rem;
+    }
     button{
       margin: 5% 0;
       cursor: pointer;
+    }
+  }
+}
+
+@media only screen and (max-width: 460px){
+  .container{
+    padding: 2%;
+    .form{
+      .form-field{
+        width: 100%;
+      }
     }
   }
 }

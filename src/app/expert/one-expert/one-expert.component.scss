@@ -1,9 +1,78 @@
 .expert-container{
   margin: 2% 1% 2% 4%;
-  width: 70%;
+  width: 75%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 1.5%;
+  .basic-data{
+    width: 45%;
+    margin: 0 1.5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    img{
+      width: 50%;
+      border-radius: 100px;
+      box-shadow: 0 0 10px grey;
+      margin-bottom: 5%;
+    }
+    h3{
+      margin: 2% 0;
+    }
+    a,h4{
+      margin: 2% 0;
+    }
+  }
+  .introduction{
+    margin: 0 1.5%;
+    width: 45%;
+  }
+  .prices{
+    width: 100%;
+    .price-card{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 1.5%;
+      margin: 1.5% 0;
+      transition: .2s ease all;
+      p{
+        margin: 1% 0;
+      }
+    }
+  }
 }
 
 .ratings{
   margin: 2% 4% 2% 1%;
-  width: 35%;
+  width: 25%;
+  .rating-container{
+    margin: 5% 0;
+  }
+}
+
+@media only screen and (max-width: 460px){
+  .container{
+    flex-direction: column;
+    padding: 2% 4%;
+    .expert-container{
+      margin: 0;
+      margin-bottom: 5%;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      .basic-data, .introduction, .prices{
+        width: 100%;
+      }
+    }
+    .ratings{
+      margin: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
 }

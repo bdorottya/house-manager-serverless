@@ -1,19 +1,18 @@
 <section class="card flex user-home">
-  <mat-spinner *ngIf="this.isLoading">
-  </mat-spinner>
-  <div class="flex user-info col" *ngIf="!this.isLoading">
+  <div class="flex user-info col">
     <h3>Üdv, {{user?.lastName}}!</h3>
     <img [src]="avatarImage">
-    <button mat-button (click)="openAvatarDialog(avatarImage)" class="primary-btn">Profilkép feltöltése</button>
-    <button mat-button (click)="updateUserData()" class="primary-btn">Adataim módosítása</button>
-    <button mat-button (click)="openHomeUploadDialog()" class="primary-btn">Ingatlan feltöltése</button>
+    <div class="buttons">
+      <button mat-button (click)="openAvatarDialog(avatarImage)" class="primary-btn">Profilkép feltöltése</button>
+      <button mat-button (click)="updateUserData()" class="primary-btn">Adataim módosítása</button>
+      <button mat-button (click)="openHomeUploadDialog()" class="primary-btn">Ingatlan feltöltése</button>
+    </div>
   </div>
-  <div class="user-menu" *ngIf="!this.isLoading">
+  <div class="user-menu">
     <div class="own-homes">
       <div class="own-homes-container">
         <h2>Feltöltött ingatlanok</h2>
-        <mat-spinner *ngIf="!this.loaded && uploadedHomes.length > 0"></mat-spinner>
-        <div *ngIf="this.loaded && uploadedHomes.length > 0" class="home-card-container">
+        <div *ngIf="uploadedHomes" class="home-card-container">
           <div class="home-card card" *ngFor="let home of this.uploadedHomes">
             <img src="{{home.images ? home.images[0] : ''}}">
             <div class="padding-box">
@@ -28,15 +27,14 @@
             </div>
           </div>
         </div>
-        <div *ngIf="this.loaded && uploadedHomes.length<0">
+        <div *ngIf="!uploadedHomes">
           <h3>Még nem töltöttél fel ingatlant.</h3>
         </div>
       </div>
     </div>
     <div class="saved-homes">
       <h2>Mentett Ingatlanok</h2>
-      <mat-spinner *ngIf="!this.loadedSaved && this.savedHomes.length > 0"></mat-spinner>
-      <div *ngIf="this.loadedSaved && this.savedHomes.length > 0" class="home-card-container">
+      <div *ngIf="this.savedHomes" class="home-card-container">
         <div class="home-card card" *ngFor="let home of this.savedHomes">
           <img src="{{home.images ? home.images[0] : ''}}">
           <div class="padding-box">
@@ -48,7 +46,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="this.loadedSaved && savedHomes.length<0">
+      <div *ngIf="!this.savedHomes">
         <h3>Még nem mentettél el ingatlant.</h3>
       </div>
     </div>

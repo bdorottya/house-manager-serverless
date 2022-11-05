@@ -12,10 +12,16 @@
       width: 90%;
       margin-bottom: 10%;
     }
-    button{
-      margin: 2.5% 0;
-      cursor: pointer;
+    .buttons{
+      display: flex;
+      flex-direction: column;
+      justify-content: stretch;
+      button{
+        margin: 0.5% 0;
+        cursor: pointer;
+      }
     }
+
   }
   .user-menu{
     width: 80%;
@@ -56,4 +62,29 @@
     }
   }
 
+}
+
+@media only screen and (max-width: 460px){
+  .user-home{
+    flex-direction: column;
+    .user-info{
+      width: 100%;
+    }
+    .user-menu{
+      width:100%;
+      align-items: center;
+      h2{
+        text-align: center;
+      }
+      .home-card-container{
+        flex-direction: column;
+        align-items: center;
+        padding: 0 3%;
+        .home-card{
+          margin: 2% 0;
+          width: 70%;
+        }
+      }
+    }
+  }
 }
