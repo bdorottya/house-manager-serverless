@@ -31,11 +31,11 @@
     <mat-form-field  appearance="outline" required class="form-field city-field">
       <mat-label>Város</mat-label>
       <input matInput formControlName="city" type="text" [style.text-transform]="'capitalize'">
-      <button matSuffix mat-icon-button type="submit"><mat-icon>search</mat-icon></button>
+      <button matSuffix mat-icon-button type="submit"><mat-icon style="font-weight: 800;color:#21ae49">search</mat-icon></button>
     </mat-form-field>
     <div class="buttons">
       <button mat-button class="secondary-btn" [disabled]="this.homeForm.pristine" type="button" (click)="clearForm()">Feltételek törlése</button>
-      <button class="expand-button primary-btn" mat-button type="button" (click)="expand()">
+      <button class="expand-button primary-btn" mat-button type="button" (click)="expand()" (selectstart)="expand()">
         Részletes keresés <mat-icon class="button-icon" [ngClass]="this.open ? 'transform' : ''">expand_more</mat-icon>
       </button>
     </div>

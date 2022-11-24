@@ -163,7 +163,7 @@
       <input type="file" formControlName="images" multiple (change)="uploadFiles($event)">
       <div class="image-preview">
         <img *ngIf="imagesToShow && imagesToShow.length==0" [src]="this.noImage">
-        <div *ngFor="let image of imagesToShow">
+        <div *ngFor="let image of imagesToShow" class="image-container">
           <mat-icon class="icon" mat-icon-button (click)="removeImage(image)">cancel</mat-icon>
           <img [src]="this.image">
         </div>

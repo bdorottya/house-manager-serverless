@@ -25,7 +25,9 @@ export class AddRatingComponent implements OnInit {
     user: new FormControl('')
   })
 
+
   ngOnInit(): void {
+
     this.expertService.getExpert(this.expertId as unknown as string).then(data => {
       this.expert = data;
       this.ratingForm.get("expert")?.setValue(this.expert.firstName + " " + this.expert.lastName);

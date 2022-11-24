@@ -4,11 +4,13 @@ import { idToken } from '@angular/fire/auth';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 import { SpinnerComponent } from 'src/app/navigation/spinner/spinner.component';
 import { HomeSearchQuery } from 'src/app/search/query.model';
 import { SearchService } from 'src/app/search/search.service';
 import { HomeDAO } from '../home.model';
 import { HomeService } from '../home.service';
+import * as Realm from 'realm-web';
 
 @Component({
   selector: 'app-all-homes',
@@ -45,15 +47,17 @@ export class AllHomesComponent implements OnInit, AfterViewInit {
   isLoading:boolean = true;
 
   fromHomePage?:boolean;
+  role!:string;
 
   sortingForm:FormGroup = new FormGroup({
     sortingSelect: new FormControl('')
   })
 
 
-  constructor(private dialog: MatDialog, private routerSnapshot: ActivatedRoute, private serachService: SearchService, public homeService: HomeService) { }
+  constructor(public authService: AuthService, private dialog: MatDialog, private routerSnapshot: ActivatedRoute, private serachService: SearchService, public homeService: HomeService) { }
 
    ngOnInit(): void {
+    this.role = localStorage.getItem("role") as string;
     this.sortingForm.get('sortingSelect')?.setValue('price-asc');
     let app = new Realm.App({id: this.app_id});
     let user:any;

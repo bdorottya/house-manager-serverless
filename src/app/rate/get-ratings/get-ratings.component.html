@@ -1,5 +1,5 @@
 <h2>Értékelések</h2>
-<button [disabled]="!this.authService.isLoggedIn()" (click)="writeRating(expert._id)" mat-button class="expert-btn">Értékelés írása <mat-icon style="color:white">edit</mat-icon></button>
+<button *ngIf="this.authService.isLoggedIn() && this.role==='user'" (click)="writeRating(expert._id)" mat-button class="expert-btn">Értékelés írása <mat-icon style="color:white">edit</mat-icon></button>
 <div class="rating-container" *ngIf="this.ratings.length > 0">
   <div *ngFor="let rate of this.ratings" class="rating-card card">
     <h5>Értékelés: <span>{{rate.star}}</span></h5>

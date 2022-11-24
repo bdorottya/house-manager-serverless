@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SpinnerComponent } from 'src/app/navigation/spinner/spinner.component';
 import { User, UserDAO } from 'src/app/user/socialUser.model';
+import * as Realm from 'realm-web';
 import { expressionType } from '@angular/compiler/src/output/output_ast';
 
 @Component({
@@ -48,40 +49,41 @@ export class SignupComponent implements OnInit {
 
   async submitSignup(){
     if(this.signupForm.valid){
-      let email = this.signupForm.get("email")?.value;
-      let password = this.signupForm.get("password")?.value;
-      let lastName = this.signupForm.get("lastName")?.value;
-      let firstName = this.signupForm.get("firstName")?.value;
-      let date = new Date()
-      let res = await this.authService.signup(email, password);
-      let app = new Realm.App({id: this.app_id});
-      const creds = Realm.Credentials.emailPassword(email, password);
-      this.dialog.open(SpinnerComponent);
-      try{
-        let user = await app.logIn(creds);
-        console.assert(user.id === app.currentUser?.id);
-        console.log(app.currentUser?.id);
-        this.authService.loggedInUser = true;
-        localStorage.setItem("userID", app.currentUser?.id as string);
-        localStorage.setItem("userEmail", email);
-      }catch(err){
-        console.error("failed to log in", err);
-      }
-      let loggedInUser = app.currentUser;
-      let id = new BSON.ObjectID(loggedInUser?.id);
-      let user = new User();
-      user._id = id;
-      user.email = email;
-      user.firstName = firstName;
-      user.lastName = lastName;
-      user.registrationDate = date;
-      user.role = "user";
-      let result = this.authService.insertUser(user);
-      result.then(() => {
-        this.snackbar.open("Sikeres regisztráció!", 'OK', {panelClass: 'secondary-snackbar', horizontalPosition: 'right', verticalPosition: 'top'})
-        this.dialog.closeAll();
-        this.router.navigate(['/userhome']);
-      });
+
+        let email = this.signupForm.get("email")?.value;
+        let password = this.signupForm.get("password")?.value;
+        let lastName = this.signupForm.get("lastName")?.value;
+        let firstName = this.signupForm.get("firstName")?.value;
+        let date = new Date()
+        let res = await this.authService.signup(email, password);
+        let app = new Realm.App({id: this.app_id});
+        const creds = Realm.Credentials.emailPassword(email, password);
+        this.dialog.open(SpinnerComponent);
+        try{
+          let user = await app.logIn(creds);
+          console.assert(user.id === app.currentUser?.id);
+          console.log(app.currentUser?.id);
+          this.authService.loggedInUser = true;
+          localStorage.setItem("userID", app.currentUser?.id as string);
+          localStorage.setItem("userEmail", email);
+        }catch(err){
+          console.log(err);
+        }
+        let loggedInUser = app.currentUser;
+        let id = new BSON.ObjectID(loggedInUser?.id);
+        let user = new User();
+        user._id = id;
+        user.email = email;
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.registrationDate = date;
+        user.role = "user";
+        let result = this.authService.insertUser(user);
+        result.then(() => {
+          this.snackbar.open("Sikeres regisztráció!", 'OK', {panelClass: 'secondary-snackbar', horizontalPosition: 'right', verticalPosition: 'top'})
+          this.dialog.closeAll();
+          this.router.navigate(['/userhome']);
+        });
     }
   }
 

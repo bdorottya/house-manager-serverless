@@ -26,14 +26,12 @@ export class AuthGuard implements CanActivate {
 
 @Injectable()
 export class UserTypeGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router){}
+  constructor(private router: Router){}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
-    let email = localStorage.getItem("userEmail") as string;
-    let user = this.authService.role;
-    console.log(user);
-    let result: boolean;
-    if(user === 'expert'){
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):boolean | Promise<boolean> {
+    let user = localStorage.getItem('role') as string;
+    let result:boolean;
+    if(user != 'user'){
       this.router.navigate(['/expertdashboard']);
       result = false;
     }else{
@@ -41,20 +39,17 @@ export class UserTypeGuard implements CanActivate {
     }
 
     return result;
-
   }
 }
 
 @Injectable()
 export class ExpertTypeGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router){}
+  constructor(private router: Router){}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
-    let email = localStorage.getItem("userEmail") as string;
-    let user = this.authService.role;
-    console.log(user);
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):boolean | Promise<boolean> {
+    let user = localStorage.getItem('role') as string;
     let result:boolean;
-    if(user === 'expert'){
+    if(user != 'expert'){
       this.router.navigate(['/userhome']);
       result = false;
     }else{
@@ -62,5 +57,6 @@ export class ExpertTypeGuard implements CanActivate {
     }
 
     return result;
+
   }
 }

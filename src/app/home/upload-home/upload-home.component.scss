@@ -1,5 +1,6 @@
 .form-container{
   height: 600px;
+  z-index: 2;
   .form-flex-container{
     display: flex;
     flex-direction: row;
@@ -18,9 +19,32 @@
         }
       }
       .image-preview{
-        img{
-          width: 50%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        .image-container{
+          min-height:fit-content;
+          position: relative;
+          width:46%;
+          margin: 1%;
+          img{
+            width: 100%;
+            object-fit: contain;
+          }
+          .icon{
+            cursor: pointer;
+            position: relative;
+            top: 25px;
+            z-index: 2;
+            float: right;
+            right: 5px;
+            color: white;
+            &:hover{
+              color: #ddd;
+            }
+          }
         }
+
       }
     }
   }

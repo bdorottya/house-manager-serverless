@@ -57,7 +57,7 @@ export class SearchFiltersComponent implements OnInit {
 
     this.fields = Constants.expertFields;
     this.homeForm = this.fb.group({
-      type: ['', Validators.required],
+      type: ['elado', Validators.required],
       city: [''],
       city2: [''],
       buildingType: [''],

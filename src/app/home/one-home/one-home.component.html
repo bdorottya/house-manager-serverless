@@ -11,12 +11,19 @@
     </div>
   </div>
   <div class="card flex col uploader-data">
-    <h2>Feltöltő adatai</h2>
-    <h4>{{uploader.firstName}} {{uploader.lastName}}</h4>
-    <div class="contact">
-      <a *ngIf="uploader.phone" href="{{'tel:'+uploader.phone}}"><button mat-button class="primary-btn"><mat-icon>phone</mat-icon> {{uploader.phone}}</button></a>
-      <a href="{{'mailto:'+uploader.email}}"><button mat-button class="primary-btn"><mat-icon>email</mat-icon> {{uploader.email}}</button></a>
+    <div class="user-data-visible" *ngIf="this.authService.isLoggedIn()">
+      <h2>Feltöltő adatai</h2>
+      <h4>{{uploader.firstName}} {{uploader.lastName}}</h4>
+      <div class="contact">
+        <a *ngIf="uploader.phone" href="{{'tel:'+uploader.phone}}"><button mat-button class="primary-btn"><mat-icon>phone</mat-icon> {{uploader.phone}}</button></a>
+        <a href="{{'mailto:'+uploader.email}}"><button mat-button class="primary-btn"><mat-icon>email</mat-icon> {{uploader.email}}</button></a>
+      </div>
     </div>
+    <div class="user-data-hidden" *ngIf="!this.authService.isLoggedIn()">
+      <h3>A feltöltő adatainak megtekintéséhez be kell jelentkezned!</h3>
+      <a routerLink="/login"><button class="primary-btn" mat-button>Bejelentkezés</button></a>
+    </div>
+    <span><button *ngIf="((this.authService.isLoggedIn()) && (this.user._id != this.home.uploader) && this.role === 'user')" (click)="saveHome()" [style.cursor]="'pointer'" class="secondary-btn" mat-button><mat-icon>favorite_border</mat-icon> Ingatlan mentése</button></span>
   </div>
 </section>
 <section class="card flex home-data">
@@ -47,15 +54,15 @@
     <h4>Vegy igénybe szolgáltatásainkat!</h4>
     <div class="service-card card flex">
       <p>Kérje ingatlanos segítségét.</p>
-      <button mat-button class="primary-btn">Bővebben</button>
+      <span><button mat-button class="primary-btn" (click)="openNotImplemented()">Bővebben</button></span>
     </div>
     <div class="service-card card flex">
       <p>Bérleti szerződés? Keresse jogászainkat.</p>
-      <button mat-button class="primary-btn">Bővebben</button>
+      <span><button mat-button class="primary-btn" (click)="openNotImplemented()">Bővebben</button></span>
     </div>
     <div class="service-card card flex">
       <p>Költöztetési ajánlataink</p>
-      <button mat-button class="primary-btn">Bővebben</button>
+      <a routerLink="/moving"> <button mat-button class="primary-btn">Bővebben</button></a>
     </div>
   </div>
 </section>

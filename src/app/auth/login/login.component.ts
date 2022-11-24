@@ -6,6 +6,7 @@ import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
 import { UserDAO } from 'src/app/user/socialUser.model';
 import { BSON } from 'realm-web';
 import { UserService } from 'src/app/user/user.service';
+import * as Realm from 'realm-web';
 
 @Component({
   selector: 'app-login',
@@ -34,6 +35,8 @@ export class LoginComponent implements OnInit {
 
   googleLoginShow: boolean = false;
 
+  redirectUri:string = 'https://housemanager-597f6.web.app/login';
+
 
   constructor(private userService: UserService, private authService: AuthService, private router: Router, private activated: ActivatedRoute) { }
 
@@ -49,14 +52,6 @@ export class LoginComponent implements OnInit {
     });
 
 }
-
-googleLogin(response:any){
-  const app = new Realm.App({
-    id: this.app_id
-  });
-  const credentials = Realm.Credentials.google(response.credential);
-  app.logIn(credentials).then((user) => alert(`Logged in with id: ${user.id}`));
-  }
 
 
   submitLogin(){

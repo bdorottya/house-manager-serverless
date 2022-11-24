@@ -47,6 +47,9 @@ import { ErrorMessageComponent } from './navigation/error-message/error-message.
 import { GetRatingsComponent } from './rate/get-ratings/get-ratings.component';
 import { MovingComponent } from './navigation/moving/moving.component';
 import { ServicesComponent } from './navigation/services/services.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { NotImplementedComponent } from './navigation/not-implemented/not-implemented.component';
+
 
 
 @NgModule({
@@ -68,7 +71,8 @@ import { ServicesComponent } from './navigation/services/services.component';
     ErrorMessageComponent,
     GetRatingsComponent,
     MovingComponent,
-    ServicesComponent
+    ServicesComponent,
+    NotImplementedComponent
   ],
   imports: [
     BrowserModule,
@@ -97,7 +101,13 @@ import { ServicesComponent } from './navigation/services/services.component';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage())
+    provideStorage(() => getStorage()),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig }

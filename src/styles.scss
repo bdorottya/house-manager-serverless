@@ -167,6 +167,14 @@ a:hover{
   background-color: goldenrod;
   color: white;
   border: none;
+  border-radius: 5px;
+}
+
+.secondary-expert-btn{
+  background-color: white;
+  color: goldenrod;
+  box-shadow: 0 0 4px goldenrod;
+  border-radius: 5px;
 }
 
 .card{

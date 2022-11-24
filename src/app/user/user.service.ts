@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { ObjectId } from 'mongodb';
 import { Subject } from 'rxjs';
-import { SocialUser, updateUserDao, User, UserDAO } from './socialUser.model';
+import { User } from './socialUser.model';
+import * as Realm from 'realm-web';
 
 @Injectable({
   providedIn: 'root'
@@ -28,26 +29,15 @@ export class UserService {
     let mongo = app.currentUser?.mongoClient("mongodb-atlas");
     let collection = mongo?.db("home-maker").collection("users");
     return await collection?.findOne({email: userEmail});
-
   }
 
-
-
-  async updateUser(email: string, user: updateUserDao){
-    console.log("update userben");
-    const data = {
-      email: email,
-      avatar: user.avatar,
-      phone: user.phone
-    }
-    console.log(data);
-    let update = this.httpClient.post(this.base_url, data);
-    update.subscribe(data => {
-      console.log(data);
-    })
+  async saveExpert(user:any, expert:any){
+    let app = new Realm.App({id: this.app_id});
+    let mongo = app.currentUser?.mongoClient("mongodb-atlas");
+    let collection = mongo?.db("home-maker").collection("users");
+    console.log(user,expert);
+    return await collection?.updateOne({_id: user._id}, {$push: {_savedExperts: expert._id}});
   }
-
-
 
   async updateUserAfterHomeUpload(homeId:string){
     let userId = localStorage.getItem("userEmail") as string;
@@ -59,6 +49,15 @@ export class UserService {
     res.subscribe(data => {
       console.log(data);
     })
+  }
+
+  async removeSavedHome(user:User, newArray:ObjectId[]){
+    let app = new Realm.App({id: this.app_id});
+    let mongo = app.currentUser?.mongoClient("mongodb-atlas");
+    let collection = mongo?.db("home-maker").collection("users");
+    let newUser = user;
+    newUser._savedHomes = newArray;
+    return collection?.updateOne({_id: user._id}, {newUser});
   }
 
 

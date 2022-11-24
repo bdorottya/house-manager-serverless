@@ -8,6 +8,7 @@ import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { HomeDAO } from "../home/home.model";
 import { User } from "../user/socialUser.model";
 import { HomeSearchQuery } from "./query.model";
+import * as Realm from 'realm-web';
 
 export class Minmax{
   min!: number;
@@ -78,7 +79,7 @@ export class SearchService {
       }
       let mongo = app.currentUser?.mongoClient("mongodb-atlas");
       let collection = mongo?.db("home-maker").collection("homes");
-      let results = collection?.find();
+      let results = collection?.find({type: 'elado'});
       results?.then(data => {
         this.documents.next(data);
       })
@@ -95,7 +96,7 @@ export class SearchService {
       }
       let mongo = app.currentUser?.mongoClient("mongodb-atlas");
       let collection = mongo?.db("home-maker").collection("homes");
-      return collection?.find({}, {sort: {_uploadDate: 1}, limit: 3});
+      return collection?.find({}, {sort: {_uploadDate: -1}, limit: 3});
     }
 
     async getSimilarHomes(home: HomeDAO){
@@ -145,6 +146,12 @@ export class SearchService {
       Object.entries(query).forEach(entry => {
         const [key, value] = entry;
         if(value){
+          if(key === 'city'){
+            let cityValue:string = value as string;
+            cityValue = (cityValue.charAt(0).toLocaleUpperCase() + cityValue.slice(1));
+            finalQuery[key] = cityValue;
+            return;
+          }
           if(typeof(value) === "object"){
             let values:any;
             values = value;
@@ -169,25 +176,37 @@ export class SearchService {
               finalQuery[key] = limit;
               return;
             }
-
-            if(Object.values(values)){
-              console.log("ide be kéne jönni", values);
-              if((Object.keys(values)[0] as string).includes("min") || (Object.keys(values)[1] as string).includes('min')){
-                console.log(Object.keys(values));
+            if(Object.values(values)[0] && !Object.values(values)[1]){
+              console.log("egyik létezik másik nem", values);
+              if((Object.keys(values)[0] as string).includes("min")){
+                limits.min = Object.values(values)[0] as unknown as number;
+                limit = {$gte: limits.min}
+                finalQuery[key] = limit;
+                return;
+              }
+              if((Object.keys(values)[0] as string).includes("max")){
+                limits.min = Object.values(values)[0] as unknown as number;
+                limit = {$lte: limits.min}
+                finalQuery[key] = limit;
+                return;
+              }
+            }
+            if(Object.values(values)[1] && !Object.values(values)[0]){
+              if((Object.keys(values)[1] as string).includes("min")){
                 limits.min = Object.values(values)[1] as unknown as number;
                 limit = {$gte: limits.min}
                 finalQuery[key] = limit;
                 return;
               }
-              if((Object.keys(values)[0] as string).includes("max") || (Object.keys(values)[1] as string).includes('max')){
-                console.log(key);
-                limits.max = Object.values(values)[1] as unknown as number;
-                limit = {$lte: limits.max}
+              if((Object.keys(values)[1] as string).includes("max")){
+                limits.min = Object.values(values)[1] as unknown as number;
+                limit = {$lte: limits.min}
                 finalQuery[key] = limit;
                 return;
               }
             }
           }
+
           if(key == "minBathroom"){
             let goodKey = "bathroom"
             let limit = {$gte: value as number};

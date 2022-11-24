@@ -17,7 +17,7 @@ export class AuthService {
   admin_email:string = "admin@system.com";
   admin_password:string = "admin1234";
   loggedInUser?: boolean;
-  app:any;
+  app = new Realm.App({id: this.app_id});
   role!:string;
 
   user:any;
@@ -25,7 +25,6 @@ export class AuthService {
   constructor(private dialog: MatDialog, private router: Router, private snackBar: MatSnackBar, private userService: UserService) {}
 
   async loginWithEmailAndPass(email: string, password: string){
-    this.app = new Realm.App({id: this.app_id});
     const creds = Realm.Credentials.emailPassword(email, password);
     try{
       let user = await this.app.logIn(creds);
@@ -34,9 +33,12 @@ export class AuthService {
       this.loggedInUser = true;
       localStorage.setItem("userID", this.app.currentUser?.id as string);
       localStorage.setItem("userEmail", email);
+
       this.userService.getUser(email).then(data => {
         console.log(data);
         this.role = data.role;
+        this.user = user;
+        localStorage.setItem("role", data.role);
       })
       return user;
     }catch(err: any){

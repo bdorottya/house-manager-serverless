@@ -7,7 +7,7 @@
       <h4>{{expert.city}}</h4>
       <a href="{{'tel:'+expert.phone}}"><button class="expert-btn" mat-button><mat-icon style="color:white">phone</mat-icon> {{expert.phone}}</button></a>
       <a href="{{'mailto:'+expert.email}}"><button class="expert-btn" mat-button><mat-icon style="color:white">mail</mat-icon> {{expert.email}}</button></a>
-      <h5 *ngIf="this.ratings.length > 0"><mat-icon style="color:gold">star</mat-icon>{{currentRate | number: '0.1-1' }}</h5>
+      <button (click)="saveContact()" class="expert-btn" mat-button *ngIf="this.authService.isLoggedIn() && this.role === 'user'  "><mat-icon>favorite_border</mat-icon> Szakember mentése</button>
     </div>
     <div class="introduction">
       <h2>Bemutatkozás</h2>

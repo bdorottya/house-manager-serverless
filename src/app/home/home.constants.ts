@@ -6,5 +6,4 @@ export class HomeArray{
   static yesno:any[]=[{"name": "Igen", "value": true}, { "name": "Nem", "value": false}];
   static sorting:string[]=["Ár szerint növekvő", "Ár szerint csökkenő", "Méret szerint növekvő", "Méret szerint csökkenő"];
   static buildingType:string[]=["Tégla lakás","Panel lakás","Faház","Egyéb"];
-
 }

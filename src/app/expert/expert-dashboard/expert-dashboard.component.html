@@ -38,7 +38,11 @@
     <div class="ratings card">
       <h2>Értékelések</h2>
       <div class="rating-container">
-
+        <div class="rating" *ngFor="let rating of this.ratings; let i=index">
+          <h4>{{this.userNames[i]}}</h4>
+          <h4>{{rating.star}}</h4>
+          <h5>{{rating.review}}</h5>
+        </div>
       </div>
     </div>
   </section>

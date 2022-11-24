@@ -2,7 +2,7 @@
   <div class="left-side flex">
     <div class="glass-box search-box card flex">
       <form [formGroup]="searchForm" (ngSubmit)="search()">
-        <mat-form-field appearance="outline" class="mobile-city">
+        <mat-form-field appearance="outline" class="mobile-city city">
           <mat-label>Város</mat-label>
           <input matInput formControlName="city" type="text">
         </mat-form-field>
@@ -78,7 +78,7 @@
       <img src="{{service.img}}" class="icon-100">
       <h5>{{service.name}}</h5>
       <p>{{service.desc}}</p>
-      <a href='services/#{{service.tag}}'><button mat-button class="primary-btn">Tovább</button></a>
+      <a href='{{service.tag}}'><button mat-button class="primary-btn">Tovább</button></a>
     </div>
   </div>
 

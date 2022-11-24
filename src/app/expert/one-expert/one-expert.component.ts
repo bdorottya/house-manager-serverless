@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { ObjectId } from 'mongodb';
+import { AuthService } from 'src/app/auth/auth.service';
 import { SpinnerComponent } from 'src/app/navigation/spinner/spinner.component';
 import { AddRatingComponent } from 'src/app/rate/add-rating/add-rating.component';
 import { Rate } from 'src/app/rate/rate.model';
 import { RateService } from 'src/app/rate/rate.service';
 import { User } from 'src/app/user/socialUser.model';
+import { UserService } from 'src/app/user/user.service';
 import { ExpertService } from '../expert.service';
 
 @Component({
@@ -22,9 +25,12 @@ export class OneExpertComponent implements OnInit {
   currentRate!:number;
   ratings:Rate[]=[];
 
-  constructor(private router: ActivatedRoute, private expertService: ExpertService, private dialog: MatDialog, private ratingService: RateService) { }
+  role!:string;
+
+  constructor(private snackBar: MatSnackBar, private userService: UserService, public authService: AuthService, private router: ActivatedRoute, private expertService: ExpertService, private dialog: MatDialog, private ratingService: RateService) { }
 
   ngOnInit(): void {
+    this.role = localStorage.getItem("role") as string;
     this.dialog.open(SpinnerComponent);
     let id = this.router.snapshot.paramMap.get("id") as string;
     let expert = this.expertService.getExpert(id);
@@ -34,8 +40,40 @@ export class OneExpertComponent implements OnInit {
         this.currentRate = this.ratingService.getCurrentRateValue(this.ratings);
         this.dialog.closeAll();
       });
-
     })
+  }
+
+  saveContact(){
+    let exists:boolean;
+    this.authService.getUser().then(user => {
+      let expert = this.expert;
+      if(user._savedExperts){
+        user._savedExperts.forEach((exp:ObjectId) => {
+          if(exp.equals(expert._id)){
+            exists = true;
+          }
+        })
+        if(exists === true){
+          this.snackBar.open("Már elmentetted ezt a szakembert", "OK", {panelClass: 'secondary-snackbar'});
+        }else{
+          this.userService.saveExpert(user, expert).then(data => {
+            console.log(data);
+            if(data){
+              this.snackBar.open("Szakember mentése sikeres!", "OK", {panelClass: 'success-snackbar'});
+            }
+          });
+        }
+      }else{
+        this.userService.saveExpert(user, expert).then(data => {
+          console.log(data);
+          if(data){
+            this.snackBar.open("Szakember mentése sikeres!", "OK", {panelClass: 'success-snackbar'});
+          }
+        });
+      }
+
+    });
+
   }
 
   writeRating(id:ObjectId){

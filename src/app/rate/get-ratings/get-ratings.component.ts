@@ -19,18 +19,35 @@ export class GetRatingsComponent implements OnInit {
   @Input() expert!: User;
 
   ratings: Rate[] = [];
+  role!:string;
 
   ngOnInit(): void {
+    this.role = localStorage.getItem("role") as string;
     this.getRatings();
   }
 
   writeRating(id:ObjectId){
     let dialog = this.dialog.open(AddRatingComponent);
     dialog.componentInstance.expertId=id;
+    dialog.afterClosed().subscribe(obs => {
+      this.getRatings();
+      setTimeout(() => {
+        this.ratingService.getCurrentRateValue(this.ratings);
+      }, 2000);
+    })
+  }
+
+  convertStringToInt(ratings:Rate[]){
+    for(let i = 0; i < ratings.length; i++){
+      console.log(ratings[i].star);
+      ratings[i].star = ratings[i].star as number;
+      console.log(ratings[i].star);
+    }
   }
 
   async getRatings(){
     await this.ratingService.getRatings(this.expert._id).then((data: Rate[]) => {
+      this.convertStringToInt(data);
       this.ratings = data;
       console.log(this.ratings);
     })

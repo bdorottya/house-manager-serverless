@@ -5,7 +5,6 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { AllExpertsComponent } from './expert/all-experts/all-experts.component';
 import { AllHomesComponent } from './home/all-homes/all-homes.component';
 import { OneHomeComponent } from './home/one-home/one-home.component';
-import { SavedHomesComponent } from './home/saved-homes/saved-homes.component';
 import { HomePageComponent } from './navigation/home-page/home-page.component';
 import { UpdateDataComponent } from './user/update-data/update-data.component';
 import { UploadAvatarComponent } from './user/upload-avatar/upload-avatar.component';
@@ -33,7 +32,7 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,  {scrollPositionRestoration: 'enabled'})],
   exports: [RouterModule],
   providers: [AuthGuard, UserTypeGuard, ExpertTypeGuard]
 })

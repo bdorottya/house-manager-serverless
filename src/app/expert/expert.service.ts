@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ObjectId } from 'mongodb';
 import { BSON } from 'realm-web';
 import { User } from '../user/socialUser.model';
+import * as Realm from 'realm-web';
 
 @Injectable({
   providedIn: 'root'

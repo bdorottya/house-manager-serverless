@@ -1,6 +1,6 @@
 <section class="card flex user-home">
   <div class="flex user-info col">
-    <h3>Üdv, {{user?.lastName}}!</h3>
+    <h3>Üdv, {{user.lastName}}!</h3>
     <img [src]="avatarImage">
     <div class="buttons">
       <button mat-button (click)="openAvatarDialog(avatarImage)" class="primary-btn">Profilkép feltöltése</button>
@@ -13,19 +13,21 @@
       <div class="own-homes-container">
         <h2>Feltöltött ingatlanok</h2>
         <div *ngIf="uploadedHomes" class="home-card-container">
-          <div class="home-card card" *ngFor="let home of this.uploadedHomes">
-            <img src="{{home.images ? home.images[0] : ''}}">
-            <div class="padding-box">
-              <h3>{{home.city}}<span>{{home.city2 ? ', ' + home.city2 : ''}}</span></h3>
-              <h5>{{home.street}}</h5>
-              <h4>{{home.type=="elado" ? home.price + " Millió Ft." : home.price + " ezer Ft/hó" }}</h4>
-              <span>Mentések száma: {{home._savedCount ? home._savedCount : 0}}</span>
-              <div class="buttons">
-                <a routerLink="/onehome/{{home._id}}"><button mat-button class="primary-btn">Tovább</button></a>
-                <button mat-button class="secondary-btn" (click)="openHomeUploadDialog(home)">Szerkesztés</button>
+          <carousel [height]="350" [margin]="25" class="carousel-html-content carousel">
+            <div class="home-card carousel-cell" *ngFor="let home of this.uploadedHomes">
+              <img src="{{home.images ? home.images[0] : ''}}">
+              <div class="padding-box">
+                <h3>{{home.city}}<span>{{home.city2 ? ', ' + home.city2 : ''}}</span></h3>
+                <h5>{{home.street}}</h5>
+                <h4>{{home.type=="elado" ? home.price + " Millió Ft." : home.price + " ezer Ft/hó" }}</h4>
+                <span>Mentések száma: {{home._savedCount ? home._savedCount : 0}}</span>
+                <div class="buttons">
+                  <a routerLink="/onehome/{{home._id}}"><button mat-button class="primary-btn">Tovább</button></a>
+                  <button mat-button class="secondary-btn" (click)="openHomeUploadDialog(home)">Szerkesztés</button>
+                </div>
               </div>
             </div>
-          </div>
+          </carousel>
         </div>
         <div *ngIf="!uploadedHomes">
           <h3>Még nem töltöttél fel ingatlant.</h3>
@@ -35,23 +37,39 @@
     <div class="saved-homes">
       <h2>Mentett Ingatlanok</h2>
       <div *ngIf="this.savedHomes" class="home-card-container">
-        <div class="home-card card" *ngFor="let home of this.savedHomes">
-          <img src="{{home.images ? home.images[0] : ''}}">
-          <div class="padding-box">
-            <h3>{{home.city}}</h3>
-            <h4>{{home.type=="elado" ? home.price + " Millió Ft." : home.price + " ezer Ft/hó" }}</h4>
-            <div class="buttons">
-              <a routerLink="/onehome/{{home._id}}"><button mat-button class="primary-btn">Tovább</button></a>
+        <carousel [height]="300" [margin]="15" class="carousel-html-content">
+          <div class="home-card carousel-cell" *ngFor="let home of this.savedHomes">
+            <img src="{{home.images ? home.images[0] : ''}}">
+            <div class="padding-box">
+              <h3>{{home.city}}</h3>
+              <h4>{{home.type=="elado" ? home.price + " Millió Ft." : home.price + " ezer Ft/hó" }}</h4>
+              <div class="buttons">
+                <a routerLink="/onehome/{{home._id}}"><button mat-button class="primary-btn">Tovább</button></a>
+              </div>
             </div>
           </div>
-        </div>
+          </carousel>
       </div>
       <div *ngIf="!this.savedHomes">
         <h3>Még nem mentettél el ingatlant.</h3>
       </div>
     </div>
     <div class="saved-experts">
-
+      <h2>Mentett Szakemberek</h2>
+      <div class="expert-container">
+        <carousel [height]="300" [margin]="15" class="carousel-html-content">
+          <div class="home-card carousel-cell" *ngFor="let expert of this.savedExperts">
+            <img src="{{expert.avatar ? expert.avatar : this.noImg}}">
+            <div class="padding-box">
+              <h3>{{expert.firstName}} {{expert.lastName}}</h3>
+              <h4>{{expert.field}}, {{expert.city}}</h4>
+              <div class="buttons">
+                <a routerLink="/oneexpert/{expert._id}}"><button mat-button class="primary-btn">Tovább</button></a>
+              </div>
+            </div>
+          </div>
+          </carousel>
+      </div>
     </div>
   </div>
 </section>

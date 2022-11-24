@@ -106,16 +106,16 @@
 
 
 @media only screen and (max-width:460px){
+  .expanded{
+    height: fit-content;
+    z-index: 100%;
+  }
   .home-form{
-    height: 17rem;
+    min-height: 17rem;
+    transition: .3s ease-in-out all;
     .form-field{
       width: 100%;
     }
-      .expanded{
-        min-height: 50rem;
-        z-index: 100%;
-      }
-
     .first-row{
       flex-direction: column;
       align-items: center;
@@ -130,9 +130,9 @@
     .hidden-panel{
       flex-direction: column;
       align-items: center;
-    }
-    .expanded{
-      height: fit-content;
+      .form-field{
+        max-width: 90%;
+      }
     }
   }
   .expert-form{

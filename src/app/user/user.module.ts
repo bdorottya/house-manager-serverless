@@ -15,6 +15,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {RouterModule} from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { SavedExpertsComponent } from './saved-experts/saved-experts.component';
+import { IvyCarouselModule } from 'angular-responsive-carousel';
 
 
 @NgModule({
@@ -22,6 +24,7 @@ import { MatInputModule } from '@angular/material/input';
     UpdateDataComponent,
     UserDashboardComponent,
     UploadAvatarComponent,
+    SavedExpertsComponent,
   ],
   imports: [
     CommonModule,
@@ -35,7 +38,8 @@ import { MatInputModule } from '@angular/material/input';
     MatProgressSpinnerModule,
     RouterModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    IvyCarouselModule
   ]
 })
 export class UserModule { }

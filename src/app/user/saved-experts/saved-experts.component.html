@@ -1,0 +1,24 @@
+<div class="dialog-content flex">
+  <h3>Mentett Szakemberek</h3>
+  <div class="row saved-experts" >
+    <div class="expert-card card" *ngFor="let expert of this.savedExperts">
+      <h3>{{expert.firstName}} {{expert.lastName}}</h3>
+      <h3>{{expert.field}}</h3>
+      <h3>{{expert.city}}</h3>
+      <div class="prices">
+        <div class="price-row" *ngFor="let service of expert.prices">
+          <h5>{{service.service}}</h5>
+          <h5>{{service.price}}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row ratings-wrote">
+    <h3>Írt értékeléseim</h3>
+    <div class="card rating" *ngFor="let rate of this.writtenRatings">
+      <h3><a routerLink="/oneexpert/{{rate.expertId}}">Értékelt Szakember</a></h3>
+      <h4>Értékelés: {{rate.star}}</h4>
+      <p>{{rate.review}}</p>
+    </div>
+  </div>
+</div>

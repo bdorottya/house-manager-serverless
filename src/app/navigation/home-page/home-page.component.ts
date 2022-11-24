@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ObjectId } from 'mongodb';
 import { HomeDAO } from 'src/app/home/home.model';
 import { SearchService } from 'src/app/search/search.service';
+import * as Realm from 'realm-web';
 
 @Component({
   selector: 'app-home-page',
@@ -14,16 +15,16 @@ export class HomePageComponent implements OnInit {
 
   services:any[] = [
     {"tag": "moving", "name": "Költöztetés", "desc": "A költözésben is segítünk! Keresse bármelyik hitelesített költöztető partnerünket.", "img": "../../../assets/img/moveout.png"},
-    {"tag": "ingatlanos", "name": "Ingatlanos megbízása", "desc": "Másra bízná az eladást? Keresse bizalommal ingatlanos kollégáinkat.", "img": "../../../assets/img/ingatlanos.png"},
-    {"tag": "design", "name": "Könnyen kezelhető felület", "desc": "Weboldalunkon és mobilapplikációnkban is kezelheti ingatlanügyeit, bárhol, bármikor.", "img": "../../../assets/img/app.png"},
-    {"tag": "expert", "name": "Szakember kereső", "desc": "Ellenőrzött, hitelesített szakemberek az ország bármely pontján.", "img": "../../../assets/img/certificate.png"},
-    {"tag": "certificate", "name": "Kiemelt hirdetések", "desc": "Találon vevőt 2x olyan gyorsan! Kiemelt hirdetéseink garantáltan hoznak érdeklődőket.", "img": "../../../assets/img/savehome.png"},
-    {"tag": "hitel", "name": "Hitelügyintézés", "desc": "Kollégáink rendelkezésére állnak hitelekkel kapcsolatos ügyekben is.", "img": "../../../assets/img/hitel.png"}
+    {"tag": "services/#ingatlanos", "name": "Ingatlanos megbízása", "desc": "Másra bízná az eladást? Keresse bizalommal ingatlanos kollégáinkat.", "img": "../../../assets/img/ingatlanos.png"},
+    {"tag": "services/#design", "name": "Könnyen kezelhető felület", "desc": "Weboldalunkon és mobilapplikációnkban is kezelheti ingatlanügyeit, bárhol, bármikor.", "img": "../../../assets/img/app.png"},
+    {"tag": "services/#expert", "name": "Szakember kereső", "desc": "Ellenőrzött, hitelesített szakemberek az ország bármely pontján.", "img": "../../../assets/img/certificate.png"},
+    {"tag": "services/#certificate", "name": "Kiemelt hirdetések", "desc": "Találon vevőt 2x olyan gyorsan! Kiemelt hirdetéseink garantáltan hoznak érdeklődőket.", "img": "../../../assets/img/savehome.png"},
+    {"tag": "services/#hitel", "name": "Hitelügyintézés", "desc": "Kollégáink rendelkezésére állnak hitelekkel kapcsolatos ügyekben is.", "img": "../../../assets/img/hitel.png"}
   ];
 
 searchForm = this.fb.group({
   city: [''],
-  type: [''],
+  type: ['elado'],
   size: this.fb.group({
     minSize: [''],
     maxSize: [''],

@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { BSON } from 'realm-web';
 import { updateDataDAO, UserDAO } from '../socialUser.model';
 import { UserService } from '../user.service';
+import * as Realm from 'realm-web';
 
 @Component({
   selector: 'app-update-data',

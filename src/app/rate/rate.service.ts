@@ -3,6 +3,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ObjectId } from 'mongodb';
 import { BSON } from 'realm-web';
 import { Rate } from './rate.model';
+import * as Realm from 'realm-web';
+import { User } from '../user/socialUser.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +31,7 @@ export class RateService {
       review: review,
       userId: useroid
     });
+    console.log(star);
     result?.then(data => {
       if(data){
         let insertedId = data.insertedId;
@@ -40,6 +43,20 @@ export class RateService {
         })
       }
     })
+  }
+
+  getUserWhoWroteRating(id:ObjectId): Promise<User> | undefined{
+    let app = new Realm.App({id: this.app_id});
+    let user:any;
+    let creds = Realm.Credentials.emailPassword(this.admin_email, this.admin_password);
+    if(app.currentUser){
+      user = app.currentUser;
+    }else{
+      user = app.logIn(creds);
+    }
+    let mongo = app.currentUser?.mongoClient("mongodb-atlas");
+    let collection = mongo?.db("home-maker").collection('users');
+    return collection?.findOne({_id: id});
   }
 
   async getRatings(expertId: ObjectId): Promise<Rate[]>{
@@ -56,10 +73,24 @@ export class RateService {
     return await collection.find({expertId: expertId});
   }
 
+  async getWroteRatings(userId:ObjectId): Promise<Rate[]>{
+    let app = new Realm.App({id: this.app_id});
+    let user:any;
+    let creds = Realm.Credentials.emailPassword(this.admin_email, this.admin_password);
+    if(app.currentUser){
+      user = app.currentUser;
+    }else{
+      user = app.logIn(creds);
+    }
+    let mongo = user?.mongoClient("mongodb-atlas");
+    let collection = mongo?.db("home-maker").collection('rates');
+    return await collection.find({userId: userId});
+  }
+
 
   getCurrentRateValue(ratings:Rate[]){
     let stars:number = 0;
-    let rateNumber = 0;
+    let rateNumber:number = 0;
     for(let i = 0; i < ratings.length; i++){
       console.log(ratings[i]);
       stars += ratings[i].star as number;

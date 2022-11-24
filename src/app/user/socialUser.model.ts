@@ -1,19 +1,4 @@
 import { ObjectId } from "mongodb";
-import { Rate } from "../rate/rate.model";
-
-export interface SocialUser {
-    id: string;
-    email: string;
-    avatar: string;
-    phone: string;
-    firstName: string;
-    lastName: string;
-    field: string;
-    _registrationDate: Date;
-    _uploadedHomes: string[];
-    _savedHomes: string[];
-    _ratingsWrote: string[];
-}
 
 export class User{
   _id!: ObjectId;
@@ -30,8 +15,7 @@ export class User{
   prices!:any[];
   _uploadedHomes!:ObjectId[];
   _savedHomes!:ObjectId[];
-  _ratings!:ObjectId;
-
+  _savedExperts!:ObjectId[];
 }
 
 export class UserDAO{
@@ -42,9 +26,6 @@ export class UserDAO{
   date!: Date;
   phone?:string;
   avatar?:string;
-
-
-
 }
 
 export class updateDataDAO{
@@ -52,9 +33,4 @@ export class updateDataDAO{
   lastName?:string;
   firstName?:string;
   phone?:string;
-}
-
-export class updateUserDao{
-  phone?:string;
-  avatar?:string;
 }

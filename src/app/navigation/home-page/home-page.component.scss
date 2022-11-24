@@ -18,6 +18,9 @@
     margin: 2rem;
     border-radius: 15px;
     padding: 2rem;
+    form{
+      max-width: fit-content;
+    }
     .numbers{
       flex-direction: column;
       .small{
@@ -137,7 +140,7 @@
 
 @media only screen and (max-width: 460px){
   .search{
-    flex-direction: column;
+    flex-direction: column-reverse;
     .left-side{
       min-width: 100%;
       border-top-left-radius: 15px;

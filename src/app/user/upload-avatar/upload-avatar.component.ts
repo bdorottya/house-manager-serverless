@@ -27,7 +27,6 @@ export class UploadAvatarComponent implements OnInit {
   _userType:any;
 
   ngOnInit(): void {
-
     this.previewImage = this.data.image;
   }
 

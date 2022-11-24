@@ -9,6 +9,7 @@ import { FileUpload } from '../data-models/file-upload.model';
 import { UserDAO } from '../user/socialUser.model';
 import { UserService } from '../user/user.service';
 import { HomeDAO } from './home.model';
+import * as Realm from 'realm-web';
 
 @Injectable({
   providedIn: 'root'
@@ -158,18 +159,20 @@ export class HomeService {
 
   saveHome(home?: ObjectId){
     let app = new Realm.App({id: this.app_id});
+    let mongo = app.currentUser?.mongoClient("mongodb-atlas");
+    let collection = mongo?.db("home-maker").collection("users");
     let user = app.currentUser;
     console.log("save me: ", home as unknown as string);
     console.log(user);
     let data = {
-      userId: user?.id,
-      homeId: home
+      userId: new BSON.ObjectID(user?.id),
+      homeId: new BSON.ObjectID(home)
     }
-    let alreadySaved = user?.callFunction("alreadySavedHome", home as unknown as string, user?.id as unknown as string);
+    let alreadySaved = collection?.find({_id:data.userId, _savedHomes: data.homeId});
     alreadySaved?.then(res => {
       console.log(res);
       let ress:any = res;
-      if(ress.length>0){
+      if(ress.length!=0){
         console.log(res);
         this.snackBar.open("Már elmentetted ezt az ingatlant.", "OK", {panelClass: 'error-snackbar'});
       }else{
