@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BSON } from 'realm-web';
 import { AuthService } from '../auth.service';
@@ -19,22 +19,22 @@ import { expressionType } from '@angular/compiler/src/output/output_ast';
 export class SignupComponent implements OnInit {
 
   signupForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    passwordAgain: new FormControl('')
+    email: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    passwordAgain: new FormControl('', Validators.required)
   });
 
   expertForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    passwordAgain: new FormControl(''),
-    field: new FormControl(''),
-    city: new FormControl(''),
-    phone: new FormControl('')
+    email: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    passwordAgain: new FormControl('', Validators.required),
+    field: new FormControl('', Validators.required),
+    city: new FormControl('', Validators.required),
+    phone: new FormControl('', Validators.required)
   })
 
   fields:string[]=[];

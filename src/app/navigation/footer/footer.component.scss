@@ -39,11 +39,20 @@ footer{
     flex-direction: column;
     max-width: 100%;
     .identity{
-      width: 100%;
+      max-width: 100%;
+      justify-content: stretch;
+      text-align: justify;
     }
     .menu{
-      width: 100%;
-
+      max-width: 100%;
+      margin: 1%;
+      padding-left: 0;
+      margin-left: 0;
+      li{
+        text-decoration: underline;
+        margin: 0;
+        padding: 2.5% 0;
+      }
     }
   }
 }

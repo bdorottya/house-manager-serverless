@@ -4,7 +4,7 @@
     <div class="flex-container">
       <h3>Típus, cím</h3>
       <div class="radio-group">
-        <label for="type">Hirdetés típusa</label>
+        <mat-label for="type">Hirdetés típusa</mat-label>
         <mat-radio-group name="type" formControlName="type"  [(ngModel)]="homeType">
           <mat-radio-button class="radio-btn" value="elado" #eladoButton [checked]="this.editableHome && this.editableHome.type == 'elado'">
             Eladó
@@ -17,6 +17,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Város</mat-label>
         <input matInput required formControlName="city" [style.text-transform]="'capitalize'">
+        <mat-error *ngIf="this.uploadHome.get('city')?.hasError('required')">Város megadása kötelező!</mat-error>
       </mat-form-field>
       <mat-form-field *ngIf="this.uploadHome.get('city')?.value === 'Budapest'" appearance="outline" >
         <mat-label>Kerület</mat-label>
@@ -37,6 +38,7 @@
             {{con}}
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="this.uploadHome.get('condition')?.hasError('required')">Az állapot kiválasztása kötelező!</mat-error>
       </mat-form-field>
       <mat-form-field  appearance="outline" class="form-field medium">
         <mat-label>Épület típusa</mat-label>
@@ -45,6 +47,7 @@
             {{types}}
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="this.uploadHome.get('buildingType')?.hasError('required')">Épület típusának kiválasztása kötelező!</mat-error>
       </mat-form-field>
     </div>
 
@@ -54,6 +57,7 @@
         <mat-label>Ingatlan területe</mat-label>
         <input matInput formControlName="size" type="number">
         <span matSuffix>négyzetméter</span>
+        <mat-error *ngIf="this.uploadHome.get('size')?.hasError('required')">Méret megadása kötelező!</mat-error>
       </mat-form-field>
       <mat-form-field  appearance="outline" class="form-field medium">
         <mat-label>Hálószobák száma</mat-label>
@@ -154,6 +158,7 @@
         <mat-label>Ár</mat-label>
         <input matInput formControlName="price" type="number">
         <span matSuffix>{{this.homeType === "elado" ? 'Millió Ft.' : 'Ezer Ft/hó'}}</span>
+        <mat-error *ngIf="this.uploadHome.get('price')?.hasError('required')">Ár megadása kötelező!</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Leírás</mat-label>
@@ -162,7 +167,7 @@
       <label>Képek</label>
       <input type="file" formControlName="images" multiple (change)="uploadFiles($event)">
       <div class="image-preview">
-        <img *ngIf="imagesToShow && imagesToShow.length==0" [src]="this.noImage">
+        <img *ngIf="imagesToShow && imagesToShow.length==0" [src]="this.noImage" class="no-img">
         <div *ngFor="let image of imagesToShow" class="image-container">
           <mat-icon class="icon" mat-icon-button (click)="removeImage(image)">cancel</mat-icon>
           <img [src]="this.image">
@@ -171,7 +176,7 @@
     </div>
   </div>
   <div class="buttons">
-    <button mat-button class="primary-btn" type="submit">{{this.editableHome ? 'Módosítása' : 'Feltöltés'}}</button>
+    <button mat-button class="primary-btn" type="submit">{{this.editableHome ? 'Módosítás' : 'Feltöltés'}}</button>
     <button *ngIf="this.editableHome" mat-button class="warning-btn" type="button" (click)="deleteHome(this.editableHome._id)">Ingatlan törlése</button>
     <button mat-button class="secondary-btn" type="button" mat-dialog-close>Mégsem</button>
   </div>

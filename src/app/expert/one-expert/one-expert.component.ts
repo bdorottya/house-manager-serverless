@@ -32,6 +32,10 @@ export class OneExpertComponent implements OnInit {
   ngOnInit(): void {
     this.role = localStorage.getItem("role") as string;
     this.dialog.open(SpinnerComponent);
+    this.getExpert();
+  }
+
+  getExpert(){
     let id = this.router.snapshot.paramMap.get("id") as string;
     let expert = this.expertService.getExpert(id);
     expert.then(data => {
@@ -78,7 +82,12 @@ export class OneExpertComponent implements OnInit {
 
   writeRating(id:ObjectId){
     let dialog = this.dialog.open(AddRatingComponent);
-    dialog.componentInstance.expertId=id;
+    dialog.componentInstance.expertId=id
+    dialog.afterClosed().subscribe(obs => {
+      setTimeout(() => {
+        this.getExpert()
+      }, 1500)
+    });
   }
 
   async getRatings(){
@@ -87,6 +96,8 @@ export class OneExpertComponent implements OnInit {
       console.log(this.ratings);
     })
   }
+
+
 
 
 }

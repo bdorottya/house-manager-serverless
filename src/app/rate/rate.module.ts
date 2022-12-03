@@ -17,7 +17,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
-    AddRatingComponent
+    AddRatingComponent,
+    GetRatingsComponent
   ],
   imports: [
     CommonModule,
@@ -30,6 +31,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     ReactiveFormsModule,
     MatIconModule,
     MatTooltipModule
+  ],
+  exports: [
+    GetRatingsComponent
   ]
 })
 export class RateModule { }

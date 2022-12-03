@@ -28,8 +28,13 @@ export class ExpertDashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.getExpert();
+  }
+
+  getExpert(){
+    let email = localStorage.getItem("userEmail") as string;
     this.dialog.open(SpinnerComponent);
-    let res = this.userService.getUser(localStorage.getItem("userEmail") as string);
+    let res = this.userService.getUser(email);
     res.then(data => {
       this.expert = data;
       console.log(data);
@@ -42,15 +47,31 @@ export class ExpertDashboardComponent implements OnInit {
     let dialog = this.dialog.open(UpdateAvatarComponent);
     dialog.componentInstance.expert = this.expert;
     dialog.componentInstance.image = this.image;
+    dialog.afterClosed().subscribe(obs => {
+      if(obs){
+        setTimeout(() => {
+          this.getExpert();
+        }, 1500)
+      }
+    })
   }
 
   updateData(){
     let dialog = this.dialog.open(UpdateDataComponent);
     dialog.componentInstance.expert = this.expert;
+    dialog.afterClosed().subscribe(obs => {
+        setTimeout(() => {
+          this.getExpert();
+        }, 1500)
+    })
   }
 
   modifyPrices(){
-    this.dialog.open(ModifyPricesComponent);
+    this.dialog.open(ModifyPricesComponent).afterClosed().subscribe(obs => {
+      setTimeout(() => {
+        this.getExpert();
+      }, 1000)
+    });
   }
 
   getRatings(){

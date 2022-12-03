@@ -7,8 +7,11 @@ import { BSON } from "realm-web";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { HomeDAO } from "../home/home.model";
 import { User } from "../user/socialUser.model";
-import { HomeSearchQuery } from "./query.model";
 import * as Realm from 'realm-web';
+import { Rate } from "../rate/rate.model";
+import { RateService } from "../rate/rate.service";
+import { MatDialog } from "@angular/material/dialog";
+import { SpinnerComponent } from "../navigation/spinner/spinner.component";
 
 export class Minmax{
   min!: number;
@@ -29,7 +32,7 @@ export class SearchService {
     admin_email:string = "admin@system.com";
     admin_password:string = "admin1234";
 
-    constructor(private router: Router){}
+    constructor(private rateService: RateService, private dialog: MatDialog){}
 
     async expertResults(query:any){
       let app = new Realm.App({id: this.app_id});
@@ -40,13 +43,14 @@ export class SearchService {
       }else{
         user = app.logIn(creds);
       }
+      this.dialog.open(SpinnerComponent);
       let mongo = app.currentUser?.mongoClient("mongodb-atlas");
       let collection = mongo?.db("home-maker").collection("users");
-      console.log(query);
       let result = collection?.find(query);
       result?.then(data => {
         console.log(data);
         this.expertDocs.next(data);
+        this.dialog.closeAll();
       })
     }
 
@@ -63,7 +67,15 @@ export class SearchService {
       let collection = mongo?.db("home-maker").collection('users');
       let results = collection?.find({role: 'expert'});
       results?.then(data => {
+        data.forEach(expert => {
+          let ratings: Rate[] = [];
+          this.rateService.getRatings(expert._id).then(data => {
+            ratings = data;
+            expert._ratings = ratings;
+          })
+        })
         this.expertDocs.next(data);
+
       })
 
     }
@@ -99,7 +111,7 @@ export class SearchService {
       return collection?.find({}, {sort: {_uploadDate: -1}, limit: 3});
     }
 
-    async getSimilarHomes(home: HomeDAO){
+    async getSimilarHomes(home: HomeDAO): Promise<HomeDAO[]>{
       let app = new Realm.App({id: this.app_id});
       let user;
       let creds = Realm.Credentials.emailPassword(this.admin_email, this.admin_password);
@@ -110,15 +122,15 @@ export class SearchService {
       }
       let mongo = app.currentUser?.mongoClient("mongodb-atlas");
       let collection = mongo?.db("home-maker").collection("homes");
-      let priceLimit = {$lt: home.price+100};
-      let sizeLimit = {$gt: home.size-5, $lt: home.size+15};
+      let priceLimit = {$lt: home.price+200, $gt: home.price-200};
+      let sizeLimit = {$gt: home.size-10, $lt: home.size+25};
       let query = {type: home.type, city: home.city, price: priceLimit, size: sizeLimit};
-      console.log(query);
-      return collection?.find(query,{limit:4});
+
+      return collection?.find(query,{limit:4}) as unknown as HomeDAO[];
     }
 
     async queryHomes(rawQuery:any){
-      console.log(rawQuery);
+
       let results: Promise<HomeDAO[]> | undefined;
       let app = new Realm.App({id: this.app_id});
       let user;
@@ -128,15 +140,16 @@ export class SearchService {
       }else{
         user = app.logIn(creds);
       }
+      this.dialog.open(SpinnerComponent);
       let mongo = app.currentUser?.mongoClient("mongodb-atlas");
       let collection = mongo?.db("home-maker").collection("homes");
       let query = this.queryBuilder(rawQuery);
-      console.log(query);
+
       results = collection?.find(query);
       await results?.then(data => {
-          console.log(data);
           this.documents.next(data);
           this.foundDocuments = data;
+          this.dialog.closeAll();
       })
     }
 
@@ -177,7 +190,6 @@ export class SearchService {
               return;
             }
             if(Object.values(values)[0] && !Object.values(values)[1]){
-              console.log("egyik létezik másik nem", values);
               if((Object.keys(values)[0] as string).includes("min")){
                 limits.min = Object.values(values)[0] as unknown as number;
                 limit = {$gte: limits.min}

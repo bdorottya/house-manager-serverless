@@ -5,6 +5,7 @@ import { ObjectId } from 'mongodb';
 import { HomeDAO } from 'src/app/home/home.model';
 import { SearchService } from 'src/app/search/search.service';
 import * as Realm from 'realm-web';
+import { Constants } from 'src/app/environment/constants';
 
 @Component({
   selector: 'app-home-page',
@@ -33,8 +34,15 @@ searchForm = this.fb.group({
     minPrice: [''],
     maxPrice: [''],
   }),
-
 })
+
+expertForm = this.fb.group({
+  city: ['', Validators.required],
+  field: ['', Validators.required]
+})
+
+showSearch:string = 'home';
+fields = Constants.expertFields;
 
 elado:boolean=true;
 eladoTexts = ["Millió Ft", "Ezer Ft/hó.", ];
@@ -83,9 +91,27 @@ mostRecent:HomeDAO[] = [];
       console.log(query);
       let results = this.searchService.queryBuilder(query);
       console.log(results);
-      this.router.navigate(['/allhomes'],{queryParams: {'data': JSON.stringify(results)}});
+      this.router.navigate(['/allhomes'],{queryParams: {'data': JSON.stringify(query)}});
     }else{
       console.log("error");
+    }
+  }
+
+  searchExpert(){
+    if(!this.expertForm.invalid){
+      let query = this.expertForm.value;
+      console.log(query);
+      this.router.navigate(['/allexperts'],{queryParams: {'data': JSON.stringify(query)}});
+    }else{
+      console.log("error");
+    }
+  }
+
+  showExpertSearch(){
+    if(this.showSearch === 'home'){
+      this.showSearch = 'expert';
+    }else{
+      this.showSearch = 'home';
     }
   }
 

@@ -1,6 +1,12 @@
+.search-box-container{
+  display: grid;
+}
 .search{
+  grid-column: 1;
+  grid-row: 1;
   margin: 2% 4%;
   padding: 0;
+  z-index: 10;
   .left-side{
     max-width: 46%;
     border-top-left-radius: 15px;
@@ -64,20 +70,93 @@
       align-self: flex-end;
       border-radius: 15px;
       padding: .4rem 1rem;
+      cursor: pointer;
     }
   }
-
+}
+.show-home-search{
+  opacity: 1;
+}
+.no-show-home-search{
+  margin-left: -500px;
+  opacity: 0;
 }
 
-.expert{
+.show-expert-search{
   margin: 2% 4%;
-  padding: 0;
-
+  opacity: 1;
 }
+.no-show-expert-search{
+  opacity: 0;
+  margin-left: 500px;
+}
+.expert-search{
+  grid-column: 1;
+  grid-row: 1;
+  z-index: 1;
+  padding: 0;
+  .right-side{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    justify-content: flex-end;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-image: url("../../../assets/img/pexels-bidvine-1249611.jpg");
+    background-position: center center;
+    background-size: cover;
+    .glass-box{
+      width: 70%;
+      backdrop-filter: blur(5px);
+      background-color: white;
+      background-color: rgba(254,254,254,0.35);
+      opacity: 4;
+      border: 1px solid white;
+      margin: 2rem;
+      border-radius: 15px;
+      padding: 2rem;
+      display: flex;
+      justify-content: stretch;
+      form{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        button{
+          align-self: flex-end;
+          border-radius: 15px;
+          padding: 5%;
+        }
+      }
+    }
+  }
+  .left-side{
+    width: 100%;
+    padding: 2rem 3rem;
+    flex-direction: column;
+    h3{
+      font-size: 2.5rem;
+      font-weight: 800;
+    }
+    h4{
+      font-weight: 300;
+      font-size: 1.4rem;
+      margin-bottom: 6.5rem;
+    }
+    button{
+      align-self: flex-start;
+      border-radius: 15px;
+      padding: .4rem 1rem;
+    }
+  }
+}
+
+
 
 .recom{
   margin: 2% 4%;
   padding: 1%;
+
   h3{
     padding-left: 5%;
     font-size: 1.5rem;
@@ -148,6 +227,7 @@
       border-bottom-left-radius: 0;
       .glass-box{
         max-width: 100%;
+        margin: 3%;
         .numbers{
           width: 100%;
           justify-content: flex-start;

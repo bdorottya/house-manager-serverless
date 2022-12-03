@@ -49,6 +49,8 @@ import { MovingComponent } from './navigation/moving/moving.component';
 import { ServicesComponent } from './navigation/services/services.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NotImplementedComponent } from './navigation/not-implemented/not-implemented.component';
+import { ExpertModule } from './expert/expert.module';
+import { MatPaginatorModule} from '@angular/material/paginator';
 
 
 
@@ -56,20 +58,12 @@ import { NotImplementedComponent } from './navigation/not-implemented/not-implem
   declarations: [
     AppComponent,
     NavBarComponent,
-    AllExpertsComponent,
-    OneExpertComponent,
-    ExpertDashboardComponent,
     HomePageComponent,
     AllHomesComponent,
     FooterComponent,
     PleaseSignInComponent,
-    SearchFiltersComponent,
     SpinnerComponent,
-    ModifyPricesComponent,
-    UpdateAvatarComponent,
-    UpdateDataComponent,
     ErrorMessageComponent,
-    GetRatingsComponent,
     MovingComponent,
     ServicesComponent,
     NotImplementedComponent
@@ -80,7 +74,8 @@ import { NotImplementedComponent } from './navigation/not-implemented/not-implem
     AppRoutingModule,
     BrowserAnimationsModule,
     AuthModule,
-    UserModule,
+    MatPaginatorModule,
+    ExpertModule,
     SearchModule,
     MatButtonModule,
     MatIconModule,
@@ -90,7 +85,6 @@ import { NotImplementedComponent } from './navigation/not-implemented/not-implem
     MatDialogModule,
     MatMenuModule,
     MatRadioModule,
-    HomeModule,
     MatFormFieldModule,
     MatExpansionModule,
     MatButtonToggleModule,

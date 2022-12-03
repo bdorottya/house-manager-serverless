@@ -56,16 +56,16 @@ export class UploadHomeComponent implements OnInit {
     this.yesno = HomeArray.yesno;
 
     this.uploadHome = this.fb.group({
-      type: [''],
+      type: ['', [Validators.required]],
       city: ['', [Validators.required]],
       city2: [''],
       street: [''],
-      buildingType: [''],
+      buildingType: ['', [Validators.required]],
       levelsInBuilding: [''],
-      condition: [''],
+      condition: ['', [Validators.required]],
       level: [''],
-      size: [''],
-      price: [''],
+      size: ['', [Validators.required]],
+      price: ['', [Validators.required]],
       bedroom: [''],
       bathroom: [''],
       heatingType: [''],
@@ -82,19 +82,20 @@ export class UploadHomeComponent implements OnInit {
     });
 
     if(this.editableHome){
-      console.log(this.editableHome);
+      this.uploadHome.disable();
       this.uploadHome.patchValue(this.editableHome);
       if(this.editableHome.images){
         this.imagesToShow = this.editableHome.images;
       }
-      console.log(this.uploadHome.value);
-      console.log(this.uploadHome);
       this.uploadHome.get("type")?.disable();
       if(this.editableHome.type === "elado"){
         this.uploadHome.get("type")?.setValue('elado');
       }else{
         this.uploadHome.get("type")?.setValue('kiado');
       }
+      this.uploadHome.get("price")?.enable();
+      this.uploadHome.get("description")?.enable();
+      this.uploadHome.get('images')?.enable();
     }
   }
 
@@ -159,7 +160,7 @@ export class UploadHomeComponent implements OnInit {
       if(this.editableHome){
         this.homeService.updateHome(this.editableHome._id, this.uploadHome.value).then(data => {
           if(data){
-            
+
             this.dialogRef.close();
             this.snackBar.open("Ingataln adatainak módosítása sikeres", "OK", {panelClass: 'success-snackbar'});
             return;

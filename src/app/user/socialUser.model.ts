@@ -1,4 +1,5 @@
 import { ObjectId } from "mongodb";
+import { Rate } from "../rate/rate.model";
 
 export class User{
   _id!: ObjectId;
@@ -16,6 +17,7 @@ export class User{
   _uploadedHomes!:ObjectId[];
   _savedHomes!:ObjectId[];
   _savedExperts!:ObjectId[];
+  _ratings?:Rate[];
 }
 
 export class UserDAO{

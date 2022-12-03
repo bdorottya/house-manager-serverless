@@ -25,6 +25,8 @@ export class AddRatingComponent implements OnInit {
     user: new FormControl('')
   })
 
+  stars: number[] = [1,2,3,4,5];
+
 
   ngOnInit(): void {
 

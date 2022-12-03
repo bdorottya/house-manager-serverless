@@ -1,5 +1,5 @@
 <section class="search-container card">
-  <app-search-filters></app-search-filters>
+  <app-search-filters [setQuery]="this.setQuery"></app-search-filters>
 </section>
 <section class="card results">
   <div class="no-result" *ngIf="this.experts.length == 0">
@@ -11,6 +11,7 @@
       <h3>{{exp.firstName}} {{exp.lastName}}</h3>
       <h4>{{exp.field}}</h4>
       <h4>{{exp.city}}</h4>
+      <h5><mat-icon [style.color]="'goldenrod'">star</mat-icon>{{exp._ratings ? (this.ratingService.getCurrentRateValue(exp._ratings) | number: '1.1-1' ): ''}}</h5>
       <a routerLink="/oneexpert/{{exp._id}}"><button mat-button class="primary-btn">Tovább</button></a>
     </div>
   </div>

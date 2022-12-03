@@ -42,6 +42,14 @@ export class UserDashboardComponent implements OnInit, AfterViewInit {
   constructor(private expertService: ExpertService, private homeService: HomeService, private httpClient: HttpClient, private _snackBar: MatSnackBar, private userService: UserService, private authService: AuthService, private router: Router, private store: AngularFireStorage, public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.getUser();
+  }
+
+  ngAfterViewInit(): void {
+
+  }
+
+  getUser(){
     this.dialog.open(SpinnerComponent);
     let email = localStorage.getItem("userEmail");
     let user = this.userService.getUser(email as string);
@@ -60,13 +68,7 @@ export class UserDashboardComponent implements OnInit, AfterViewInit {
       })
       this.getSavedHomes();
       this.dialog.closeAll();
-
     })
-  }
-
-  ngAfterViewInit(): void {
-
-
   }
 
   getSavedExperts(user:User){
@@ -132,12 +134,14 @@ export class UserDashboardComponent implements OnInit, AfterViewInit {
 
   openAvatarDialog(image:any){
     this.dialog.open(UploadAvatarComponent, {data: {email: this.user?.email, image: image}}).afterClosed().subscribe(obs => {
-      if(obs){
-        if(this.user){
-          this.getAvatar(this.user?.avatar);
+      setTimeout(() => {
+        if(obs){
+          if(this.user){
+            this.getUser();
+          }
+          this._snackBar.open("Sikeres képfeltöltés!", "OK");
         }
-        this._snackBar.open("Sikeres képfeltöltés!", "OK");
-      }
+      }, 1500)
     });
   }
 
@@ -147,7 +151,7 @@ export class UserDashboardComponent implements OnInit, AfterViewInit {
       dialog.afterClosed().subscribe(obs => {
         setTimeout(() => {
           this.getUploadedHomes();
-        }, 3000)
+        }, 1500)
 
       })
     }else{
@@ -156,7 +160,7 @@ export class UserDashboardComponent implements OnInit, AfterViewInit {
       dialog.afterClosed().subscribe(obs => {
         setTimeout(() => {
           this.getUploadedHomes();
-        }, 3000)
+        }, 1500)
       })
     }
   }

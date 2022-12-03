@@ -1,11 +1,16 @@
+.container{
+  margin: 2% 4%;
+  max-width: 100%;
+  justify-content: space-between;
+}
 .expert-data{
-  width: 35%;
-  margin: 2%  2% 2% 4%;
+  min-width: 30%;
+  max-width: 30%;
   justify-content: flex-start;
   flex-direction: column;
   align-items: center;
   img{
-    width: 50%;
+    width: 70%;
     border-radius: 15px;
     box-shadow: 0 0 5px grey;
   }
@@ -21,11 +26,12 @@
 
 }
 .double-card{
-  width:60%;
-  margin: 2% 4% 2% 2%;
+  min-width:60%;
+  max-width: 60%;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  justify-content: stretch;
+  justify-content: flex-start;
   .data{
     margin-bottom: 5%;
     padding: 1% 10%;

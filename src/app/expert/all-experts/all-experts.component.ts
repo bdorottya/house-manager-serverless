@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { SpinnerComponent } from 'src/app/navigation/spinner/spinner.component';
 import { RateService } from 'src/app/rate/rate.service';
 import { SearchService } from 'src/app/search/search.service';
@@ -16,15 +17,32 @@ export class AllExpertsComponent implements OnInit {
   experts: User[] = [];
   noImg:string = '../../../assets/img/no-img.jpg';
 
-  constructor(private searchService: SearchService, public ratingService: RateService, private dialog: MatDialog) { }
+  setQuery:any;
+
+  constructor(private routerSnapshot: ActivatedRoute, private searchService: SearchService, public ratingService: RateService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.dialog.open(SpinnerComponent);
-    this.searchService.getAllExperts();
-    this.searchService.expertDocs.subscribe(data => {
-      this.experts = data;
-      this.dialog.closeAll();
-    })
+    if(this.routerSnapshot.snapshot.queryParams['data']){
+      console.log('bejön');
+      let fromHomePage = JSON.parse(this.routerSnapshot.snapshot.queryParams['data']);
+      console.log(fromHomePage);
+      this.setQuery = fromHomePage;
+      this.searchService.expertResults(fromHomePage);
+      this.searchService.expertDocs.subscribe(data => {
+        console.log(data);
+        this.experts = data;
+        this.dialog.closeAll();
+      })
+    }else{
+      console.log('else');
+      this.searchService.getAllExperts();
+      this.searchService.expertDocs.subscribe(data => {
+        console.log(data);
+        this.experts = data;
+        this.dialog.closeAll();
+      });
+    }
   }
-
 }
+

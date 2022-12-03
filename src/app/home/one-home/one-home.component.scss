@@ -110,9 +110,9 @@
     }
   }
   .recom{
-    margin: 0 3% 0 0;
+    margin: 0 0 0 0;
     align-items: stretch;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     h4{
       text-align: center;
       font-size: 1.1rem;
@@ -120,22 +120,19 @@
     .service-card{
       justify-content: space-between;
       align-items: center;
-      padding: 3% 10%;
+      padding: 3% 5%;
       font-size:.9rem;
+      margin: 2% 0;
     }
   }
+}
+.desc{
+  margin: 2% 4%;
 }
 
 .similar-homes{
   margin: 2% 4%;
   .recom-container{
-    img{
-      width: 100%;
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-      max-height: 14rem;
-      object-fit: cover;
-    }
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -143,6 +140,13 @@
       padding: 0;
       margin: 2%;
       width: 20%;
+      img{
+        width: 100%;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        height: 10rem;
+        object-fit: contain;
+      }
       .padding-box{
         padding: 2% 4%;
         .spans{

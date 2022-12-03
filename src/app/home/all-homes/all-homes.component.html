@@ -16,7 +16,7 @@
       <div *ngIf="this.empty" class="no-results">
         <h1>Sajnáljunk, nincs a keresésnek megfelelő elem. :(</h1>
       </div>
-        <div class="home-card card flex" *ngFor="let home of homes">
+        <div class="home-card card flex" *ngFor="let home of homesToShow">
           <div class="image-container">
             <img src="{{home.images ? home.images[0] : ''}}">
             <div class="overlay">
@@ -38,11 +38,12 @@
               <span>{{home.bathroom}} fürdőszoba</span>
             </div>
             <div class="flex buttons">
-              <button *ngIf="((this.authService.isLoggedIn()) && !(this.user.id === home.uploader) && this.role === 'user')" (click)="this.homeService.saveHome(home._id)" mat-button class="secondary-btn">Mentés <mat-icon>favorite_border</mat-icon></button>
+              <button *ngIf="((this.authService.isLoggedIn()) && !(this.user._id.equals(home.uploader)) && this.role === 'user')" (click)="this.homeService.saveHome(home._id)" mat-button class="secondary-btn">Mentés <mat-icon>favorite_border</mat-icon></button>
               <a routerLink="/onehome/{{home._id}}"><button mat-button class="primary-btn">Tovább<mat-icon>navigate_next</mat-icon></button></a>
             </div>
           </div>
         </div>
   </div>
+  <mat-paginator [style.align-self]="'flex-end'" [pageIndex]="pageIndex" (page)="handleChange($event)" [length]="this.homes.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
 </section>
 

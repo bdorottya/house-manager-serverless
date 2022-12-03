@@ -45,6 +45,16 @@ export class SearchFiltersComponent implements OnInit {
     {name: 'Csak képes hirdetés', value: 'hasImages', icon: 'image'},
   ]
 
+  extrasElado: Array<any> = [
+    {name: 'Lift az épületben', value: 'elevator', icon: 'elevator'},
+    {name: 'Padlás/Pince', value: 'attic', icon: 'warehouse'},
+    {name: 'Erkély/terasz', value: 'balcony', icon: 'balcony'},
+    {name: 'Kert', value: 'garden', icon: 'yard'},
+    {name: 'Légkondi', value: 'ac', icon: 'ac_unit'},
+    {name: 'Csak képes hirdetés', value: 'hasImages', icon: 'image'},
+  ]
+
+
 
   ngOnInit(): void {
     this.city2 = HomeArray.city2;
@@ -89,7 +99,14 @@ export class SearchFiltersComponent implements OnInit {
     })
 
     if(this.setQuery){
-      this.homeForm.patchValue(this.setQuery);
+      if(this.searchType === 'home'){
+        this.homeForm.patchValue(this.setQuery);
+        this.homeForm.markAsDirty();
+      }else{
+        this.expertForm.patchValue(this.setQuery);
+        this.expertForm.markAsDirty();
+      }
+
     }
 
 
@@ -100,6 +117,7 @@ export class SearchFiltersComponent implements OnInit {
     if(this.searchType == 'home'){
       this.homeForm.reset();
       this.searchService.getAllHomes();
+      this.homeForm.get("type")?.setValue('elado');
     }else{
       this.expertForm.reset();
       this.searchService.getAllExperts();

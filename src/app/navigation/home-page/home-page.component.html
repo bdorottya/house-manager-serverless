@@ -1,51 +1,78 @@
-<section class="search card flex">
-  <div class="left-side flex">
-    <div class="glass-box search-box card flex">
-      <form [formGroup]="searchForm" (ngSubmit)="search()">
-        <mat-form-field appearance="outline" class="mobile-city city">
-          <mat-label>Város</mat-label>
-          <input matInput formControlName="city" type="text">
-        </mat-form-field>
-        <mat-radio-group formControlName="type" class="radio flex">
-          <mat-radio-button labelPosition="before" value="elado" name="elado">Eladó</mat-radio-button>
-          <mat-radio-button labelPosition="before" value="kiado" name="kiado">Kiadó</mat-radio-button>
-        </mat-radio-group>
-        <div class="flex numbers">
-          <div class="flex" formGroupName="size">
-            <mat-form-field appearance="outline" class="small">
-              <mat-label>Méret (min)</mat-label>
-              <input matInput formControlName="minSize" type="number">
-              <span matSuffix>NM</span>
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="small">
-              <mat-label>Méret (max)</mat-label>
-              <input matInput formControlName="maxSize" type="number" >
-              <span matSuffix>NM</span>
-            </mat-form-field>
+<div class="search-box-container">
+  <section class="search card flex" [ngClass]="this.showSearch === 'home' ? '' : 'none'">
+
+    <div class="left-side flex">
+      <div class="glass-box search-box card flex">
+        <form [formGroup]="searchForm" (ngSubmit)="search()">
+          <mat-form-field appearance="outline" class="mobile-city city">
+            <mat-label>Város</mat-label>
+            <input matInput formControlName="city" type="text">
+          </mat-form-field>
+          <mat-radio-group formControlName="type" class="radio flex">
+            <mat-radio-button labelPosition="before" value="elado" name="elado">Eladó</mat-radio-button>
+            <mat-radio-button labelPosition="before" value="kiado" name="kiado">Kiadó</mat-radio-button>
+          </mat-radio-group>
+          <div class="flex numbers">
+            <div class="flex" formGroupName="size">
+              <mat-form-field appearance="outline" class="small">
+                <mat-label>Méret (min)</mat-label>
+                <input matInput formControlName="minSize" type="number">
+                <span matSuffix>NM</span>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="small">
+                <mat-label>Méret (max)</mat-label>
+                <input matInput formControlName="maxSize" type="number" >
+                <span matSuffix>NM</span>
+              </mat-form-field>
+            </div>
+            <div class="flex" formGroupName="price">
+              <mat-form-field appearance="outline" class="small">
+                <mat-label>Ár (min)</mat-label>
+                <input matInput formControlName="minPrice" type="number">
+                <span matSuffix>{{this.elado ? eladoTexts[0] : eladoTexts[1]}}</span>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="small">
+                <mat-label>Ár (max)</mat-label>
+                <input matInput formControlName="maxPrice" type="number" >
+                <span matSuffix>{{this.elado ? eladoTexts[0] : eladoTexts[1]}}</span>
+              </mat-form-field>
+            </div>
           </div>
-          <div class="flex" formGroupName="price">
-            <mat-form-field appearance="outline" class="small">
-              <mat-label>Ár (min)</mat-label>
-              <input matInput formControlName="minPrice" type="number">
-              <span matSuffix>{{this.elado ? eladoTexts[0] : eladoTexts[1]}}</span>
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="small">
-              <mat-label>Ár (max)</mat-label>
-              <input matInput formControlName="maxPrice" type="number" >
-              <span matSuffix>{{this.elado ? eladoTexts[0] : eladoTexts[1]}}</span>
-            </mat-form-field>
-          </div>
-        </div>
-        <button mat-button class="primary-btn" type="submit">Keresés</button>
-      </form>
+          <button mat-button class="primary-btn" type="submit">Keresés</button>
+        </form>
+      </div>
     </div>
-  </div>
-  <div class="right-side flex">
-    <h3>Az álomotthon többé nem csak álom!</h3>
-    <h4>Keressen több száz azonnal elérhető kiadó és eladó ingatlan között.</h4>
-    <button class="primary-btn" mat-button routerLink="/allexperts">Szakembert keres?</button>
-  </div>
-</section>
+    <div class="right-side flex">
+      <h3>Az álomotthon többé nem csak álom!</h3>
+      <h4>Keressen több száz azonnal elérhető kiadó és eladó ingatlan között.</h4>
+      <button class="primary-btn" mat-button (click)="showExpertSearch()">Szakembert keres?</button>
+    </div>
+  </section>
+  <section class="card flex expert-search" [ngClass]="this.showSearch === 'expert' ? 'show-expert-search' : 'no-show-expert-search'">
+    <div class="left-side flex">
+      <h3>Javításra szorul?</h3>
+      <h4>Szakembereink rendelkezésére állnak!</h4>
+      <button class="primary-btn" mat-button (click)="showExpertSearch()">Ingatlant keres?</button>
+    </div>
+    <div class="right-side flex">
+      <div class="glass-box flex">
+        <form [formGroup]="expertForm" (ngSubmit)="searchExpert()">
+          <mat-form-field appearance="outline" class="mobile-city city">
+            <mat-label>Város</mat-label>
+            <input matInput formControlName="city" type="text">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="mobile-city city">
+            <mat-label>Szakterület</mat-label>
+            <mat-select matInput formControlName="field">
+              <mat-option *ngFor="let field of this.fields" [value]="field">{{field}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button [style.cursor]="'pointer'" type="submit" class="primary-btn">Keresés</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
 <section class="recom card">
   <h3>Frissen feltöltött ingatlanok</h3>
   <div class="flex container">

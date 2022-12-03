@@ -24,9 +24,9 @@ const routes: Routes = [
   {path: "allexperts", component: AllExpertsComponent},
   {path: "userhome", component: UserDashboardComponent, canActivate: [AuthGuard, UserTypeGuard]},
   {path: "onehome/:id", component: OneHomeComponent},
-  {path: "pleasesignin", component: PleaseSignInComponent},
   {path: "expertdashboard", component: ExpertDashboardComponent, canActivate: [AuthGuard, ExpertTypeGuard]},
   {path: "oneexpert/:id", component: OneExpertComponent},
+  {path: "pleasesignin", component: PleaseSignInComponent},
   {path: 'moving', component: MovingComponent},
   {path: 'services', component: ServicesComponent}
 ]

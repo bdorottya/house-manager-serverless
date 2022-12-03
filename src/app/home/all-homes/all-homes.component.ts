@@ -1,16 +1,18 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { idToken } from '@angular/fire/auth';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { SpinnerComponent } from 'src/app/navigation/spinner/spinner.component';
-import { HomeSearchQuery } from 'src/app/search/query.model';
 import { SearchService } from 'src/app/search/search.service';
 import { HomeDAO } from '../home.model';
 import { HomeService } from '../home.service';
 import * as Realm from 'realm-web';
+import { HomeArray } from '../home.constants';
+import { User } from 'src/app/user/socialUser.model';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-all-homes',
@@ -27,18 +29,15 @@ export class AllHomesComponent implements OnInit, AfterViewInit {
   homes: HomeDAO[] = [];
 
 
-  city2:string[] = ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX","XXI","XXII","XXIII"];
-  conditions:string[] = ["Újépítésű", "újszerű", "Frissen Felújított", "Felújításra szorul", "Telek", "Épülő"];
-  parking:string[] = ["Külön építésű garázs", "Garázs az épület aljában/tetején", "Fedetlen kocsibeálló", "Utcán"];
-  heating:string[] = ["Gázkazán", "Elektromos", "Gáz (cirkó)", "Gáz (konvektor)", "fan-coil", "Vegyes tüzelésű kazán", "Cserépkályha", "Távfűtés", "Padlófűtés", "Falfűtés", "Egyéb"];
-  yesno:any[]=[{"name": "Igen", "value": true}, { "name": "Nem", "value": false}];
+  city2:string[] = HomeArray.city2;
+  conditions:string[] = HomeArray.conditions;
+  parking:string[] = HomeArray.parking;
+  heating:string[] = HomeArray.heating;
   sorting:any[]=[{name: "Ár szerint növekvő", value: 'price-asc'}, {name: "Ár szerint csökkenő", value: 'price-desc'}, {name: "Méret szerint növekvő", value: 'size-asc'}, {name: "Méret szerint csökkenő", value: 'size-desc'}];
-  buildingType:string[]=["Tégla lakás","Panel lakás","Faház","Egyéb"];
+  buildingType:string[]= HomeArray.buildingType;
 
-  user:any;
+  user!:User;
   isLoggedIn!:boolean;
-
-  query: HomeSearchQuery = new HomeSearchQuery();
   setQuery:any;
 
   viewMode = new FormControl('');
@@ -48,6 +47,13 @@ export class AllHomesComponent implements OnInit, AfterViewInit {
 
   fromHomePage?:boolean;
   role!:string;
+
+  pageSize:number = 10;
+  pageSizeOptions:number[] = [10,20,50];
+  length:number = 10;
+  pageIndex:number = 0;
+
+  homesToShow: HomeDAO[] = [];
 
   sortingForm:FormGroup = new FormGroup({
     sortingSelect: new FormControl('')
@@ -65,7 +71,9 @@ export class AllHomesComponent implements OnInit, AfterViewInit {
     this.dialog.open(SpinnerComponent);
     if(app.currentUser){
       user = app.currentUser;
-      this.user = user;
+      this.authService.getUser().then(user => {
+        this.user = user;
+      })
     }else{
       user = app.logIn(creds);
       this.user = user;
@@ -80,7 +88,8 @@ export class AllHomesComponent implements OnInit, AfterViewInit {
           this.isLoading = false;
           console.log(obs);
           this.homes = obs;
-          this.homes = this.homes.sort((a,b) => a.price - b.price);
+          this.homesToShow = this.homes.slice(0,9);
+          this.homesToShow = this.homes.sort((a,b) => a.price - b.price);
           if(this.homes.length == 0){
             this.empty = true;
             }else{
@@ -93,7 +102,8 @@ export class AllHomesComponent implements OnInit, AfterViewInit {
           this.serachService.documents.subscribe(observer => {
             console.log(observer);
             this.homes = observer;
-            this.homes = this.homes.sort((a,b) => a.price - b.price);
+            this.homesToShow = this.homes.slice(0,9);
+            this.homesToShow = this.homes.sort((a,b) => a.price - b.price);
             if(this.homes.length == 0){
               this.empty = true;
               }else{
@@ -108,17 +118,25 @@ export class AllHomesComponent implements OnInit, AfterViewInit {
       this.sortingForm.get('sortingSelect')?.valueChanges.subscribe(data => {
         console.log(data);
         if(data == 'price-asc'){
-          this.homes.sort((a,b) => a.price - b.price)
+          this.homesToShow.sort((a,b) => a.price - b.price)
         }
         if(data == 'price-desc'){
-          this.homes.sort((a,b) => b.price - a.price)
+          this.homesToShow.sort((a,b) => b.price - a.price)
         }
         if(data == 'size-asc'){
-          this.homes.sort((a,b) => a.size - b.size)
+          this.homesToShow.sort((a,b) => a.size - b.size)
         }
         if(data == "size-desc"){
-          this.homes.sort((a,b) => b.size - a.size);
+          this.homesToShow.sort((a,b) => b.size - a.size);
         }
       })
+    }
+
+    handleChange(e: PageEvent){
+      this.pageIndex = e.pageIndex;
+      this.pageSize = e.pageSize;
+      this.length = e.length;
+      this.homesToShow =  this.homes.slice(e.pageIndex*e.pageSize,
+        e.pageIndex*e.pageSize + e.pageSize);
     }
 }

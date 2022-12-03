@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'src/app/user/socialUser.model';
+import * as Realm from 'realm-web';
 
 @Component({
   selector: 'app-update-data',
@@ -50,9 +51,9 @@ export class UpdateDataComponent implements OnInit {
         city: this.dataForm.get("city")?.value,
         welcomeText: this.dataForm.get("welcomeText")?.value,
       }}).then(data => {
-        console.log(data);
-        this.snackBar.open("Sikeres adatmódpsítás", "OK", {panelClass: 'successful-snackbar'});
-        this.close();
+        if(data){
+          this.close();
+        }
       })
     }
   }

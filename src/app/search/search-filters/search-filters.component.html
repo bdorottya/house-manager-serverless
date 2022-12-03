@@ -61,6 +61,18 @@
         <span matSuffix>{{this.homeForm.get('type')?.value == "elado" ? "Millió Ft." : "Ezer Ft/hó"}}</span>
       </mat-form-field>
     </span>
+    <span formGroupName="size" class="inline-span">
+      <mat-form-field  appearance="outline" class="form-field">
+        <mat-label>Ingatlan mérete (min)</mat-label>
+        <input matInput type="number" formControlName="minSize">
+        <span matSuffix>nm</span>
+      </mat-form-field>
+      <mat-form-field  appearance="outline" class="form-field ">
+        <mat-label>Ingatlan mérete (max)</mat-label>
+        <input matInput type="number" formControlName="maxSize">
+        <span matSuffix>nm</span>
+      </mat-form-field>
+    </span>
     <mat-form-field  appearance="outline" class="form-field medium">
       <mat-label>Ingatlan állapota</mat-label>
       <mat-select formControlName="condition" multiple>
@@ -85,18 +97,6 @@
       <mat-form-field  appearance="outline" class="form-field">
         <mat-label>Ingatlan szintje (max)</mat-label>
         <input matInput type="number" formControlName="maxLevel">
-      </mat-form-field>
-    </span>
-    <span formGroupName="size" class="inline-span">
-      <mat-form-field  appearance="outline" class="form-field">
-        <mat-label>Ingatlan mérete (min)</mat-label>
-        <input matInput type="number" formControlName="minSize">
-        <span matSuffix>nm</span>
-      </mat-form-field>
-      <mat-form-field  appearance="outline" class="form-field ">
-        <mat-label>Ingatlan mérete (max)</mat-label>
-        <input matInput type="number" formControlName="maxSize">
-        <span matSuffix>nm</span>
       </mat-form-field>
     </span>
     <mat-form-field  appearance="outline" class="form-field small">
@@ -125,10 +125,19 @@
     </mat-form-field>
   </div>
   <div class="radio-groups">
-    <div class="checkbox-group" *ngFor="let extra of extras">
-      <mat-icon class="icon">{{extra.icon}}</mat-icon>
-      <label>{{extra.name}}</label>
-      <mat-checkbox formControlName="{{extra.value}}"></mat-checkbox>
+    <div class="flex center-justify" *ngIf="this.homeForm.get('type')?.value==='elado'">
+      <div class="checkbox-group" *ngFor="let extra of extrasElado">
+        <mat-icon class="icon">{{extra.icon}}</mat-icon>
+        <label>{{extra.name}}</label>
+        <mat-checkbox formControlName="{{extra.value}}"></mat-checkbox>
+      </div>
+    </div>
+    <div class="flex center-justify" *ngIf="this.homeForm.get('type')?.value === 'kiado'">
+      <div class="checkbox-group" *ngFor="let extra of extras">
+        <mat-icon class="icon">{{extra.icon}}</mat-icon>
+        <label>{{extra.name}}</label>
+        <mat-checkbox formControlName="{{extra.value}}"></mat-checkbox>
+      </div>
     </div>
   </div>
   <button type="submit" mat-button class="primary-btn submit-button">Keresés</button>
