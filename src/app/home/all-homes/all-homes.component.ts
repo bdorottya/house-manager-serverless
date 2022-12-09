@@ -88,8 +88,8 @@ export class AllHomesComponent implements OnInit, AfterViewInit {
           this.isLoading = false;
           console.log(obs);
           this.homes = obs;
-          this.homesToShow = this.homes.slice(0,9);
           this.homesToShow = this.homes.sort((a,b) => a.price - b.price);
+          this.homesToShow = this.homesToShow.slice(0,10);
           if(this.homes.length == 0){
             this.empty = true;
             }else{
@@ -102,8 +102,8 @@ export class AllHomesComponent implements OnInit, AfterViewInit {
           this.serachService.documents.subscribe(observer => {
             console.log(observer);
             this.homes = observer;
-            this.homesToShow = this.homes.slice(0,9);
             this.homesToShow = this.homes.sort((a,b) => a.price - b.price);
+            this.homesToShow = this.homesToShow.slice(0,10);
             if(this.homes.length == 0){
               this.empty = true;
               }else{

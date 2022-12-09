@@ -84,6 +84,12 @@
 
 }
 
+.paginator{
+  margin: 0;
+  padding: 0;
+
+}
+
 @media only screen and (max-width: 460px){
   .user-home{
     flex-direction: column;
@@ -96,7 +102,7 @@
       h2{
         text-align: center;
       }
-      .home-card-container{
+      .home-card-container, .expert-container{
         flex-direction: column;
         align-items: center;
         padding: 0 3%;

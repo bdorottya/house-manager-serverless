@@ -16,7 +16,7 @@ import {RouterModule} from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SavedExpertsComponent } from './saved-experts/saved-experts.component';
-import { IvyCarouselModule } from 'angular-responsive-carousel';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 @NgModule({
@@ -32,14 +32,14 @@ import { IvyCarouselModule } from 'angular-responsive-carousel';
     ReactiveFormsModule,
     MatTabsModule,
     MatBadgeModule,
+    MatPaginatorModule,
     MatSnackBarModule,
     HomeModule,
     MatDialogModule,
     MatProgressSpinnerModule,
     RouterModule,
     MatFormFieldModule,
-    MatInputModule,
-    IvyCarouselModule
+    MatInputModule
   ]
 })
 export class UserModule { }

@@ -19,9 +19,10 @@
 @media only screen and (max-width: 460px){
   .container{
     padding: 2%;
-    .form{
+    width: 15rem;
+    form{
       .form-field{
-        width: 100%;
+        width: 15rem;
       }
     }
   }
