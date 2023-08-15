@@ -74,6 +74,8 @@ import { MatPaginatorModule} from '@angular/material/paginator';
     AppRoutingModule,
     BrowserAnimationsModule,
     AuthModule,
+    UserModule,
+    HomeModule,
     MatPaginatorModule,
     ExpertModule,
     SearchModule,

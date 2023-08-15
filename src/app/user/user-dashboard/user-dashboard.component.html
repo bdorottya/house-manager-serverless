@@ -12,8 +12,15 @@
     <div class="own-homes">
       <div class="own-homes-container">
         <h2>Feltöltött ingatlanok</h2>
+<<<<<<< HEAD
         <div *ngIf="uploadedHomes.length>0" class="home-card-container">
             <div class="home-card carousel-cell" *ngFor="let home of this.uploadedHomes">
+=======
+        <div *ngIf="uploadedToShow.length>0" >
+          <mat-paginator class="paginator" (page)="handleUploadedChange($event)" [pageSize]="this.pageSize" [length]="uploadedLength" [pageIndex]="uploadedPageIndex" [hidePageSize]="true"></mat-paginator>
+          <div class="home-card-container">
+            <div class="card home-card" *ngFor="let home of this.uploadedToShow">
+>>>>>>> f3619d1320bf9afd925ec6ef5fc6283f6a75bf51
               <img src="{{home.images ? home.images[0] : ''}}">
               <div class="padding-box">
                 <h3>{{home.city}}<span>{{home.city2 ? ', ' + home.city2 : ''}}</span></h3>
@@ -26,14 +33,19 @@
                 </div>
               </div>
             </div>
+<<<<<<< HEAD
+=======
+          </div>
+>>>>>>> f3619d1320bf9afd925ec6ef5fc6283f6a75bf51
         </div>
-        <div *ngIf="uploadedHomes.length<1">
+        <div *ngIf="uploadedToShow.length<1">
           <h3>Még nem töltöttél fel ingatlant.</h3>
         </div>
       </div>
     </div>
     <div class="saved-homes">
       <h2>Mentett Ingatlanok</h2>
+<<<<<<< HEAD
       <div *ngIf="this.savedHomes.length>0" class="home-card-container">
           <div class="home-card carousel-cell" *ngFor="let home of this.savedHomes">
             <img src="{{home.images ? home.images[0] : ''}}">
@@ -45,15 +57,39 @@
               </div>
             </div>
           </div>
+=======
+      <div *ngIf="this.savedToShow.length>0" >
+        <mat-paginator class="paginator" (page)="handleSavedChange($event)" [length]="savedLength" [pageIndex]="savedPageIndex" [hidePageSize]="true"></mat-paginator>
+        <div class="home-card-container">
+          <div class=" card home-card" *ngFor="let home of this.savedToShow">
+              <img src="{{home.images ? home.images[0] : ''}}">
+              <div class="padding-box">
+                <h3>{{home.city}}</h3>
+                <h4>{{home.type=="elado" ? home.price + " Millió Ft." : home.price + " ezer Ft/hó" }}</h4>
+                <div class="buttons">
+                  <a routerLink="/onehome/{{home._id}}"><button mat-button class="primary-btn">Tovább</button></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+>>>>>>> f3619d1320bf9afd925ec6ef5fc6283f6a75bf51
       </div>
-      <div *ngIf="this.savedHomes.length<1">
+      <div *ngIf="this.savedToShow.length<1">
         <h3>Még nem mentettél el ingatlant.</h3>
       </div>
     </div>
     <div class="saved-experts">
       <h2>Mentett Szakemberek</h2>
+<<<<<<< HEAD
       <div class="expert-container" *ngIf="this.savedExperts.length>0">
           <div class="home-card carousel-cell" *ngFor="let expert of this.savedExperts">
+=======
+      <div  *ngIf="this.expertsToShow.length>0">
+        <mat-paginator class="paginator" (page)="handleExpertChange($event)" [length]="expertLength" [pageIndex]="expertPageIndex" [hidePageSize]="true"></mat-paginator>
+        <div class="expert-container" >
+          <div class="home-card card" *ngFor="let expert of this.expertsToShow">
+>>>>>>> f3619d1320bf9afd925ec6ef5fc6283f6a75bf51
             <img src="{{expert.avatar ? expert.avatar : this.noImg}}">
             <div class="padding-box">
               <h3>{{expert.firstName}} {{expert.lastName}}</h3>
@@ -64,8 +100,13 @@
               </div>
             </div>
           </div>
+<<<<<<< HEAD
+=======
+        </div>
+
+>>>>>>> f3619d1320bf9afd925ec6ef5fc6283f6a75bf51
       </div>
-      <div *ngIf="this.savedExperts.length<1">
+      <div *ngIf="this.expertsToShow.length<1">
         <h3>Még nem mentettél el szakembert.</h3>
       </div>
     </div>

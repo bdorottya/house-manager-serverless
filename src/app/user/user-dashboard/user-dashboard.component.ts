@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { MatDialog } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ObjectId } from 'bson';
@@ -37,6 +38,20 @@ export class UserDashboardComponent implements OnInit {
 
   noImg = "../../../assets/img/no-img.jpg";
 
+  uploadedLength:number = 3;
+  savedLength:number=3;
+  expertLength:number=3;
+
+  uploadedPageIndex = 0;
+  savedPageIndex = 0;
+  expertPageIndex = 0;
+
+  pageSize=3;
+
+  uploadedToShow:HomeDAO[] = [];
+  savedToShow:HomeDAO[] = [];
+  expertsToShow:User[] = [];
+
 
 
   constructor(private expertService: ExpertService, private homeService: HomeService, private httpClient: HttpClient, private _snackBar: MatSnackBar, private userService: UserService, private authService: AuthService, private router: Router, private store: AngularFireStorage, public dialog: MatDialog) { }
@@ -45,6 +60,32 @@ export class UserDashboardComponent implements OnInit {
     this.getUser();
   }
 
+<<<<<<< HEAD
+=======
+  ngAfterViewInit(): void {
+
+  }
+
+  handleExpertChange(e:PageEvent){
+    this.expertLength = e.length;
+    this.expertPageIndex = e.pageIndex;
+    this.expertsToShow =  this.savedExperts.slice(e.pageIndex*this.pageSize,
+      e.pageIndex*this.pageSize + this.pageSize);
+  }
+  handleUploadedChange(e:PageEvent){
+    this.uploadedLength = e.length;
+    this.uploadedPageIndex = e.pageIndex;
+    this.uploadedToShow =  this.uploadedHomes.slice(e.pageIndex*this.pageSize,
+      e.pageIndex*this.pageSize + this.pageSize);
+  }
+  handleSavedChange(e:PageEvent){
+    this.savedLength = e.length;
+    this.savedPageIndex = e.pageIndex;
+    this.savedToShow =  this.savedHomes.slice(e.pageIndex*this.pageSize,
+      e.pageIndex*this.pageSize + this.pageSize);
+  }
+
+>>>>>>> f3619d1320bf9afd925ec6ef5fc6283f6a75bf51
   getUser(){
     this.dialog.open(SpinnerComponent);
     let email = localStorage.getItem("userEmail");
@@ -56,7 +97,9 @@ export class UserDashboardComponent implements OnInit {
       this.getUploadedHomes();
       this.homeService.ownHomes.subscribe(data => {
         this.uploadedHomes = data;
-        this.uploadedHomes.sort((a,b) => b.price - a.price);
+        this.uploadedToShow = this.uploadedHomes;
+        this.uploadedToShow = this.uploadedToShow.slice(0,3);
+        this.uploadedLength = this.uploadedHomes.length;
       })
     }).then(() =>{
       this.getAvatar(this.user.avatar);
@@ -75,6 +118,9 @@ export class UserDashboardComponent implements OnInit {
       user._savedExperts.forEach(exp => {
         this.expertService.getExpert(exp as unknown as string).then(expert => {
           this.savedExperts.push(expert);
+        }).then(() => {
+          this.expertsToShow = this.savedExperts;
+          this.expertsToShow.slice(0,2);
         })
       })
     }
@@ -182,6 +228,8 @@ export class UserDashboardComponent implements OnInit {
             }
           })
         })
+        this.savedToShow = this.savedHomes;
+        this.savedToShow.slice(0,2);
       }
     }
   }
