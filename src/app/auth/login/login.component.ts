@@ -69,6 +69,7 @@ export class LoginComponent implements OnInit {
             let email = localStorage.getItem("userEmail") as string;
             let res = collection?.findOne({email: email});
             res?.then(data => {
+              this.authService.user$.next(data);
               if(data.role === "user"){
                 this.router.navigateByUrl('/userhome');
               }else{

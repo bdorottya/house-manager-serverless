@@ -4,7 +4,7 @@ import { UpdateDataComponent } from './update-data/update-data.component';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 
 import {MatStepperModule} from '@angular/material/stepper';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UploadAvatarComponent } from './upload-avatar/upload-avatar.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatBadgeModule} from '@angular/material/badge';
@@ -16,7 +16,6 @@ import {RouterModule} from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SavedExpertsComponent } from './saved-experts/saved-experts.component';
-import { IvyCarouselModule } from 'angular-responsive-carousel';
 
 
 @NgModule({
@@ -30,6 +29,7 @@ import { IvyCarouselModule } from 'angular-responsive-carousel';
     CommonModule,
     MatStepperModule,
     ReactiveFormsModule,
+    FormsModule,
     MatTabsModule,
     MatBadgeModule,
     MatSnackBarModule,
@@ -39,7 +39,6 @@ import { IvyCarouselModule } from 'angular-responsive-carousel';
     RouterModule,
     MatFormFieldModule,
     MatInputModule,
-    IvyCarouselModule
   ]
 })
 export class UserModule { }

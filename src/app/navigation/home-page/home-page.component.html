@@ -1,6 +1,5 @@
 <div class="search-box-container">
   <section class="search card flex" [ngClass]="this.showSearch === 'home' ? '' : 'none'">
-
     <div class="left-side flex">
       <div class="glass-box search-box card flex">
         <form [formGroup]="searchForm" (ngSubmit)="search()">
@@ -79,7 +78,7 @@
     <div class="home-card card card-hover-effect" *ngFor="let home of this.mostRecent" (click)="goToHome(home._id)">
       <img src="{{home.images[0]}}" class="icon-100p card-img">
       <p>{{home.type == "elado" ? home.price + ' Millió Ft' : home.price + ' ezer Ft/hó'}}</p>
-      <p>{{home.city}}, <span *ngIf="home.city2">{{home.city2}}</span></p>
+      <p>{{home.city}}<span *ngIf="home.city2">, {{home.city2}}</span></p>
       <div class="icons flex">
         <div class="flex" >
           <img src="../../../assets/img/blueprint.png" class="icon-50">

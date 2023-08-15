@@ -13,7 +13,6 @@
       <div class="own-homes-container">
         <h2>Feltöltött ingatlanok</h2>
         <div *ngIf="uploadedHomes.length>0" class="home-card-container">
-          <carousel [height]="350" [margin]="25" class="carousel-html-content carousel">
             <div class="home-card carousel-cell" *ngFor="let home of this.uploadedHomes">
               <img src="{{home.images ? home.images[0] : ''}}">
               <div class="padding-box">
@@ -27,7 +26,6 @@
                 </div>
               </div>
             </div>
-          </carousel>
         </div>
         <div *ngIf="uploadedHomes.length<1">
           <h3>Még nem töltöttél fel ingatlant.</h3>
@@ -37,7 +35,6 @@
     <div class="saved-homes">
       <h2>Mentett Ingatlanok</h2>
       <div *ngIf="this.savedHomes.length>0" class="home-card-container">
-        <carousel [height]="300" [margin]="15" class="carousel-html-content">
           <div class="home-card carousel-cell" *ngFor="let home of this.savedHomes">
             <img src="{{home.images ? home.images[0] : ''}}">
             <div class="padding-box">
@@ -48,7 +45,6 @@
               </div>
             </div>
           </div>
-          </carousel>
       </div>
       <div *ngIf="this.savedHomes.length<1">
         <h3>Még nem mentettél el ingatlant.</h3>
@@ -57,7 +53,6 @@
     <div class="saved-experts">
       <h2>Mentett Szakemberek</h2>
       <div class="expert-container" *ngIf="this.savedExperts.length>0">
-        <carousel [height]="350" [margin]="15" class="carousel-html-content">
           <div class="home-card carousel-cell" *ngFor="let expert of this.savedExperts">
             <img src="{{expert.avatar ? expert.avatar : this.noImg}}">
             <div class="padding-box">
@@ -69,7 +64,6 @@
               </div>
             </div>
           </div>
-        </carousel>
       </div>
       <div *ngIf="this.savedExperts.length<1">
         <h3>Még nem mentettél el szakembert.</h3>

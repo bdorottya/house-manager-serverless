@@ -77,8 +77,6 @@ mostRecent:HomeDAO[] = [];
       this.mostRecent = data;
       console.log(this.mostRecent);
     })
-
-    console.log(this.mostRecent);
   }
 
   goToHome(homeId:ObjectId){

@@ -218,18 +218,23 @@
 }
 
 @media only screen and (max-width: 460px){
+  .search-box-container{
+    max-width: 100%;
+  }
   .search{
     flex-direction: column-reverse;
+    .right-side{
+      max-width: 100%;
+    }
     .left-side{
-      min-width: 100%;
       border-top-left-radius: 15px;
       border-top-right-radius: 15px;
       border-bottom-left-radius: 0;
       .glass-box{
-        max-width: 100%;
+
         margin: 3%;
         .numbers{
-          width: 100%;
+          //width: 100%;
           justify-content: flex-start;
           div{
             .small{

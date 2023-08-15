@@ -29,7 +29,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         ModifyPricesComponent,
         OneExpertComponent,
         UpdateDataComponent,
-        UpdateAvatarComponent
+        UpdateAvatarComponent,
     ],
     imports: [
         BrowserModule,

@@ -38,14 +38,12 @@ export class HomeService {
   async getHome(id: string): Promise<Observable<HomeDAO>>{
     let queryParams = new HttpParams();
     queryParams = queryParams.append("id", id);
-    console.log(queryParams);
     return await this.httpClient.get<HomeDAO>(this.baseUrlHome, {params: queryParams});
   }
 
   async getUploader(id: string): Promise<Observable<UserDAO>>{
     let params = new HttpParams();
     params = params.append("id", id);
-    console.log(params);
     return await this.httpClient.get<UserDAO>(this.baseUrlUploader, {params: params});
   }
 
@@ -57,7 +55,6 @@ export class HomeService {
         images.push(image);
       })
     })
-    console.log(images);
     return images;
   }
 
@@ -65,13 +62,9 @@ export class HomeService {
     let app = new Realm.App({id: this.app_id});
     let user = app.currentUser;
     let observers;
-    console.log(images);
     images.forEach(image => {
-      console.log("forban");
-      console.log(image);
       let upload = this.httpClient.post(this.baseUrlImages, {homeId: homeId, images: image});
       upload.subscribe(obs => {
-        console.log(obs);
         observers.push(obs);
       })
     })
@@ -123,6 +116,7 @@ export class HomeService {
             this.uploadImages(res?.insertedId, file);
         })
       }).then(() => {
+        this.ownHomes.next([home]);
         this.snackBar.open("Sikeres feltöltés", "OK", {panelClass: 'success-snackbar'});
       })
     }}

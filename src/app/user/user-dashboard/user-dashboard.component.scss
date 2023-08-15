@@ -32,7 +32,8 @@
     .home-card-container, .expert-container{
       display: flex;
       flex-direction: row;
-      flex-wrap: wrap;
+      flex-wrap: no-wrap;
+      overflow-x: scroll;
       .expert-buttons{
         display:flex;
         flex-direction: column;

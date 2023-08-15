@@ -23,7 +23,7 @@ import { UserService } from '../user.service';
   templateUrl: './user-dashboard.component.html',
   styleUrls: ['./user-dashboard.component.scss']
 })
-export class UserDashboardComponent implements OnInit, AfterViewInit {
+export class UserDashboardComponent implements OnInit {
 
   getHomeUrl = "https://data.mongodb-api.com/app/housemanager-zblhe/endpoint/gethome";
   user!: User;
@@ -45,10 +45,6 @@ export class UserDashboardComponent implements OnInit, AfterViewInit {
     this.getUser();
   }
 
-  ngAfterViewInit(): void {
-
-  }
-
   getUser(){
     this.dialog.open(SpinnerComponent);
     let email = localStorage.getItem("userEmail");
@@ -57,16 +53,19 @@ export class UserDashboardComponent implements OnInit, AfterViewInit {
       this.isLoading = false;
       this.user = data;
       this.authService.role = data.role;
-      if(data.avatar){
-        this.getAvatar(this.user.avatar);
-      }
       this.getUploadedHomes();
-      this.getSavedExperts(this.user);
       this.homeService.ownHomes.subscribe(data => {
         this.uploadedHomes = data;
         this.uploadedHomes.sort((a,b) => b.price - a.price);
       })
+    }).then(() =>{
+      this.getAvatar(this.user.avatar);
+    }).then(() =>{
+
       this.getSavedHomes();
+    }).then(() =>{
+      this.getSavedExperts(this.user);
+    }).then(() =>{
       this.dialog.closeAll();
     })
   }

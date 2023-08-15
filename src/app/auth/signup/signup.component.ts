@@ -80,6 +80,7 @@ export class SignupComponent implements OnInit {
         user.role = "user";
         let result = this.authService.insertUser(user);
         result.then(() => {
+          this.authService.user$.next(user);
           this.snackbar.open("Sikeres regisztráció!", 'OK', {panelClass: 'secondary-snackbar', horizontalPosition: 'right', verticalPosition: 'top'})
           this.dialog.closeAll();
           this.router.navigate(['/userhome']);
@@ -120,6 +121,7 @@ export class SignupComponent implements OnInit {
       expert.registrationDate = date;
       let result = this.authService.insertUser(expert);
       result.then(() => {
+        this.authService.user$.next(expert);
         this.snackbar.open("Sikeres regisztráció!", 'OK', {panelClass: 'secondary-snackbar', horizontalPosition: 'right', verticalPosition: 'top'})
         this.dialog.closeAll();
         this.router.navigate(['/expertdashboard']);

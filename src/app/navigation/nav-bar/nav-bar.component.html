@@ -11,11 +11,11 @@
     <a routerLink="/services">Szolgáltatások</a>
   </span>
   <span class="flex-item hide-small login-buttons">
-    <a *ngIf="!this.authService.isLoggedIn()" routerLink="/login"><button class="secondary-btn" mat-button>Bejelentkezés</button></a>
-    <a *ngIf="!this.authService.isLoggedIn()" routerLink="/signup"><button class="primary-btn" mat-button>Regisztráció</button></a>
-    <a *ngIf="this.authService.isLoggedIn()" routerLink="{{this.authService.role==='user' || this.role === 'user' ? '/userhome' : '/expertdashboard'}}"><button [ngClass]="this.role==='expert' ? 'expert-btn' : 'primary-btn'" mat-button>Profilom</button></a>
-    <!--<a *ngIf="this.authService.isLoggedIn()" routerLink="/expertdashboard"><button class="primary-btn" mat-button>Profilom</button></a>-->
-    <a *ngIf="this.authService.isLoggedIn()" (click)="logOut()"><button [ngClass]="this.role==='expert' ? 'secondary-expert-btn' : 'secondary-btn'" mat-button>Kijelentkezés</button></a>
+    <a  *ngIf="!isLoggedIn" routerLink="/login"><button class="secondary-btn" mat-button>Bejelentkezés</button></a>
+    <a  *ngIf="!isLoggedIn" routerLink="/signup"><button class="primary-btn" mat-button>Regisztráció</button></a>
+    <a  *ngIf="isLoggedIn && role == 'user'" routerLink="/userhome"><button class="primary-btn" mat-button>Profilom</button></a>
+    <a *ngIf="isLoggedIn && role== 'expert'" routerLink="/expertdashboard"><button class="expert-btn" mat-button>Profilom</button></a>
+    <a *ngIf="isLoggedIn" (click)="logOut()"><button [ngClass]="this.role==='expert' ? 'secondary-expert-btn' : 'secondary-btn'" mat-button>Kijelentkezés</button></a>
   </span>
   <span class="flex-item small mobile-login">
     <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
@@ -36,19 +36,19 @@
         <mat-icon>info</mat-icon>
         <span routerLink="/services">Szolgáltatások</span>
       </button>
-      <button mat-menu-item *ngIf="this.authService.isLoggedIn()">
+      <button mat-menu-item >
         <mat-icon>account_circle</mat-icon>
         <span routerLink="{{this.authService.role==='user' || this.role == 'user' ? '/userhome' : '/expertdashboard'}}">Profilom</span>
       </button>
-      <button mat-menu-item *ngIf="this.authService.isLoggedIn()">
+      <button mat-menu-item >
         <mat-icon>logout</mat-icon>
         <span (click)="logOut()">Kijelentkezés</span>
       </button>
-      <button mat-menu-item *ngIf="!this.authService.isLoggedIn()">
+      <button mat-menu-item >
         <mat-icon>person</mat-icon>
         <span routerLink="/login">Bejelentkezés</span>
       </button>
-      <button mat-menu-item *ngIf="!this.authService.isLoggedIn()">
+      <button mat-menu-item >
         <mat-icon>key</mat-icon>
         <span routerLink="/signup">Regisztráció</span>
       </button>

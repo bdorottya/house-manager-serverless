@@ -6,6 +6,7 @@ import * as Realm from 'realm-web';
 import { ErrorMessageComponent } from '../navigation/error-message/error-message.component';
 import { User, UserDAO } from '../user/socialUser.model';
 import { UserService } from '../user/user.service';
+import { ReplaySubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,7 @@ export class AuthService {
   role!:string;
 
   user:any;
+  user$ = new Subject<User>();
 
   constructor(private dialog: MatDialog, private router: Router, private snackBar: MatSnackBar, private userService: UserService) {}
 
@@ -39,6 +41,7 @@ export class AuthService {
         this.role = data.role;
         this.user = user;
         localStorage.setItem("role", data.role);
+        this.user$.next(data);
       })
       return user;
     }catch(err: any){
@@ -108,6 +111,7 @@ export class AuthService {
     let user = await app.logIn(creds);
     try{
       return await app.emailPasswordAuth.registerUser({ email, password });
+
     }catch(err){
       console.error(err);
       return;
@@ -120,6 +124,7 @@ export class AuthService {
     console.log(app.currentUser?.isLoggedIn);
     localStorage.removeItem("userID");
     localStorage.removeItem("userEmail");
+    this.user$.complete();
     this.router.navigate(["/"]);
   }
 }
